@@ -170,6 +170,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
+    <Compile Include="Controllers\GeneralDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Data\LibraryDbContext.cs" />
@@ -178,11 +179,13 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
+    <Compile Include="Models\GeneralData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryManager.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthorService.cs" />
+    <Compile Include="Services\GeneralDataService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +250,11 @@
     <Content Include="Views\Authors\Details.cshtml" />
     <Content Include="Views\Authors\Edit.cshtml" />
     <Content Include="Views\Authors\Index.cshtml" />
+    <Content Include="Views\GeneralData\Create.cshtml" />
+    <Content Include="Views\GeneralData\Delete.cshtml" />
+    <Content Include="Views\GeneralData\Details.cshtml" />
+    <Content Include="Views\GeneralData\Edit.cshtml" />
+    <Content Include="Views\GeneralData\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

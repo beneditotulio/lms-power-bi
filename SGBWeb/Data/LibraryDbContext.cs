@@ -15,5 +15,6 @@ namespace SGBWeb.Data
         }
 
         public DbSet<Author> Authors { get; set; }
+        public DbSet<GeneralData> GeneralDatas { get; set; }
     }
 }
