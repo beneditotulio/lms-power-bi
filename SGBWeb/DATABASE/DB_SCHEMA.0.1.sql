@@ -281,3 +281,24 @@ end region
 25/09/2023
 Created by IP
 */
+
+/*
+begin region
+26/09/2023
+Created by IP
+*/
+
+CREATE TABLE Bookcases (
+    BookcaseID INT PRIMARY KEY IDENTITY(1,1),
+    BookcaseName NVARCHAR(255) NOT NULL,
+    Location NVARCHAR(100),
+    Capacity INT,
+    Description NVARCHAR(255),
+    CONSTRAINT Unique_BookcaseName UNIQUE (BookcaseName)
+);
+GO
+/*
+end region
+26/09/2023
+Created by IP
+*/
