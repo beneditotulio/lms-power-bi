@@ -16,6 +16,7 @@ namespace SGBWeb.Controllers
     {
         private LibraryDbContext db = new LibraryDbContext();
         AuthorService AuthorServices = new AuthorService();
+        GeneralDataService GeneralDataService = new GeneralDataService();
         // GET: Authors
         public ActionResult Index()
         {
@@ -41,6 +42,7 @@ namespace SGBWeb.Controllers
         // GET: Authors/Create
         public ActionResult Create()
         {
+            ViewData["GeneralData"] = GeneralDataService.GetAllGeneralDataByType("COUNTRY");
             return View();
         }
 
