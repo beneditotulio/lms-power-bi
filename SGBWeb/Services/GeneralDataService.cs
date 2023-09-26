@@ -28,6 +28,13 @@ namespace SGBWeb.Services
         {
             return _context.GeneralDatas.FirstOrDefault(g => g.ID == id);
         }
+        // Retrieve a GeneralData record by ID
+        public List<GeneralData> GetAllGeneralDataByType(string classifierType)
+        {
+            return _context.GeneralDatas
+                .Where(g => g.ClassifierType == classifierType)
+                .ToList();
+        }
 
         // Retrieve all GeneralData records
         public List<GeneralData> GetAllGeneralData()
