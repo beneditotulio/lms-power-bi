@@ -60,6 +60,7 @@ namespace SGBWeb.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewData["GeneralData"] = GeneralDataService.GetAllGeneralDataByType("COUNTRY");
             return View(author);
         }
 
@@ -75,6 +76,7 @@ namespace SGBWeb.Controllers
             {
                 return HttpNotFound();
             }
+            ViewData["GeneralData"] = GeneralDataService.GetAllGeneralDataByType("COUNTRY");
             return View(author);
         }
 

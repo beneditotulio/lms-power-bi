@@ -1,7 +1,8 @@
 ﻿@model SGBWeb.Models.Author
-
+@using SGBWeb.Models
 @{
     ViewBag.Title = "Edit";
+    List<GeneralData> generalDatas = ViewData["GeneralData"] as List<GeneralData>;
 }
 
 <h2>Edit</h2>
@@ -10,7 +11,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Author</h4>
         <hr />
@@ -28,7 +29,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", type = "date" } })
                 @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -36,8 +37,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CountryOfOrigin, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CountryOfOrigin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CountryOfOrigin, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.CountryOfOrigin, new SelectList(generalDatas, "ID", "Description"), "Escolha o País....",
+                                   new
+                                   {
+                                       @class = "form-control",
+                                       @id = "countryId",
+                                       @name = "clientId",
+                                       style = "font-size:12px;",
+                                       @required = "required"
+                                   })
             </div>
         </div>
 
