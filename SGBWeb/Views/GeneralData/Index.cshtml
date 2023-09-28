@@ -11,7 +11,10 @@
     </div>
 </div>
 <p>
-    @Html.ActionLink("Criar Novo", "Create")
+    @*@Html.ActionLink("Criar Novo", "Create", new {@class = "btn btn-success" })*@
+    <a class="btn btn-sm btn-success" href="@Url.Action("Create")">
+        Criar
+    </a>
 </p>
 <table class="table">
     <tr>

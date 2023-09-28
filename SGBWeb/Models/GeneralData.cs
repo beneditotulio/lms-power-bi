@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -16,22 +17,22 @@ namespace SGBWeb.Models
         public string ID { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(50), DisplayName("Parente")]
         public string ParentId { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(50), DisplayName("Classificador")]
         public string ClassifierType { get; set; }
 
         [Required]
-        [StringLength(255)]
+        [StringLength(255), DisplayName("Descrição")]
         public string Description { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [StringLength(10), DisplayName("Abreviatura")]
         public string ShortName { get; set; }
 
-        [Required]
+        [Required, DisplayName("Pre-Definido?")]
         public int IsDefault { get; set; }
 
         [Required]
