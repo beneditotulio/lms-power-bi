@@ -117,9 +117,11 @@ namespace SGBWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Publisher publisher = db.Publishers.Find(id);
-            db.Publishers.Remove(publisher);
-            db.SaveChanges();
+            if (PublisherService.DeletePublisher(id))
+            {
+                TempData["successMessage"] = "Registo Gravado com sucesso!";
+            }
+            TempData["erroMessage"] = "Registo Gravado com sucesso!";
             return RedirectToAction("Index");
         }
 
