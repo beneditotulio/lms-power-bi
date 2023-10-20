@@ -174,6 +174,7 @@
     <Compile Include="Controllers\GeneralDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PublishersController.cs" />
     <Compile Include="Data\LibraryDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -185,10 +186,12 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryManager.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Publisher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthorService.cs" />
     <Compile Include="Services\BookcaseService.cs" />
     <Compile Include="Services\GeneralDataService.cs" />
+    <Compile Include="Services\PublisherService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -263,6 +266,11 @@
     <Content Include="Views\Bookcase\Details.cshtml" />
     <Content Include="Views\Bookcase\Edit.cshtml" />
     <Content Include="Views\Bookcase\Index.cshtml" />
+    <Content Include="Views\Publishers\Create.cshtml" />
+    <Content Include="Views\Publishers\Delete.cshtml" />
+    <Content Include="Views\Publishers\Details.cshtml" />
+    <Content Include="Views\Publishers\Edit.cshtml" />
+    <Content Include="Views\Publishers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
