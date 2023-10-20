@@ -601,36 +601,37 @@ CREATE TABLE Books (
     Title VARCHAR(250) NOT NULL,
     Subtitle VARCHAR(250) NOT NULL,
     CDU VARCHAR(20) NOT NULL,
-    BookcaseID VARCHAR(50),
+    BookcaseID INT,
     PublisherID INT, -- Foreign key to the Publishers table
-    LanguageID  VARCHAR(50), -- Foreign key to the Languages table
+    LanguageID  NVARCHAR(50), -- Foreign key to the Languages table
     Pagination INT,
     PublicationYear INT,
-    CategoryID VARCHAR(50),
+    CategoryID NVARCHAR(50),
     AvailableCopies INT,
-    Country VARCHAR(50),
-    Illustration VARCHAR(50),
+    CountryID NVARCHAR(50),
+    Illustration VARCHAR(250),
     FOREIGN KEY (PublisherID) REFERENCES Publishers(PublisherID),
     FOREIGN KEY (LanguageID) REFERENCES GeneralData(ID),
     FOREIGN KEY (CategoryID) REFERENCES GeneralData(ID),
-    FOREIGN KEY (BookcaseID) REFERENCES Bookcases(BookcaseID)
+    FOREIGN KEY (BookcaseID) REFERENCES Bookcases(BookcaseID),
+    FOREIGN KEY (CountryID) REFERENCES GeneralData(ID)
 );
 GO
 
 -- Junction table for relating books to authors (many-to-many)
 CREATE TABLE BooksAuthors (
-    BookAuthorID INT PRIMARY KEY,
+    BookAuthorID INT PRIMARY KEY Identity(1,1),
     ISBN VARCHAR(20),
     AuthorID INT,
     FOREIGN KEY (ISBN) REFERENCES Books(ISBN),
     FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
 );
-
+GO
 
 
 -- Copies table
 CREATE TABLE Copies (
-    CopyID INT PRIMARY KEY,
+    CopyID INT PRIMARY KEY Identity(1,1),
     ISBN VARCHAR(20), -- Foreign key to the Books table
     CopyNumber INT,
     Condition VARCHAR(50),
