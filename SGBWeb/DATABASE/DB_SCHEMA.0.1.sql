@@ -64,6 +64,7 @@ GO
 -- Insert statements for 150 countries with Portuguese names
 INSERT INTO GeneralData (ID, ParentId, ClassifierType, Description, ShortName, IsDefault, ExtCode)
 VALUES
+('CTR0000', '', 'COUNTRY', 'N/A', ' ', 0, ' '),
 ('CTR0001', '', 'COUNTRY', 'Afeganistão', 'AF', 0, 'AF'),
 ('CTR0002', '', 'COUNTRY', 'Albânia', 'AL', 0, 'AL'),
 ('CTR0003', '', 'COUNTRY', 'Argélia', 'DZ', 0, 'DZ'),
@@ -300,5 +301,384 @@ GO
 /*
 end region
 26/09/2023
+Created by IP
+*/
+
+
+/*
+begin region
+20/10/2023
+Created by IP
+*/
+
+-- Inserir idiomas na tabela GeneralData
+INSERT INTO GeneralData ([ID], [ParentId], [ClassifierType], [Description], [ShortName], [IsDefault], [ExtCode])
+VALUES
+    ('IDM0000', ' ', 'IDIOMA', 'N/A', ' ', 0, ' '),
+    ('IDM0001', ' ', 'IDIOMA', 'Inglês', ' ', 0, ' '),
+    ('IDM0002', ' ', 'IDIOMA', 'Espanhol', ' ', 0, ' '),
+    ('IDM0003', ' ', 'IDIOMA', 'Francês', ' ', 0, ' '),
+    ('IDM0004', ' ', 'IDIOMA', 'Alemão', ' ', 0, ' '),
+    ('IDM0005', ' ', 'IDIOMA', 'Italiano', ' ', 0, ' '),
+    ('IDM0006', ' ', 'IDIOMA', 'Português', ' ', 0, ' '),
+    ('IDM0007', ' ', 'IDIOMA', 'Holandês', ' ', 0, ' '),
+    ('IDM0008', ' ', 'IDIOMA', 'Sueco', ' ', 0, ' '),
+    ('IDM0009', ' ', 'IDIOMA', 'Norueguês', ' ', 0, ' '),
+    ('IDM0010', ' ', 'IDIOMA', 'Dinamarquês', ' ', 0, ' '),
+    ('IDM0011', ' ', 'IDIOMA', 'Islandês', ' ', 0, ' '),
+    ('IDM0012', ' ', 'IDIOMA', 'Finlandês', ' ', 0, ' '),
+    ('IDM0013', ' ', 'IDIOMA', 'Grego', ' ', 0, ' '),
+    ('IDM0014', ' ', 'IDIOMA', 'Turco', ' ', 0, ' '),
+    ('IDM0015', ' ', 'IDIOMA', 'Árabe', ' ', 0, ' '),
+    ('IDM0016', ' ', 'IDIOMA', 'Hebraico', ' ', 0, ' '),
+    ('IDM0017', ' ', 'IDIOMA', 'Russo', ' ', 0, ' '),
+    ('IDM0018', ' ', 'IDIOMA', 'Ucraniano', ' ', 0, ' '),
+    ('IDM0019', ' ', 'IDIOMA', 'Polonês', ' ', 0, ' '),
+    ('IDM0020', ' ', 'IDIOMA', 'Tcheco', ' ', 0, ' '),
+    ('IDM0021', ' ', 'IDIOMA', 'Húngaro', ' ', 0, ' '),
+    ('IDM0022', ' ', 'IDIOMA', 'Romeno', ' ', 0, ' '),
+    ('IDM0023', ' ', 'IDIOMA', 'Búlgaro', ' ', 0, ' '),
+    ('IDM0024', ' ', 'IDIOMA', 'Sérvio', ' ', 0, ' '),
+    ('IDM0025', ' ', 'IDIOMA', 'Croata', ' ', 0, ' '),
+    ('IDM0026', ' ', 'IDIOMA', 'Esloveno', ' ', 0, ' '),
+    ('IDM0027', ' ', 'IDIOMA', 'Macedônio', ' ', 0, ' '),
+    ('IDM0028', ' ', 'IDIOMA', 'Albanês', ' ', 0, ' '),
+    ('IDM0029', ' ', 'IDIOMA', 'Lituano', ' ', 0, ' '),
+    ('IDM0030', ' ', 'IDIOMA', 'Letão', ' ', 0, ' '),
+    ('IDM0031', ' ', 'IDIOMA', 'Estoniano', ' ', 0, ' '),
+    ('IDM0032', ' ', 'IDIOMA', 'Chinês (simplificado)', ' ', 0, ' '),
+    ('IDM0033', ' ', 'IDIOMA', 'Chinês (tradicional)', ' ', 0, ' '),
+    ('IDM0034', ' ', 'IDIOMA', 'Japonês', ' ', 0, ' '),
+    ('IDM0035', ' ', 'IDIOMA', 'Coreano', ' ', 0, ' '),
+    ('IDM0036', ' ', 'IDIOMA', 'Vietnamita', ' ', 0, ' '),
+    ('IDM0037', ' ', 'IDIOMA', 'Tailandês', ' ', 0, ' '),
+    ('IDM0038', ' ', 'IDIOMA', 'Malaio', ' ', 0, ' '),
+    ('IDM0039', ' ', 'IDIOMA', 'Indonésio', ' ', 0, ' '),
+    ('IDM0040', ' ', 'IDIOMA', 'Hindi', ' ', 0, ' '),
+    ('IDM0041', ' ', 'IDIOMA', 'Bengali', ' ', 0, ' '),
+    ('IDM0042', ' ', 'IDIOMA', 'Punjabi', ' ', 0, ' '),
+    ('IDM0043', ' ', 'IDIOMA', 'Marathi', ' ', 0, ' '),
+    ('IDM0044', ' ', 'IDIOMA', 'Tamil', ' ', 0, ' '),
+    ('IDM0045', ' ', 'IDIOMA', 'Telugu', ' ', 0, ' '),
+    ('IDM0046', ' ', 'IDIOMA', 'Kannada', ' ', 0, ' '),
+    ('IDM0047', ' ', 'IDIOMA', 'Urdu', ' ', 0, ' '),
+    ('IDM0048', ' ', 'IDIOMA', 'Áfrikaans', ' ', 0, ' '),
+    ('IDM0049', ' ', 'IDIOMA', 'Swahili', ' ', 0, ' '),
+    ('IDM0050', ' ', 'IDIOMA', 'Zulu', ' ', 0, ' '),
+    ('IDM0051', ' ', 'IDIOMA', 'Xhosa', ' ', 0, ' '),
+    ('IDM0052', ' ', 'IDIOMA', 'Somali', ' ', 0, ' '),
+    ('IDM0053', ' ', 'IDIOMA', 'Amárico', ' ', 0, ' '),
+    ('IDM0054', ' ', 'IDIOMA', 'Tigrínia', ' ', 0, ' '),
+    ('IDM0055', ' ', 'IDIOMA', 'Oromo', ' ', 0, ' '),
+    ('IDM0056', ' ', 'IDIOMA', 'Afegão', ' ', 0, ' '),
+    ('IDM0057', ' ', 'IDIOMA', 'Persa', ' ', 0, ' '),
+    ('IDM0058', ' ', 'IDIOMA', 'Curdo', ' ', 0, ' '),
+    ('IDM0059', ' ', 'IDIOMA', 'Turcomeno', ' ', 0, ' '),
+    ('IDM0060', ' ', 'IDIOMA', 'Quirguiz', ' ', 0, ' '),
+    ('IDM0061', ' ', 'IDIOMA', 'Cazaque', ' ', 0, ' '),
+    ('IDM0062', ' ', 'IDIOMA', 'Uzbeque', ' ', 0, ' '),
+    ('IDM0063', ' ', 'IDIOMA', 'Tadjique', ' ', 0, ' '),
+    ('IDM0064', ' ', 'IDIOMA', 'Quirguiz', ' ', 0, ' '),
+    ('IDM0065', ' ', 'IDIOMA', 'Cazaque', ' ', 0, ' '),
+    ('IDM0066', ' ', 'IDIOMA', 'Uzbeque', ' ', 0, ' '),
+    ('IDM0067', ' ', 'IDIOMA', 'Tadjique', ' ', 0, ' '),
+    ('IDM0068', ' ', 'IDIOMA', 'Hindi', ' ', 0, ' '),
+    ('IDM0069', ' ', 'IDIOMA', 'Punjabi', ' ', 0, ' '),
+    ('IDM0070', ' ', 'IDIOMA', 'Gujarati', ' ', 0, ' '),
+    ('IDM0071', ' ', 'IDIOMA', 'Bengali', ' ', 0, ' '),
+    ('IDM0072', ' ', 'IDIOMA', 'Oriya', ' ', 0, ' '),
+    ('IDM0073', ' ', 'IDIOMA', 'Assamês', ' ', 0, ' '),
+    ('IDM0074', ' ', 'IDIOMA', 'Cingalês', ' ', 0, ' '),
+    ('IDM0075', ' ', 'IDIOMA', 'Nepalês', ' ', 0, ' '),
+    ('IDM0076', ' ', 'IDIOMA', 'Tibetano', ' ', 0, ' '),
+    ('IDM0077', ' ', 'IDIOMA', 'Birmânes', ' ', 0, ' '),
+    ('IDM0078', ' ', 'IDIOMA', 'Laosiano', ' ', 0, ' '),
+    ('IDM0079', ' ', 'IDIOMA', 'Cambojano', ' ', 0, ' '),
+    ('IDM0080', ' ', 'IDIOMA', 'Tailandês', ' ', 0, ' '),
+    ('IDM0081', ' ', 'IDIOMA', 'Lao', ' ', 0, ' '),
+    ('IDM0082', ' ', 'IDIOMA', 'Khmer', ' ', 0, ' '),
+    ('IDM0083', ' ', 'IDIOMA', 'Malaiala', ' ', 0, ' '),
+    ('IDM0084', ' ', 'IDIOMA', 'Cingalês', ' ', 0, ' '),
+    ('IDM0085', ' ', 'IDIOMA', 'Nepalês', ' ', 0, ' '),
+    ('IDM0086', ' ', 'IDIOMA', 'Tibetano', ' ', 0, ' '),
+    ('IDM0087', ' ', 'IDIOMA', 'Birmânes', ' ', 0, ' '),
+    ('IDM0088', ' ', 'IDIOMA', 'Laosiano', ' ', 0, ' '),
+    ('IDM0089', ' ', 'IDIOMA', 'Cambojano', ' ', 0, ' '),
+    ('IDM0090', ' ', 'IDIOMA', 'Tailandês', ' ', 0, ' '),
+    ('IDM0091', ' ', 'IDIOMA', 'Malaio', ' ', 0, ' '),
+    ('IDM0092', ' ', 'IDIOMA', 'Indonésio', ' ', 0, ' '),
+    ('IDM0093', ' ', 'IDIOMA', 'Filipino', ' ', 0, ' '),
+    ('IDM0094', ' ', 'IDIOMA', 'Tagalog', ' ', 0, ' '),
+    ('IDM0095', ' ', 'IDIOMA', 'Guarani', ' ', 0, ' '),
+    ('IDM0096', ' ', 'IDIOMA', 'Quechua', ' ', 0, ' '),
+    ('IDM0097', ' ', 'IDIOMA', 'Nahuatl', ' ', 0, ' '),
+    ('IDM0098', ' ', 'IDIOMA', 'Maori', ' ', 0, ' '),
+    ('IDM0099', ' ', 'IDIOMA', 'Samoano', ' ', 0, ' '),
+    ('IDM0100', ' ', 'IDIOMA', 'Havaiano', ' ', 0, ' ');
+GO
+
+-- Inserir mais 50 idiomas na tabela GeneralData
+INSERT INTO GeneralData ([ID], [ParentId], [ClassifierType], [Description], [ShortName], [IsDefault], [ExtCode])
+VALUES
+    ('IDM0101', ' ', 'IDIOMA', 'Sânscrito', ' ', 0, ' '),
+    ('IDM0102', ' ', 'IDIOMA', 'Suaíli', ' ', 0, ' '),
+    ('IDM0103', ' ', 'IDIOMA', 'Hausa', ' ', 0, ' '),
+    ('IDM0104', ' ', 'IDIOMA', 'Iorubá', ' ', 0, ' '),
+    ('IDM0105', ' ', 'IDIOMA', 'Xhosa', ' ', 0, ' '),
+    ('IDM0106', ' ', 'IDIOMA', 'Maori', ' ', 0, ' '),
+    ('IDM0107', ' ', 'IDIOMA', 'Esperanto', ' ', 0, ' '),
+    ('IDM0108', ' ', 'IDIOMA', 'Eslovaco', ' ', 0, ' '),
+    ('IDM0109', ' ', 'IDIOMA', 'Letão', ' ', 0, ' '),
+    ('IDM0110', ' ', 'IDIOMA', 'Georgiano', ' ', 0, ' '),
+    ('IDM0111', ' ', 'IDIOMA', 'Armênio', ' ', 0, ' '),
+    ('IDM0112', ' ', 'IDIOMA', 'Azerbaijani', ' ', 0, ' '),
+    ('IDM0113', ' ', 'IDIOMA', 'Cazaque', ' ', 0, ' '),
+    ('IDM0114', ' ', 'IDIOMA', 'Turcomeno', ' ', 0, ' '),
+    ('IDM0115', ' ', 'IDIOMA', 'Curdo', ' ', 0, ' '),
+    ('IDM0116', ' ', 'IDIOMA', 'Pashto', ' ', 0, ' '),
+    ('IDM0117', ' ', 'IDIOMA', 'Urdu', ' ', 0, ' '),
+    ('IDM0118', ' ', 'IDIOMA', 'Nepali', ' ', 0, ' '),
+    ('IDM0119', ' ', 'IDIOMA', 'Sinhala', ' ', 0, ' '),
+    ('IDM0120', ' ', 'IDIOMA', 'Khmer', ' ', 0, ' '),
+    ('IDM0121', ' ', 'IDIOMA', 'Bengali', ' ', 0, ' '),
+    ('IDM0122', ' ', 'IDIOMA', 'Telugu', ' ', 0, ' '),
+    ('IDM0123', ' ', 'IDIOMA', 'Tamil', ' ', 0, ' '),
+    ('IDM0124', ' ', 'IDIOMA', 'Marathi', ' ', 0, ' '),
+    ('IDM0125', ' ', 'IDIOMA', 'Gujarati', ' ', 0, ' '),
+    ('IDM0126', ' ', 'IDIOMA', 'Punjabi', ' ', 0, ' '),
+    ('IDM0127', ' ', 'IDIOMA', 'Hindi', ' ', 0, ' '),
+    ('IDM0128', ' ', 'IDIOMA', 'Urdu', ' ', 0, ' '),
+    ('IDM0129', ' ', 'IDIOMA', 'Malayalam', ' ', 0, ' '),
+    ('IDM0130', ' ', 'IDIOMA', 'Tulu', ' ', 0, ' '),
+    ('IDM0131', ' ', 'IDIOMA', 'Kannada', ' ', 0, ' '),
+    ('IDM0132', ' ', 'IDIOMA', 'Oriya', ' ', 0, ' '),
+    ('IDM0133', ' ', 'IDIOMA', 'Assamese', ' ', 0, ' '),
+    ('IDM0134', ' ', 'IDIOMA', 'Kashmiri', ' ', 0, ' '),
+    ('IDM0135', ' ', 'IDIOMA', 'Sindhi', ' ', 0, ' '),
+    ('IDM0136', ' ', 'IDIOMA', 'Nepali', ' ', 0, ' '),
+    ('IDM0137', ' ', 'IDIOMA', 'Bodo', ' ', 0, ' '),
+    ('IDM0138', ' ', 'IDIOMA', 'Manipuri', ' ', 0, ' '),
+    ('IDM0139', ' ', 'IDIOMA', 'Sanskrit', ' ', 0, ' '),
+    ('IDM0140', ' ', 'IDIOMA', 'Tibetan', ' ', 0, ' '),
+    ('IDM0141', ' ', 'IDIOMA', 'Burmese', ' ', 0, ' '),
+    ('IDM0142', ' ', 'IDIOMA', 'Lao', ' ', 0, ' '),
+    ('IDM0143', ' ', 'IDIOMA', 'Khmer', ' ', 0, ' '),
+    ('IDM0144', ' ', 'IDIOMA', 'Vietnamese', ' ', 0, ' '),
+    ('IDM0145', ' ', 'IDIOMA', 'Hmong', ' ', 0, ' '),
+    ('IDM0146', ' ', 'IDIOMA', 'Igbo', ' ', 0, ' '),
+    ('IDM0147', ' ', 'IDIOMA', 'Yoruba', ' ', 0, ' '),
+    ('IDM0148', ' ', 'IDIOMA', 'Zulu', ' ', 0, ' '),
+    ('IDM0149', ' ', 'IDIOMA', 'Somali', ' ', 0, ' '),
+    ('IDM0150', ' ', 'IDIOMA', 'Amharic', ' ', 0, ' ');
+GO
+
+
+-- Inserir 50 categorias de livros na tabela GeneralData
+INSERT INTO GeneralData ([ID], [ParentId], [ClassifierType], [Description], [ShortName], [IsDefault], [ExtCode])
+VALUES
+    ('CAT0000', ' ', 'CATEGORIA', 'N/A', ' ', 0, ' '),
+    ('CAT0001', ' ', 'CATEGORIA', 'Ficção Científica', ' ', 0, ' '),
+    ('CAT0002', ' ', 'CATEGORIA', 'Fantasia', ' ', 0, ' '),
+    ('CAT0003', ' ', 'CATEGORIA', 'Romance', ' ', 0, ' '),
+    ('CAT0004', ' ', 'CATEGORIA', 'Mistério', ' ', 0, ' '),
+    ('CAT0005', ' ', 'CATEGORIA', 'Suspense', ' ', 0, ' '),
+    ('CAT0006', ' ', 'CATEGORIA', 'Aventura', ' ', 0, ' '),
+    ('CAT0007', ' ', 'CATEGORIA', 'História', ' ', 0, ' '),
+    ('CAT0008', ' ', 'CATEGORIA', 'Biografia', ' ', 0, ' '),
+    ('CAT0009', ' ', 'CATEGORIA', 'Política', ' ', 0, ' '),
+    ('CAT0010', ' ', 'CATEGORIA', 'Autoajuda', ' ', 0, ' '),
+    ('CAT0011', ' ', 'CATEGORIA', 'Ficção Histórica', ' ', 0, ' '),
+    ('CAT0012', ' ', 'CATEGORIA', 'Literatura Clássica', ' ', 0, ' '),
+    ('CAT0013', ' ', 'CATEGORIA', 'Poesia', ' ', 0, ' '),
+    ('CAT0014', ' ', 'CATEGORIA', 'Humor', ' ', 0, ' '),
+    ('CAT0015', ' ', 'CATEGORIA', 'Ciência', ' ', 0, ' '),
+    ('CAT0016', ' ', 'CATEGORIA', 'Tecnologia', ' ', 0, ' '),
+    ('CAT0017', ' ', 'CATEGORIA', 'Psicologia', ' ', 0, ' '),
+    ('CAT0018', ' ', 'CATEGORIA', 'Filosofia', ' ', 0, ' '),
+    ('CAT0019', ' ', 'CATEGORIA', 'Religião', ' ', 0, ' '),
+    ('CAT0020', ' ', 'CATEGORIA', 'Arte', ' ', 0, ' '),
+    ('CAT0021', ' ', 'CATEGORIA', 'Música', ' ', 0, ' '),
+    ('CAT0022', ' ', 'CATEGORIA', 'Esportes', ' ', 0, ' '),
+    ('CAT0023', ' ', 'CATEGORIA', 'Viagem', ' ', 0, ' '),
+    ('CAT0024', ' ', 'CATEGORIA', 'Culinária', ' ', 0, ' '),
+    ('CAT0025', ' ', 'CATEGORIA', 'Quadrinhos', ' ', 0, ' '),
+    ('CAT0026', ' ', 'CATEGORIA', 'Literatura Infantil', ' ', 0, ' '),
+    ('CAT0027', ' ', 'CATEGORIA', 'Literatura Juvenil', ' ', 0, ' '),
+    ('CAT0028', ' ', 'CATEGORIA', 'História em Quadrinhos', ' ', 0, ' '),
+    ('CAT0029', ' ', 'CATEGORIA', 'Drama', ' ', 0, ' '),
+    ('CAT0030', ' ', 'CATEGORIA', 'Teatro', ' ', 0, ' '),
+    ('CAT0031', ' ', 'CATEGORIA', 'Clube do Livro', ' ', 0, ' '),
+    ('CAT0032', ' ', 'CATEGORIA', 'Ação', ' ', 0, ' '),
+    ('CAT0033', ' ', 'CATEGORIA', 'Horror', ' ', 0, ' '),
+    ('CAT0034', ' ', 'CATEGORIA', 'Ficção Fantástica', ' ', 0, ' '),
+    ('CAT0035', ' ', 'CATEGORIA', 'Ciência-Ficção Apocalíptica', ' ', 0, ' '),
+    ('CAT0036', ' ', 'CATEGORIA', 'História Alternativa', ' ', 0, ' '),
+    ('CAT0037', ' ', 'CATEGORIA', 'Ficção Científica Espacial', ' ', 0, ' '),
+    ('CAT0038', ' ', 'CATEGORIA', 'Ficção Científica Distópica', ' ', 0, ' '),
+    ('CAT0039', ' ', 'CATEGORIA', 'Romance de Época', ' ', 0, ' '),
+    ('CAT0040', ' ', 'CATEGORIA', 'Romance Contemporâneo', ' ', 0, ' '),
+    ('CAT0041', ' ', 'CATEGORIA', 'Romance Histórico', ' ', 0, ' '),
+    ('CAT0042', ' ', 'CATEGORIA', 'Romance Paranormal', ' ', 0, ' '),
+    ('CAT0043', ' ', 'CATEGORIA', 'Romance Erótico', ' ', 0, ' '),
+    ('CAT0044', ' ', 'CATEGORIA', 'Romance LGBT', ' ', 0, ' '),
+    ('CAT0045', ' ', 'CATEGORIA', 'Ficção de Espionagem', ' ', 0, ' '),
+    ('CAT0046', ' ', 'CATEGORIA', 'Mistério Criminal', ' ', 0, ' '),
+    ('CAT0047', ' ', 'CATEGORIA', 'Mistério de Detetive', ' ', 0, ' '),
+    ('CAT0048', ' ', 'CATEGORIA', 'Mistério de Crime Real', ' ', 0, ' '),
+    ('CAT0049', ' ', 'CATEGORIA', 'Thriller de Espionagem', ' ', 0, ' '),
+    ('CAT0050', ' ', 'CATEGORIA', 'Thriller Psicológico', ' ', 0, ' ');
+    GO
+
+
+-- Inserir 50 CDUs na tabela GeneralData
+INSERT INTO GeneralData ([ID], [ParentId], [ClassifierType], [Description], [ShortName], [IsDefault], [ExtCode])
+VALUES
+    ('CDU0000', ' ', 'CDU', '000 - N/A', ' ', 0, ' '),
+    ('CDU0001', ' ', 'CDU', '001 - Conhecimento geral', ' ', 0, ' '),
+    ('CDU0002', ' ', 'CDU', '002 - Biblioteconomia, documentação', ' ', 0, ' '),
+    ('CDU0003', ' ', 'CDU', '003 - Sistemas', ' ', 0, ' '),
+    ('CDU0004', ' ', 'CDU', '004 - Ciência e conhecimento', ' ', 0, ' '),
+    ('CDU0005', ' ', 'CDU', '005 - Matemática e ciências naturais', ' ', 0, ' '),
+    ('CDU0006', ' ', 'CDU', '006 - Ciências aplicadas', ' ', 0, ' '),
+    ('CDU0007', ' ', 'CDU', '007 - Arte, arquitetura', ' ', 0, ' '),
+    ('CDU0008', ' ', 'CDU', '008 - Língua, linguística, filologia', ' ', 0, ' '),
+    ('CDU0009', ' ', 'CDU', '009 - Geografia, biografia, história', ' ', 0, ' '),
+    ('CDU0010', ' ', 'CDU', '010 - Documentação e publicações', ' ', 0, ' '),
+    ('CDU0011', ' ', 'CDU', '011 - Bibliotecas e ciência da informação', ' ', 0, ' '),
+    ('CDU0012', ' ', 'CDU', '012 - Padrões de informação', ' ', 0, ' '),
+    ('CDU0013', ' ', 'CDU', '013 - Registo', ' ', 0, ' '),
+    ('CDU0014', ' ', 'CDU', '014 - Publicações em série', ' ', 0, ' '),
+    ('CDU0015', ' ', 'CDU', '015 - Publicações eletrônicas', ' ', 0, ' '),
+    ('CDU0016', ' ', 'CDU', '016 - Organização e informação da documentação', ' ', 0, ' '),
+    ('CDU0017', ' ', 'CDU', '017 - Documentação, publicações em série', ' ', 0, ' '),
+    ('CDU0018', ' ', 'CDU', '018 - Documentação audiovisual', ' ', 0, ' '),
+    ('CDU0019', ' ', 'CDU', '019 - Documentação tipográfica', ' ', 0, ' '),
+    ('CDU0020', ' ', 'CDU', '020 - Bibliotecas e ciência da informação', ' ', 0, ' '),
+    ('CDU0021', ' ', 'CDU', '021 - Bibliotecas', ' ', 0, ' '),
+    ('CDU0022', ' ', 'CDU', '022 - Arquivos', ' ', 0, ' '),
+    ('CDU0023', ' ', 'CDU', '023 - Museus', ' ', 0, ' '),
+    ('CDU0024', ' ', 'CDU', '024 - Livros, impressos', ' ', 0, ' '),
+    ('CDU0025', ' ', 'CDU', '025 - Bibliografias, catálogos', ' ', 0, ' '),
+    ('CDU0026', ' ', 'CDU', '026 - Bibliografia', ' ', 0, ' '),
+    ('CDU0027', ' ', 'CDU', '027 - Catálogos', ' ', 0, ' '),
+    ('CDU0028', ' ', 'CDU', '028 - Livros raros e manuscritos', ' ', 0, ' '),
+    ('CDU0029', ' ', 'CDU', '029 - Publicações governamentais', ' ', 0, ' '),
+    ('CDU0030', ' ', 'CDU', '030 - Documentação, publicações em série', ' ', 0, ' '),
+    ('CDU0031', ' ', 'CDU', '031 - Documentação audiovisual', ' ', 0, ' '),
+    ('CDU0032', ' ', 'CDU', '032 - Documentação tipográfica', ' ', 0, ' '),
+    ('CDU0033', ' ', 'CDU', '033 - Processamento da informação', ' ', 0, ' '),
+    ('CDU0034', ' ', 'CDU', '034 - Informática', ' ', 0, ' '),
+    ('CDU0035', ' ', 'CDU', '035 - Redes de computadores', ' ', 0, ' '),
+    ('CDU0036', ' ', 'CDU', '036 - Segurança em informática', ' ', 0, ' '),
+    ('CDU0037', ' ', 'CDU', '037 - Software', ' ', 0, ' '),
+    ('CDU0038', ' ', 'CDU', '038 - Hardware', ' ', 0, ' '),
+    ('CDU0039', ' ', 'CDU', '039 - Electrónica, telecomunicações', ' ', 0, ' '),
+    ('CDU0040', ' ', 'CDU', '040 - Ciência e conhecimento', ' ', 0, ' '),
+    ('CDU0041', ' ', 'CDU', '041 - Organizações', ' ', 0, ' '),
+    ('CDU0042', ' ', 'CDU', '042 - Métodos e técnicas da investigação', ' ', 0, ' '),
+    ('CDU0043', ' ', 'CDU', '043 - Literatura', ' ', 0, ' '),
+    ('CDU0044', ' ', 'CDU', '044 - Ciências naturais e matemáticas', ' ', 0, ' '),
+    ('CDU0045', ' ', 'CDU', '045 - Ciências aplicadas', ' ', 0, ' '),
+    ('CDU0046', ' ', 'CDU', '046 - Ciências médicas', ' ', 0, ' '),
+    ('CDU0047', ' ', 'CDU', '047 - Ciências agrícolas', ' ', 0, ' '),
+    ('CDU0048', ' ', 'CDU', '048 - Ciências florestais', ' ', 0, ' '),
+    ('CDU0049', ' ', 'CDU', '049 - Ciências da terra e do espaço', ' ', 0, ' '),
+    ('CDU0050', ' ', 'CDU', '050 - Ciências químicas', ' ', 0, ' ');
+GO
+
+-- Publishers table
+CREATE TABLE Publishers (
+    PublisherID INT PRIMARY KEY,
+    PublisherName VARCHAR(100),
+    Address VARCHAR(200),
+    Phone VARCHAR(15)
+);
+GO
+
+-- Books table
+CREATE TABLE Books (
+    ISBN VARCHAR(20) PRIMARY KEY NOT NULL,
+    Title VARCHAR(250) NOT NULL,
+    Subtitle VARCHAR(250) NOT NULL,
+    CDU VARCHAR(20) NOT NULL,
+    BookcaseID VARCHAR(50),
+    PublisherID INT, -- Foreign key to the Publishers table
+    LanguageID  VARCHAR(50), -- Foreign key to the Languages table
+    Pagination INT,
+    PublicationYear INT,
+    CategoryID VARCHAR(50),
+    AvailableCopies INT,
+    Country VARCHAR(50),
+    Illustration VARCHAR(50),
+    FOREIGN KEY (PublisherID) REFERENCES Publishers(PublisherID),
+    FOREIGN KEY (LanguageID) REFERENCES GeneralData(ID),
+    FOREIGN KEY (CategoryID) REFERENCES GeneralData(ID),
+    FOREIGN KEY (BookcaseID) REFERENCES Bookcases(BookcaseID)
+);
+GO
+
+-- Junction table for relating books to authors (many-to-many)
+CREATE TABLE BooksAuthors (
+    BookAuthorID INT PRIMARY KEY,
+    ISBN VARCHAR(20),
+    AuthorID INT,
+    FOREIGN KEY (ISBN) REFERENCES Books(ISBN),
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+);
+
+
+
+-- Copies table
+CREATE TABLE Copies (
+    CopyID INT PRIMARY KEY,
+    ISBN VARCHAR(20), -- Foreign key to the Books table
+    CopyNumber INT,
+    Condition VARCHAR(50),
+    FOREIGN KEY (ISBN) REFERENCES Books(ISBN)
+);
+
+-- Members table
+CREATE TABLE Members (
+    MemberID INT PRIMARY KEY,
+    MemberName VARCHAR(100),
+    Address VARCHAR(200),
+    Email VARCHAR(100),
+    Phone VARCHAR(15)
+);
+
+-- Loans table
+CREATE TABLE Loans (
+    LoanID INT PRIMARY KEY,
+    ISBN VARCHAR(20), -- Foreign key to the Books table
+    MemberID INT, -- Foreign key to the Members table
+    LoanDate DATE,
+    DueDate DATE,
+    ReturnedDate DATE,
+    FOREIGN KEY (ISBN) REFERENCES Books(ISBN),
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+
+-- Reservations table
+CREATE TABLE Reservations (
+    ReservationID INT PRIMARY KEY,
+    ISBN VARCHAR(20), -- Foreign key to the Books table
+    MemberID INT, -- Foreign key to the Members table
+    ReservationDate DATE,
+    FOREIGN KEY (ISBN) REFERENCES Books(ISBN),
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+
+-- Fines table
+CREATE TABLE Fines (
+    FineID INT PRIMARY KEY,
+    MemberID INT, -- Foreign key to the Members table
+    Amount DECIMAL(10, 2),
+    FineDate DATE,
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+
+/*
+begin region
+20/10/2023
 Created by IP
 */
