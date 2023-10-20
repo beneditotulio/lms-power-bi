@@ -37,9 +37,9 @@ namespace SGBWeb.Services
         }
 
         // Update an existing publisher
-        public Publisher UpdatePublisher(int publisherId, Publisher updatedPublisher)
+        public Publisher UpdatePublisher(Publisher updatedPublisher)
         {
-            var existingPublisher = _dbContext.Publishers.Find(publisherId);
+            var existingPublisher = _dbContext.Publishers.Find(updatedPublisher.PublisherID);
             if (existingPublisher != null)
             {
                 existingPublisher.PublisherName = updatedPublisher.PublisherName;

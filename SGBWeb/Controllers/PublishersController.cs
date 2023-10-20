@@ -52,14 +52,18 @@ namespace SGBWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PublisherID,PublisherName,Address,Phone")] Publisher publisher)
         {
-            if (ModelState.IsValid)
+            if (!String.IsNullOrEmpty(publisher.PublisherName))
             {
-                db.Publishers.Add(publisher);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                PublisherService.CreatePublisher(publisher);
+                TempData["successMessage"] = "Registo Gravado com sucesso!";
             }
+            else
+            {
+                TempData["errorMessage"] = "Não foi possível gravar o registo!";
+                return View(publisher);
 
-            return View(publisher);
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: Publishers/Edit/5
@@ -69,7 +73,7 @@ namespace SGBWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Publisher publisher = db.Publishers.Find(id);
+            Publisher publisher = PublisherService.GetPublisherById(id.GetValueOrDefault());
             if (publisher == null)
             {
                 return HttpNotFound();
@@ -86,8 +90,8 @@ namespace SGBWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(publisher).State = EntityState.Modified;
-                db.SaveChanges();
+                PublisherService.UpdatePublisher(publisher);
+                TempData["successMessage"] = "Registo Gravado com sucesso!";
                 return RedirectToAction("Index");
             }
             return View(publisher);
