@@ -588,7 +588,7 @@ GO
 
 -- Publishers table
 CREATE TABLE Publishers (
-    PublisherID INT PRIMARY KEY,
+    PublisherID INT PRIMARY KEY Identity(1,1),
     PublisherName VARCHAR(100),
     Address VARCHAR(200),
     Phone VARCHAR(15)
