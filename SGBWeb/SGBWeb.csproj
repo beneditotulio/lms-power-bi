@@ -290,6 +290,7 @@
     <Content Include="Views\Publishers\Edit.cshtml" />
     <Content Include="Views\Publishers\Index.cshtml" />
     <Content Include="Views\Publishers\_Import.cshtml" />
+    <Content Include="Views\Shared\_startBoostrapLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
