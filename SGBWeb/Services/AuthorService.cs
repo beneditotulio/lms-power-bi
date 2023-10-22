@@ -65,14 +65,14 @@ namespace SGBWeb.Services
         {
             string ErrorLogs = string.Empty;
             string response = string.Empty;
-            bool result = false;
+            //bool result = false;
 
             using (var context = new LibraryDbContext())
             using (var t = context.Database.BeginTransaction())
             {
                 AuthorService authorService = new AuthorService();
 
-                int total = 0, totalCounted = 0, rows = 0;
+                int total = 0;
                 List<Author> authorsList = new List<Author>();
                 Author author = new Author();
                 try
@@ -115,7 +115,7 @@ namespace SGBWeb.Services
                 catch (Exception ex)
                 {
                     t.Rollback();
-                    response = "Erro não foi possível importar autores! ";
+                    response = "Erro não foi possível importar autores! " + ex;
                 }
             }
             return response;

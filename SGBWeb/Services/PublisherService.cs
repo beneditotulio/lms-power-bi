@@ -83,14 +83,14 @@ namespace SGBWeb.Services
         {
             string ErrorLogs = string.Empty;
             string response = string.Empty;
-            bool result = false;
+            //bool result = false;
 
             using (var context = new LibraryDbContext())
             using (var t = context.Database.BeginTransaction())
             {
                 PublisherService publisherService = new PublisherService();
 
-                int total = 0, totalCounted = 0, rows = 0;
+                int total = 0;
                 List<string> code = new List<string>();
                 List<Publisher> publisherList = new List<Publisher>();
                 Publisher publisher = new Publisher();
@@ -130,7 +130,7 @@ namespace SGBWeb.Services
                 catch (Exception ex)
                 {
                     t.Rollback();
-                    response = "Erro não foi possível importar editoras! ";
+                    response = "Erro não foi possível importar editoras! " + ex;
                 }
             }
             return response;

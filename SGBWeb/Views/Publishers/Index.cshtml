@@ -39,9 +39,34 @@
     }
 </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="card">
+    <div class="card-header">
+        <h2 class="btn-info">Lista de editoras</h2>
+    </div>
+</div>
+
+<div class="btn-group-sm">
+    <a class="btn btn-sm btn-success fa fa-plus-circle" href="@Url.Action("Create")">
+        Criar
+    </a>
+    <span class="text-light" style="float: left">  | </span>
+    @Ajax.ActionLink(" Importar", "ImportPublisher", "Publishers",
+    new { },
+    new AjaxOptions
+    {
+        UpdateTargetId = "openmodal",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "onImport()",
+    }, new
+         {
+             @id = "importExcel",
+             @class = "btn btn-sm btn-success fa fa-plus-circle",
+             @rel = "tooltip",
+             @title = "Importar Editoras",
+             @style = "float: left"
+    })
+    <span class="text-light" style="float: left">  | </span>
+</div>
 <table class="table" id="dataTable">
     <thead>
         <tr>
@@ -83,24 +108,7 @@
 
 </table>
 
-<div class="btn-group-sm">
-    @Ajax.ActionLink(" Importar", "ImportPublisher", "Publishers",
-    new { },
-    new AjaxOptions
-    {
-        UpdateTargetId = "openmodal",
-        InsertionMode = InsertionMode.Replace,
-        OnSuccess = "onImport()",
-    }, new
-         {
-             @id = "importExcel",
-             @class = "btn btn-sm btn-outline-success fa fa-plus-circle",
-             @rel = "tooltip",
-             @title = "Importar Editoras",
-             @style = "float: left"
-    })
-    <span class="text-light" style="float: left">  | </span>
-</div>
+
 
 <div id="openmodal"></div>
 

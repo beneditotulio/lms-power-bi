@@ -14,7 +14,7 @@ namespace SGBWeb.Models
         public int PublisherID { get; set; }
 
         [Required]
-        [Display(Name = "Nome do Editora")]
+        [Display(Name = "Nome da Editora")]
         public string PublisherName { get; set; }
 
         [Display(Name = "Endereço")]
