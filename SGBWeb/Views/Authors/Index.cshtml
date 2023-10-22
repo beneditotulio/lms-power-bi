@@ -35,35 +35,64 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AuthorName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateOfBirth)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CountryOfOrigin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Biography)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Website)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Detalhes", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CountryOfOrigin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Biography)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Website)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Detalhes", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>
+
+
+<div class="btn-group-sm">
+    @Ajax.ActionLink(" Importar", "ImportAuthors", "Authors",
+    new { },
+    new AjaxOptions
+    {
+        UpdateTargetId = "openmodal",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "onImport()",
+    }, new
+         {
+             @id = "importExcel",
+             @class = "btn btn-sm btn-outline-success fa fa-plus-circle",
+             @rel = "tooltip",
+             @title = "Importar Plano de contas",
+             @style = "float: left"
+    })
+    <span class="text-light" style="float: left">  | </span>
+</div>
+
+<div id="openmodal"></div>
+
+<script type="text/javascript">
+    function onImport() {
+        $('#import').modal('show');
+    }
+</script>

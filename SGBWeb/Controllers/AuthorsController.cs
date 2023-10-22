@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using SGBWeb.Data;
 using SGBWeb.Models;
 using SGBWeb.Services;
+using Syncfusion.XlsIO;
 
 namespace SGBWeb.Controllers
 {
@@ -129,6 +130,50 @@ namespace SGBWeb.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult ImportAuthors()
+        {
+            return PartialView("~/Views/Authors/_Import.cshtml");
+        }
+        public ActionResult Upload(FormCollection formCollection)
+        {
+            //Create an instance of ExcelEngine
+            using (ExcelEngine excelEngine = new ExcelEngine())
+            {
+                HttpPostedFileBase file = Request.Files["UploadedFile"];
+                if (String.IsNullOrEmpty(file.FileName))
+                {
+                    TempData["errorMessage"] = "Por favor, selecione o ficheiro que pretende importar.";
+                    return RedirectToAction(nameof(Index));
+                }
+                string path = Server.MapPath("~/Content/FileUploads/" + file.FileName);
+                if (System.IO.File.Exists(path))
+                    System.IO.File.Delete(path);
+                file.SaveAs(path);
+
+                //Instantiate the Excel application object
+                IApplication application = excelEngine.Excel;
+
+                //Set the default application version
+                application.DefaultVersion = ExcelVersion.Excel2016;
+
+                //Load the existing Excel workbook into IWorkbook
+                IWorkbook workbook = application.Workbooks.Open(path);
+
+                //Get the first worksheet in the workbook into IWorksheet
+                IWorksheet worksheet = workbook.Worksheets[0];
+
+                string res = AuthorService.ImportAuthor(workbook, worksheet);
+                //string res = "";
+                if (res.Contains("sucesso"))
+                    TempData["successMessage"] = res;
+                else
+                    TempData["errorMessage"] = res;
+                // delete uploaded file
+                System.IO.File.Delete(path);
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
