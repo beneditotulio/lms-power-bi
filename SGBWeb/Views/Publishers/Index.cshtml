@@ -42,39 +42,44 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PublisherName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table" id="dataTable">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublisherName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.PublisherID }) |
-                @Html.ActionLink("detalhes", "Details", new { id = item.PublisherID }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.PublisherID })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.PublisherName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th></th>
         </tr>
-    }
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublisherName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.PublisherID }) |
+                    @Html.ActionLink("detalhes", "Details", new { id = item.PublisherID }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.PublisherID })
+                </td>
+            </tr>
+        }
+
+    </tbody>
 
 </table>
 
@@ -91,7 +96,7 @@
              @id = "importExcel",
              @class = "btn btn-sm btn-outline-success fa fa-plus-circle",
              @rel = "tooltip",
-             @title = "Importar Plano de contas",
+             @title = "Importar Editoras",
              @style = "float: left"
     })
     <span class="text-light" style="float: left">  | </span>
@@ -103,4 +108,36 @@
     function onImport() {
         $('#import').modal('show');
     }
+    $(document).ready(function () {
+
+        var table = $('#dataTable').DataTable({
+            paginate: true,
+            autoWidth: false,
+            select: true,
+            //Necessario desativar o scrollX e scrollY para acertar o header com o body.
+            //scrollResize: true,
+            //scrollY: 300
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Procurar ...",
+            }
+        });
+
+        $('#dataTable tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+
+    });
 </script>
