@@ -96,7 +96,7 @@ namespace SGBWeb.Services
                 Publisher publisher = new Publisher();
                 try
                 {
-                    const int initPosition = 1; // primeira linha com informacao do codigo
+                    const int initPosition = 2; // primeira linha com informacao do codigo
                     //total = workbook.ActiveSheet.UsedRange.Columns.Length;
                     total = workbook.ActiveSheet.UsedRange.Rows.Length;
                     for (int i = initPosition; i <= total; i++)
