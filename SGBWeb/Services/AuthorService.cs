@@ -19,7 +19,9 @@ namespace SGBWeb.Services
 
         public List<Author> GetAllAuthors()
         {
-            return _context.Authors.ToList();
+            return _context.Authors
+                .Include(c=>c.Country)
+                .ToList();
         }
 
         public Author GetAuthorById(int id)

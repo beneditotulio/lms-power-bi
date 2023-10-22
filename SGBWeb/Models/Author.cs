@@ -15,8 +15,9 @@ namespace SGBWeb.Models
         public string AuthorName { get; set; }
         [DisplayName("Data Nascimento")]
         public DateTime DateOfBirth { get; set; }
-        [DisplayName("País")]
+        [DisplayName("País"), ForeignKey("Country")]
         public string CountryOfOrigin { get; set; }
+        public virtual GeneralData Country { get; set; }
         [DisplayName("Biografia")]
         public string Biography { get; set; } // Author's biography
         public string Website { get; set; }    // Author's website URL
