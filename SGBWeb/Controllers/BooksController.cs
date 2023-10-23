@@ -19,8 +19,17 @@ namespace SGBWeb.Controllers
         public ActionResult Index()
         {
             //var books = db.Books.Include(b => b.Bookcase).Include(b => b.Category).Include(b => b.Country).Include(b => b.Language).Include(b => b.Publisher);
-            var books = db.Books;
-            return View(books.ToList());
+             var books = new List<Book>();
+            try
+            {
+              books =  db.Books.ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return View(books);
         }
 
         // GET: Books/Details/5

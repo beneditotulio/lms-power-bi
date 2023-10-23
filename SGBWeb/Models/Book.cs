@@ -7,6 +7,7 @@ using System.Web;
 
 namespace SGBWeb.Models
 {
+    [Table("Books")]
     public class Book
     {
         [Key]
@@ -67,57 +68,57 @@ namespace SGBWeb.Models
     }
 
 
-    public class Books
-    {
-        [Key]
-        public string ISBN { get; set; }
+    //public class Books
+    //{
+    //    [Key]
+    //    public string ISBN { get; set; }
 
-        [Required]
-        public string Title { get; set; }
+    //    [Required]
+    //    public string Title { get; set; }
 
-        [Required]
-        public string Subtitle { get; set; }
+    //    [Required]
+    //    public string Subtitle { get; set; }
 
-        [Required]
-        public string CDU { get; set; }
+    //    [Required]
+    //    public string CDU { get; set; }
 
-        public int? BookcaseID { get; set; }
+    //    public int? BookcaseID { get; set; }
 
-        [ForeignKey("BookcaseID")]
-        public Bookcase Bookcase { get; set; }
+    //    [ForeignKey("BookcaseID")]
+    //    public Bookcase Bookcase { get; set; }
 
-        public int PublisherID { get; set; }
+    //    public int PublisherID { get; set; }
 
-        [ForeignKey("PublisherID")]
-        public Publisher Publisher { get; set; }
+    //    [ForeignKey("PublisherID")]
+    //    public Publisher Publisher { get; set; }
 
-        public string LanguageID { get; set; }
+    //    public string LanguageID { get; set; }
 
-        [ForeignKey("LanguageID")]
-        public GeneralData Language { get; set; }
+    //    [ForeignKey("LanguageID")]
+    //    public GeneralData Language { get; set; }
 
-        public int Pagination { get; set; }
+    //    public int Pagination { get; set; }
 
-        public int PublicationYear { get; set; }
+    //    public int PublicationYear { get; set; }
 
-        public string CategoryID { get; set; }
+    //    public string CategoryID { get; set; }
 
-        [ForeignKey("CategoryID")]
-        public GeneralData Category { get; set; }
+    //    [ForeignKey("CategoryID")]
+    //    public GeneralData Category { get; set; }
 
-        public int AvailableCopies { get; set; }
+    //    public int AvailableCopies { get; set; }
 
-        public string CountryID { get; set; }
+    //    public string CountryID { get; set; }
 
-        [ForeignKey("CountryID")]
-        public GeneralData Country { get; set; }
+    //    [ForeignKey("CountryID")]
+    //    public GeneralData Country { get; set; }
 
-        public string Illustration { get; set; }
+    //    public string Illustration { get; set; }
 
-        // Navigation properties for relationships
-        public ICollection<BooksAuthors> BooksAuthors { get; set; }
-        public ICollection<Copy> Copies { get; set; }
-    }
+    //    // Navigation properties for relationships
+    //    public ICollection<BooksAuthors> BooksAuthors { get; set; }
+    //    public ICollection<Copy> Copies { get; set; }
+    //}
 
 
 }

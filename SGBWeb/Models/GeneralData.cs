@@ -40,7 +40,7 @@ namespace SGBWeb.Models
         public string ExtCode { get; set; }
 
         // Navigation property for relationships
-        public ICollection<Book> Books { get; set; }
+        //public ICollection<Book> Books { get; set; }
     }
 
 }
