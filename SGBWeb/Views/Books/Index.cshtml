@@ -15,13 +15,13 @@
             @Html.DisplayNameFor(model => model.Bookcase.BookcaseName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category.ParentId)
+            @Html.DisplayNameFor(model => model.CategoryID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Country.ParentId)
+            @Html.DisplayNameFor(model => model.CountryID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Language.ParentId)
+            @Html.DisplayNameFor(model => model.LanguageID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Publisher.PublisherName)
@@ -56,13 +56,13 @@
             @Html.DisplayFor(modelItem => item.Bookcase.BookcaseName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Category.ParentId)
+            @Html.DisplayFor(modelItem => item.Category.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Country.ParentId)
+            @Html.DisplayFor(modelItem => item.Country.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Language.ParentId)
+            @Html.DisplayFor(modelItem => item.Language.Description)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Publisher.PublisherName)

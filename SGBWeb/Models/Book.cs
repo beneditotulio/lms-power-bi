@@ -46,7 +46,7 @@ namespace SGBWeb.Models
         [Display(Name = "Ano de Publicação")]
         public int PublicationYear { get; set; }
 
-        [Display(Name = "ID da Categoria")]
+        [Display(Name = "Categoria")]
         public string CategoryID { get; set; }
         [ForeignKey("CategoryID")]
         public GeneralData Category { get; set; }
