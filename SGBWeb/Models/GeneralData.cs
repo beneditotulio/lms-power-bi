@@ -38,6 +38,9 @@ namespace SGBWeb.Models
         [Required]
         [StringLength(50)]
         public string ExtCode { get; set; }
+
+        // Navigation property for relationships
+        public ICollection<Book> Books { get; set; }
     }
 
 }

@@ -1,0 +1,114 @@
+﻿@model SGBWeb.Models.Book
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Bookcase.BookcaseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bookcase.BookcaseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.ParentId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.ParentId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Country.ParentId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country.ParentId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Language.ParentId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Language.ParentId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Publisher.PublisherName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Publisher.PublisherName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subtitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subtitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CDU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CDU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pagination)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pagination)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PublicationYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PublicationYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableCopies)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableCopies)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Illustration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Illustration)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ISBN }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

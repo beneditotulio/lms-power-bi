@@ -1,0 +1,99 @@
+﻿@model IEnumerable<SGBWeb.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookcase.BookcaseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.ParentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country.ParentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Language.ParentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publisher.PublisherName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subtitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CDU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pagination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PublicationYear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AvailableCopies)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Illustration)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bookcase.BookcaseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.ParentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country.ParentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Language.ParentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Publisher.PublisherName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subtitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CDU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pagination)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PublicationYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AvailableCopies)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Illustration)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ISBN }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ISBN }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ISBN })
+        </td>
+    </tr>
+}
+
+</table>

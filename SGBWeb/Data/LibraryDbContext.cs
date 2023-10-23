@@ -18,5 +18,7 @@ namespace SGBWeb.Data
         public DbSet<GeneralData> GeneralDatas { get; set; }
         public DbSet<Bookcase> Bookcases { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
+
+        public System.Data.Entity.DbSet<SGBWeb.Models.Book> Books { get; set; }
     }
 }

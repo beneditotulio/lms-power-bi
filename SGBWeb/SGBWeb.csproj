@@ -180,6 +180,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BookcaseController.cs" />
+    <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\GeneralDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -192,6 +193,8 @@
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Bookcase.cs" />
+    <Compile Include="Models\BooksAuthors.cs" />
+    <Compile Include="Models\Copy.cs" />
     <Compile Include="Models\GeneralData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryManager.cs" />
@@ -200,6 +203,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthorService.cs" />
     <Compile Include="Services\BookcaseService.cs" />
+    <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\GeneralDataService.cs" />
     <Compile Include="Services\PublisherService.cs" />
     <Compile Include="Startup.cs" />
@@ -226,6 +230,8 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Import\Autores.xlsx" />
+    <Content Include="Content\Import\Editoras.xlsx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -303,6 +309,11 @@
     <Content Include="Views\Publishers\_Import.cshtml" />
     <Content Include="Views\Shared\_startBoostrapLayout.cshtml" />
     <Content Include="Views\Authors\_Import.cshtml" />
+    <Content Include="Views\Books\Create.cshtml" />
+    <Content Include="Views\Books\Delete.cshtml" />
+    <Content Include="Views\Books\Details.cshtml" />
+    <Content Include="Views\Books\Edit.cshtml" />
+    <Content Include="Views\Books\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

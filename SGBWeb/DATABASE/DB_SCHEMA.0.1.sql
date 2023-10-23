@@ -624,7 +624,7 @@ CREATE TABLE BooksAuthors (
     ISBN VARCHAR(20),
     AuthorID INT,
     FOREIGN KEY (ISBN) REFERENCES Books(ISBN),
-    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+    FOREIGN KEY (AuthorID) REFERENCES Authors(ID)
 );
 GO
 

@@ -22,6 +22,9 @@ namespace SGBWeb.Models
 
         [Display(Name = "Telefone")]
         public string Phone { get; set; }
+
+        // Navigation property for relationships
+        public ICollection<Book> Books { get; set; }
     }
 
 }
