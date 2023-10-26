@@ -25,7 +25,7 @@ namespace SGBWeb.Models
         [Display(Name = "CDU")]
         public string CDU { get; set; }
 
-        [Display(Name = "ID da Estante")]
+        [Display(Name = "Estante")]
         public int? BookcaseID { get; set; }
         [ForeignKey("BookcaseID")]
         public Bookcase Bookcase { get; set; }
@@ -54,7 +54,7 @@ namespace SGBWeb.Models
         [Display(Name = "Cópias Disponíveis")]
         public int AvailableCopies  {  get; set; }
 
-        [Display(Name = "ID do País")]
+        [Display(Name = "País")]
         public string CountryID  { get; set; }
         [ForeignKey("CountryID")]
         public GeneralData Country { get; set; }
