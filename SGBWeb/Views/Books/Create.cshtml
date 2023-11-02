@@ -1,7 +1,7 @@
 ﻿@model SGBWeb.Models.Book
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Criar";
 }
 
 <h2 class="btn-success">Criar</h2>
@@ -14,7 +14,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="row">
             <div class="col-md-6">
-                <h4>Book Information</h4>
+                <h4>Informação Essenciais</h4>
                 <hr />
                 <div class="form-group">
                     @Html.LabelFor(model => model.ISBN, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -79,7 +79,7 @@
 
             </div>
             <div class="col-md-6">
-                <h4>Additional Information</h4>
+                <h4>Informção Adicional</h4>
                 <hr />
                 <div class="form-group">
                     @Html.LabelFor(model => model.Pagination, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -133,14 +133,14 @@
             <div class="col-md-6">
                 <!-- Input field for searching and selecting authors -->
                 <div class="form-group">
-                    @Html.LabelFor(model => model.SelectedAuthorIDs, "Search Authors")
-                    @Html.TextBox("authorSearch", null, new { @class = "form-control", placeholder = "Search for authors" })
+                    @Html.LabelFor(model => model.SelectedAuthorIDs, "Pesquise o nome do Autor")
+                    @Html.TextBox("authorSearch", null, new { @class = "form-control", placeholder = "Nome do Autor" })
                     <div id="authorSearchResults"></div>
                 </div>
 
                 <!-- Display selected authors -->
                 <div class="form-group">
-                    <label for="SelectedAuthorIDs">Selected Authors:</label>
+                    <label for="SelectedAuthorIDs">Autor(e)s Selecionad(o):</label>
                     <ul id="selectedAuthorsList"></ul>
                     @Html.HiddenFor(model => model.SelectedAuthorIDs)
                 </div>
@@ -158,7 +158,7 @@
 <script>
     $(document).ready(function () {
         // Define the URL for author search
-        var authorSearchUrl = "/Book/SearchAuthors";
+        var authorSearchUrl = "/Authors/SearchAuthors";
 
         // Input field for searching authors
         var $authorSearchInput = $("#authorSearch");
@@ -181,7 +181,7 @@
         $authorSearchResults.on("click", "li", function () {
             var authorId = $(this).data("author-id");
             var authorName = $(this).text();
-            $selectedAuthorsList.append("<li>" + authorName + "</li>");
+            $selectedAuthorsList.append("<li id="authorList">" + authorName + "</li>");
             $authorSearchInput.val("");
             $authorSearchResults.html("");
             // Update the hidden input field with selected author IDs
