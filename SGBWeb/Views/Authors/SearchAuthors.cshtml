@@ -1,0 +1,8 @@
+﻿@model List<SGBWeb.Models.Author>
+<ul>
+    @foreach (var author in Model)
+    {
+        <li data-author-id="@author.ID">@author.AuthorName</li>
+    }
+</ul>
+

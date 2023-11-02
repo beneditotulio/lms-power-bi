@@ -121,6 +121,10 @@ namespace SGBWeb.Services
             return response;
         }
 
+        public List<Author> GetAuthorByName(string authorName)
+        {
+            return _context.Authors.Where(a => a.AuthorName.Contains(authorName)).ToList();
+        }
     }
 
 }

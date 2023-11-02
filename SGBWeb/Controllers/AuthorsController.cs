@@ -175,5 +175,13 @@ namespace SGBWeb.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        public ActionResult SearchAuthors(string searchTerm)
+        {
+            // Perform the author search and return a partial view with search results
+            var authors = AuthorServices.GetAuthorByName(searchTerm);
+            return PartialView(authors);
+        }
+
     }
 }
