@@ -63,7 +63,7 @@ namespace SGBWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ISBN,Title,Subtitle,CDU,BookcaseID,PublisherID,LanguageID,Pagination,PublicationYear,CategoryID,AvailableCopies,CountryID,Illustration")] Book book)
+        public ActionResult Create([Bind(Include = "ISBN,Title,Subtitle,CDU,BookcaseID,PublisherID,LanguageID,Pagination,PublicationYear,CategoryID,AvailableCopies,CountryID,Illustration,SelectedAuthorIDs")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -72,11 +72,11 @@ namespace SGBWeb.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BookcaseID = new SelectList(db.Bookcases, "BookcaseID", "BookcaseName", book.BookcaseID);
-            ViewBag.CategoryID = new SelectList(db.GeneralDatas, "ID", "ParentId", book.CategoryID);
-            ViewBag.CountryID = new SelectList(db.GeneralDatas, "ID", "ParentId", book.CountryID);
-            ViewBag.LanguageID = new SelectList(db.GeneralDatas, "ID", "ParentId", book.LanguageID);
-            ViewBag.PublisherID = new SelectList(db.Publishers, "PublisherID", "PublisherName", book.PublisherID);
+            ViewBag.BookcaseID = new SelectList(db.Bookcases, "BookcaseID", "BookcaseName");
+            ViewBag.CategoryID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "CATEGORIA").ToList(), "ID", "Description");
+            ViewBag.CountryID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "COUNTRY").ToList(), "ID", "Description");
+            ViewBag.LanguageID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "IDIOMA").ToList(), "ID", "Description");
+            ViewBag.PublisherID = new SelectList(db.Publishers, "PublisherID", "PublisherName");
             return View(book);
         }
 

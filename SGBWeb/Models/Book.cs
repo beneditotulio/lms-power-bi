@@ -61,6 +61,8 @@ namespace SGBWeb.Models
 
         [Display(Name = "Ilustração")]
         public string Illustration { get; set; }
+        [NotMapped]
+        public string SelectedAuthorIDs { get; set; }
 
         // Navigation properties for relationships
         public ICollection<BooksAuthors> BooksAuthors { get; set; }
