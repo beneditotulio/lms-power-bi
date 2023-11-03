@@ -181,7 +181,7 @@
         $authorSearchResults.on("click", "li", function () {
             var authorId = $(this).data("author-id");
             var authorName = $(this).text();
-            $selectedAuthorsList.append("<li id="authorList">" + authorName + "</li>");
+            $selectedAuthorsList.append("<li>" + authorName + "</li>");
             $authorSearchInput.val("");
             $authorSearchResults.html("");
             // Update the hidden input field with selected author IDs
