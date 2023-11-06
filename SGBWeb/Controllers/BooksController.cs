@@ -8,21 +8,21 @@ using System.Web;
 using System.Web.Mvc;
 using SGBWeb.Data;
 using SGBWeb.Models;
+using SGBWeb.Services;
 
 namespace SGBWeb.Controllers
 {
     public class BooksController : Controller
     {
         private LibraryDbContext db = new LibraryDbContext();
-
+        BookService BookService = new BookService();
         // GET: Books
         public ActionResult Index()
         {
-            //var books = db.Books.Include(b => b.Bookcase).Include(b => b.Category).Include(b => b.Country).Include(b => b.Language).Include(b => b.Publisher);
-             var books = new List<Book>();
+            var books = new List<Book>();
             try
             {
-              books =  db.Books.ToList();
+              books =  BookService.GetAllBooks();
             }
             catch (Exception ex)
             {
@@ -67,8 +67,28 @@ namespace SGBWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Books.Add(book);
-                db.SaveChanges();
+                var selectedAuthorIDs = BookService.RemoveAuthorsIds(book.SelectedAuthorIDs);
+                try
+                {
+                    if (BookService.CreateBook(book))
+                    {
+                        for (int i = 0; i < selectedAuthorIDs.Length; i++)
+                        {
+                            var bookAuthors = new BooksAuthors
+                            {
+                                AuthorID = int.Parse(selectedAuthorIDs[i]),
+                                ISBN = book.ISBN
+                            };
+                            BookService.CreateBookAuthors(bookAuthors);
+                        }
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
                 return RedirectToAction("Index");
             }
 
