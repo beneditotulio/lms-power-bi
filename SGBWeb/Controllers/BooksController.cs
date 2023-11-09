@@ -70,8 +70,10 @@ namespace SGBWeb.Controllers
                 var selectedAuthorIDs = BookService.RemoveAuthorsIds(book.SelectedAuthorIDs);
                 try
                 {
+                    //Create Book
                     if (BookService.CreateBook(book))
                     {
+                        //If is Book Created, foreach author, associate book.
                         for (int i = 0; i < selectedAuthorIDs.Length; i++)
                         {
                             var bookAuthors = new BooksAuthors
@@ -81,8 +83,22 @@ namespace SGBWeb.Controllers
                             };
                             BookService.CreateBookAuthors(bookAuthors);
                         }
+                        //If AvailableCopies = 0, then set 1
+                        book.AvailableCopies = book.AvailableCopies == 0 ? 1 : book.AvailableCopies;
+
+                        //Create each copy according to total amount of Available Copies
+                        for (int i = 1; i <= book.AvailableCopies; i++)
+                        {
+                            var copy = new Copy
+                            {
+                                CopyNumber = i,
+                                ISBN = book.ISBN,
+                                Condition = "Disponível"
+                            };
+                            BookService.CreateBookCopies(copy);
+                        }
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {

@@ -40,6 +40,12 @@ namespace SGBWeb.Services
             _context.BooksAuthors.Add(booksAuthors);
             _context.SaveChanges();
         }
+
+        public void CreateBookCopies(Copy copy)
+        {
+            _context.Copies.Add(copy);
+            _context.SaveChanges();
+        }
         // Function that takes a string series and returns an array of numbers
         public string[] RemoveAuthorsIds(string series)
         {
@@ -47,10 +53,10 @@ namespace SGBWeb.Services
             string[] parts = series.Split(',');
 
             // Filter out the parts that are numbers
-            //string[] numbers = parts.Where(part => int.TryParse(part, out _)).ToArray();
+            string[] numbers = parts.Where(part => int.TryParse(part, out _)).ToArray();
 
             // Return the numbers array
-            return parts;
+            return numbers;
         }
     }
 }

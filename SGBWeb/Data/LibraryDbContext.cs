@@ -21,6 +21,6 @@ namespace SGBWeb.Data
 
         public DbSet<Book> Books { get; set; }
         public DbSet<BooksAuthors> BooksAuthors { get; set; }
-        public DbSet<Copy> Copiesj { get; set; }
+        public DbSet<Copy> Copies { get; set; }
     }
 }

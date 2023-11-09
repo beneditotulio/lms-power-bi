@@ -17,9 +17,9 @@ namespace SGBWeb.Models
         [Display(Name = "Título")]
         public string Title { get; set; }
 
-        [Required]
+
         [Display(Name = "Subtítulo")]
-        public string Subtitle { get; set; }
+        public string Subtitle { get; set; } = "";
 
         [Required]
         [Display(Name = "CDU")]
@@ -61,7 +61,7 @@ namespace SGBWeb.Models
 
         [Display(Name = "Ilustração")]
         public string Illustration { get; set; }
-        [NotMapped]
+        [NotMapped, Required]
         public string SelectedAuthorIDs { get; set; }
 
         // Navigation properties for relationships
