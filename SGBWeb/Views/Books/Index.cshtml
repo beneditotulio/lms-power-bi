@@ -51,7 +51,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Illustration)
             </th>
-            <th></th>
+            <th>Accoes</th>
         </tr>
     </thead>
 
@@ -91,18 +91,54 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AvailableCopies)
-                    <a class="fa fa-eye"></a>
+                    <a href="@Url.Action("GetBookCopies", new {isbn = item.ISBN})" class="fa fa-eye"></a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Illustration)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ISBN }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ISBN }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ISBN })
+                    <a href="@Url.Action("Edit", new {id = item.ISBN})" class="fa fa-edit" title="Editar Livro"></a> |
+                    <a href="@Url.Action("Details", new {id = item.ISBN})" class="fa fa-list" title="Detalhes Livro"></a> |
+                    <a href="@Url.Action("Delete", new {id = item.ISBN})" class="fa fa-trash" title="Eliminar Livro"></a>
                 </td>
             </tr>
         </tbody>
     }
 
 </table>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var table = $('#dataTable').DataTable({
+            paginate: true,
+            autoWidth: false,
+            select: true,
+            //Necessario desativar o scrollX e scrollY para acertar o header com o body.
+            //scrollResize: true,
+            //scrollY: 300
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Procurar ...",
+            }
+        });
+
+        $('#dataTable tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+
+    });
+</script>

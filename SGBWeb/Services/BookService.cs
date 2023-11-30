@@ -39,6 +39,14 @@ namespace SGBWeb.Services
                 .Include(b => b.Publisher)
                 .FirstOrDefault();
         }
+        public List<Copy> GetBookCopiesByISBN(string isbn)
+        {
+            return _context
+                .Copies
+                .Where(x => x.ISBN == isbn)
+                .Include(b => b.Book)
+                .ToList();
+        }
         public bool CreateBook(Book book)
         {
             bool result = false;

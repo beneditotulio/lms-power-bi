@@ -192,6 +192,12 @@ namespace SGBWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: Books/GetBookCopies/5
+        public ActionResult GetBookCopies(string isbn)
+        {
+            var copies = BookService.GetBookCopiesByISBN(isbn);
+            return View(copies);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

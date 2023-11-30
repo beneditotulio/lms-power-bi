@@ -1,0 +1,86 @@
+﻿@model IEnumerable<SGBWeb.Models.Copy>
+
+@{
+    ViewBag.Title = "GetBookCopies";
+}
+
+<h2 class="btn-info">Lista de Copias de Livros</h2>
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table table-responsive table-striped" id="dataTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Book.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CopyNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Condition)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Book.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CopyNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Condition)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.CopyID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CopyID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CopyID })*@
+                </td>
+            </tr>
+        </tbody>
+
+    }
+</table>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var table = $('#dataTable').DataTable({
+            paginate: true,
+            autoWidth: false,
+            select: true,
+            //Necessario desativar o scrollX e scrollY para acertar o header com o body.
+            //scrollResize: true,
+            //scrollY: 300
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Procurar ...",
+            }
+        });
+
+        $('#dataTable tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+
+    });
+</script>
