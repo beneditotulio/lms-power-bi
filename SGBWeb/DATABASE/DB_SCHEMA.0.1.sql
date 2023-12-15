@@ -637,7 +637,7 @@ CREATE TABLE Copies (
     Condition VARCHAR(50),
     FOREIGN KEY (ISBN) REFERENCES Books(ISBN)
 );
-
+GO
 -- Members table
 CREATE TABLE Members (
     MemberID INT PRIMARY KEY,
@@ -646,10 +646,29 @@ CREATE TABLE Members (
     Email VARCHAR(100),
     Phone VARCHAR(15)
 );
+GO
 
+CREATE TABLE Members (
+    MemberID NVARCHAR(50) PRIMARY KEY,
+    MemberName VARCHAR(100),
+    FirstName VARCHAR(100),
+    OtherName VARCHAR(100),
+    LastName VARCHAR(100),
+    Gender VARCHAR(10),
+    Nationality VARCHAR(50),
+    Nuit VARCHAR(20),
+    Nuit VARCHAR(20),
+    MemberType VARCHAR(50),
+    Address VARCHAR(200),
+    Email VARCHAR(100),
+    Phone VARCHAR(15),
+    DateCreate DATETIME,
+    Status VARCHAR(20)
+);
+GO
 -- Loans table
 CREATE TABLE Loans (
-    LoanID INT PRIMARY KEY,
+    LoanID INT PRIMARY KEY Identity(1,1),
     ISBN VARCHAR(20), -- Foreign key to the Books table
     MemberID INT, -- Foreign key to the Members table
     LoanDate DATE,
@@ -657,6 +676,21 @@ CREATE TABLE Loans (
     ReturnedDate DATE,
     FOREIGN KEY (ISBN) REFERENCES Books(ISBN),
     FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+GO
+
+-- Loans table
+CREATE TABLE Loans (
+    LoanID INT PRIMARY KEY Identity(1,1),
+    ISBN VARCHAR(20), -- Foreign key to the Books table
+    MemberID INT, -- Foreign key to the Members table
+    UserId INT, -- New foreign key referencing Members(MemberID)
+    LoanDate DATE,
+    DueDate DATE,
+    ReturnedDate DATE,
+    FOREIGN KEY (ISBN) REFERENCES Books(ISBN),
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID),
+    FOREIGN KEY (UserId) REFERENCES Members(MemberID) -- New foreign key constraint
 );
 
 -- Reservations table
