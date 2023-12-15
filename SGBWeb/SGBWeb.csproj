@@ -206,6 +206,7 @@
     <Compile Include="Services\BookcaseService.cs" />
     <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\GeneralDataService.cs" />
+    <Compile Include="Services\MemberService.cs" />
     <Compile Include="Services\PublisherService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

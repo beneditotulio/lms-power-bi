@@ -640,15 +640,6 @@ CREATE TABLE Copies (
 GO
 -- Members table
 CREATE TABLE Members (
-    MemberID INT PRIMARY KEY,
-    MemberName VARCHAR(100),
-    Address VARCHAR(200),
-    Email VARCHAR(100),
-    Phone VARCHAR(15)
-);
-GO
-
-CREATE TABLE Members (
     MemberID NVARCHAR(50) PRIMARY KEY,
     MemberName VARCHAR(100),
     FirstName VARCHAR(100),
@@ -657,7 +648,7 @@ CREATE TABLE Members (
     Gender VARCHAR(10),
     Nationality VARCHAR(50),
     Nuit VARCHAR(20),
-    Nuit VARCHAR(20),
+    Bi VARCHAR(20),
     MemberType VARCHAR(50),
     Address VARCHAR(200),
     Email VARCHAR(100),
