@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SGBWeb.Models;
+using SGBWeb.Services;
 
 namespace SGBWeb.Controllers
 {
@@ -17,7 +18,7 @@ namespace SGBWeb.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        GeneralDataService GeneralDataService = new GeneralDataService();
         public AccountController()
         {
         }
@@ -139,6 +140,8 @@ namespace SGBWeb.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            var data = GeneralDataService.GetAllGeneralDataByType("USERPROFILE");
+            ViewData["Profile"] = data;
             return View();
         }
 
@@ -151,6 +154,7 @@ namespace SGBWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                model.profileUser = Request.Form["profileUser"];
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
