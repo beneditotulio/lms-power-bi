@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -51,6 +52,12 @@ namespace SGBWeb.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        //GET: /Account/Index
+        public ActionResult Index()
+        {
+            return View();
         }
 
         //
