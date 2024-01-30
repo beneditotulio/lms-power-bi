@@ -708,3 +708,23 @@ begin region
 20/10/2023
 Created by IP
 */
+
+/*
+begin region
+10/01/2024
+Created by IP
+*/
+--Set up Settings table
+CREATE TABLE [dbo].[Settings]
+(
+	[Id] INT NOT NULL PRIMARY KEY Identity(1,1), 
+    [InitialFine] NUMERIC(18, 2) NULL, 
+    [DailyFine] NUMERIC(18, 2) NULL, 
+    [DaysForReturn] INT NULL, 
+    [LoanByPerson] INT NULL
+)
+/*
+end region
+10/01/2024
+Created by IP
+*/
