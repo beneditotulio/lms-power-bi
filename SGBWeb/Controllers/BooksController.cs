@@ -12,6 +12,7 @@ using SGBWeb.Services;
 
 namespace SGBWeb.Controllers
 {
+    //[Authorize(Roles = "Administrator")]
     public class BooksController : Controller
     {
         private LibraryDbContext db = new LibraryDbContext();
