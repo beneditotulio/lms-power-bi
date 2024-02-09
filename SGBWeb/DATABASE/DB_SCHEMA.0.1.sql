@@ -654,7 +654,8 @@ CREATE TABLE Members (
     Email VARCHAR(100),
     Phone VARCHAR(15),
     DateCreate DATETIME,
-    Status VARCHAR(20)
+    Status VARCHAR(20),
+    UserId NVARCHAR(128)
 );
 GO
 -- Loans table
@@ -728,3 +729,33 @@ end region
 10/01/2024
 Created by IP
 */
+
+/*
+begin region
+20/01/2024
+Created by IP
+*/
+--Adding Roles
+IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE Name = 'Administrador')
+    INSERT INTO AspNetRoles (Id, Name) VALUES ('Adminnistrator', 'Administrador');
+
+IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE Name = 'Bibliotecário')
+    INSERT INTO AspNetRoles (Id, Name) VALUES ('Librarian', 'Bibliotecário');
+
+IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE Name = 'Estudante')
+    INSERT INTO AspNetRoles (Id, Name) VALUES ('Student', 'Estudante');
+
+IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE Name = 'Catalogador')
+    INSERT INTO AspNetRoles (Id, Name) VALUES ('Cataloger', 'Catalogador');
+
+IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE Name = 'Suporte de TI')
+    INSERT INTO AspNetRoles (Id, Name) VALUES ('IT Support', 'Suporte de TI');
+/*
+end region
+20/01/2024
+Created by IP
+*/
+
+
+
+
