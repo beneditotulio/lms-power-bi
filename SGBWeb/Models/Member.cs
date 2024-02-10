@@ -50,6 +50,8 @@ namespace SGBWeb.Models
 
         [DisplayName("Status")]
         public string Status { get; set; }
+        [DisplayName("UserId")]
+        public string UserId { get; set; }
     }
 
 }
