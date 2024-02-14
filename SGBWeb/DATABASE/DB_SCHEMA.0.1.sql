@@ -641,7 +641,7 @@ GO
 -- Members table
 CREATE TABLE Members (
     MemberID NVARCHAR(50) PRIMARY KEY,
-    MemberName VARCHAR(100),
+    --MemberName VARCHAR(100),
     FirstName VARCHAR(100),
     OtherName VARCHAR(100),
     LastName VARCHAR(100),

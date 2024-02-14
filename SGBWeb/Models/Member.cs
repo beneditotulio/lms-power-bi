@@ -32,6 +32,8 @@ namespace SGBWeb.Models
 
         [DisplayName("Nuit")]
         public string Nuit { get; set; }
+        [DisplayName("Bi")]
+        public string Bi { get; set; }
 
         [DisplayName("Tipo de Membro")]
         public string MemberType { get; set; }
@@ -49,9 +51,11 @@ namespace SGBWeb.Models
         public DateTime DateCreate { get; set; }
 
         [DisplayName("Status")]
-        public string Status { get; set; }
+        public string Status { get; set; } = "REGISTERED";
         [DisplayName("UserId")]
         public string UserId { get; set; }
+        //[NotMapped]
+        //public string password { get; set; }
     }
 
 }

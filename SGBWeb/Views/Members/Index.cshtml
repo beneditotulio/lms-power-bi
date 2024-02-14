@@ -2,98 +2,205 @@
 
 @{
     ViewBag.Title = "Index";
+    string errorMessage = TempData["errorMessage"] as string;
+    string successMessage = TempData["successMessage"] as string;
 }
+<style>
+    #dataTable thead th, #dataTable tbody td {
+        padding: 4px 10px;
+    }
+</style>
+<div class="container-fluid">
 
-<h2>Index</h2>
+    <div class="text-center" style="align-content:center" id="ErrorMessageDisplay">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OtherName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nationality)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nuit)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MemberType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateCreate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th></th>
-    </tr>
+        @if (errorMessage != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" style="position:center">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OtherName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gender)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nationality)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nuit)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MemberType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateCreate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MemberID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MemberID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MemberID })
-        </td>
-    </tr>
-}
+                <span>
+                    <b> Falha - </b>@errorMessage
+                </span>
+            </div>
 
-</table>
+        }
+        @if (successMessage != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+
+                <span>
+                    <b> Successo - </b>@successMessage
+                </span>
+            </div>
+
+        }
+        @if (Model.Count() == 0)
+        {
+            <div class="alert alert-info alert-dismissible fade show">
+
+                <span>
+                    <b> Info! - </b> Nenhum registo adicionado até o momento.
+                </span>
+            </div>
+        }
+    </div>
+
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="@Url.Action(actionName: "Index", controllerName: "Users")">Dashboard</a></li>
+        <li class="breadcrumb-item active">Membros</li>
+    </ol>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="btn-info">Lista de Membros</h2>
+            <b> Successo - </b>@successMessage
+        </div>
+    </div>
+    <div class="btn-group-sm">
+        <a class="btn btn-sm btn-success fa fa-plus-circle" href="@Url.Action("Create")">
+            Criar
+        </a>
+        <span class="text-light" style="float: left">  | </span>
+    </div>
+
+    <table class="table table-hover table-bordered" id="dataTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OtherName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nationality)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nuit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MemberType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateCreate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OtherName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nationality)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nuit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MemberType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @item.DateCreate.ToString("dd-mm-yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.MemberID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.MemberID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MemberID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+
+    </table>
+</div>
+
+<div id="openmodal"></div>
+
+<script type="text/javascript">
+    //function onImport() {
+    //    $('#import').modal('show');
+    //}
+    $(document).ready(function () {
+
+        var table = $('#dataTable').DataTable({
+            paginate: true,
+            autoWidth: false,
+            select: true,
+            //Necessario desativar o scrollX e scrollY para acertar o header com o body.
+            //scrollResize: true,
+            //scrollY: 300
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Procurar ...",
+            }
+        });
+
+        $('#dataTable tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+
+    });
+</script>
+@*<style>
+        #dataTable thead th #dataTable tbody td
+        {
+            padding: 2px 10px;
+        }
+    </style>*@

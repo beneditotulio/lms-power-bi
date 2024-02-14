@@ -77,7 +77,26 @@ namespace SGBWeb.Controllers
         // GET: Members/Create
         public ActionResult Create()
         {
-            ViewBag.MemberType = new SelectList(db.Roles, "Id", "Name");
+            List<AspNetRole> roles = db.Roles.ToList();
+            var memberType = new List<SelectListItem>();
+            foreach (var item in roles)
+            {
+                memberType.Add(new SelectListItem { Value = item.Name, Text = item.Name });
+            }
+            ViewBag.MemberType = memberType;
+
+            //ViewBag.MemberType = new SelectList(db.Roles, "Id", "Name");
+            ViewBag.Nationality = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "COUNTRY").ToList(), "ID", "Description");
+            // Creating a list of genders in Portuguese
+            var genders = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "Masculino", Text = "Masculino" },
+                new SelectListItem { Value = "Feminino", Text = "Feminino" },
+                // Add more options here as needed
+            };
+
+            // Passing the gender list to the view through ViewBag
+            ViewBag.Gender = new SelectList(genders, "Value", "Text");
             var model = new Member();
             return View(model);
         }
@@ -91,27 +110,42 @@ namespace SGBWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (string.IsNullOrEmpty(member.Email))
+                if (!string.IsNullOrEmpty(member.Email))
                 {
+                    // Create a Admin user
+                    var user = new ApplicationUser();
+                    user.UserName = member.Email;
+                    user.Email = member.Email;
+
+                    string userPWD = $"{member.FirstName}123#";
+                    try
+                    {
+                        var chkUser = await UserManager.CreateAsync(user, userPWD);
+
+                        //Add default User to Role Admin
+                        if (chkUser.Succeeded)
+                        {
+                            var result1 = UserManager.AddToRole(user.Id, member.MemberType);
+
+                            member.MemberID = Helpers.MemberHelper.GenNewMemberId();
+                            member.UserId = user.Id;
+                            member.DateCreate = DateTime.Today;
+                            db.Members.Add(member);
+                            db.SaveChanges();
+                            TempData["successMessage"] = "Registo Gravado com sucesso!";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["errorMessage"] = "Não foi possível gravar o registo!";
+                    }
 
                 }
-                // Create a Admin user
-                var user = new ApplicationUser();
-                user.UserName = "admin@example.com";
-                user.Email = "admin@example.com";
-
-                string userPWD = "A_Str0ng_Password";
-                var chkUser = await UserManager.CreateAsync(user, userPWD);
-
-                //Add default User to Role Admin
-                if (chkUser.Succeeded)
+                else
                 {
-                    var result1 = UserManager.AddToRole(user.Id, member.MemberType);
+                    TempData["errorMessage"] = "Não foi possível gravar o registo!";
                 }
-
-                member.MemberID = Helpers.MemberHelper.GenNewMemberId();
-                db.Members.Add(member);
-                db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
 
@@ -125,11 +159,31 @@ namespace SGBWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Member member = db.Members.Find(id);
+            Member member = db.Members.FirstOrDefault(x=>x.MemberID == id);
             if (member == null)
             {
                 return HttpNotFound();
             }
+            List<AspNetRole> roles = db.Roles.ToList();
+            var memberType = new List<SelectListItem>();
+            foreach (var item in roles)
+            {
+                memberType.Add(new SelectListItem { Value = item.Name, Text = item.Name });
+            }
+            ViewBag.MemberType = memberType;
+
+            //ViewBag.MemberType = new SelectList(db.Roles, "Id", "Name");
+            ViewBag.Nationality = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "COUNTRY").ToList(), "ID", "Description");
+            // Creating a list of genders in Portuguese
+            var genders = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "Masculino", Text = "Masculino" },
+                new SelectListItem { Value = "Feminino", Text = "Feminino" },
+                // Add more options here as needed
+            };
+
+            // Passing the gender list to the view through ViewBag
+            ViewBag.Gender = new SelectList(genders, "Value", "Text");
             return View(member);
         }
 
@@ -156,7 +210,7 @@ namespace SGBWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Member member = db.Members.Find(id);
+            Member member = db.Members.FirstOrDefault(x=>x.MemberID == id);
             if (member == null)
             {
                 return HttpNotFound();

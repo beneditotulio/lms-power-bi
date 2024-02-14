@@ -29,7 +29,7 @@ namespace SGBWeb.Helpers
                 if (!string.IsNullOrEmpty(maxNumDoc))
                 {
                     var parts = maxNumDoc.Split('/');
-                    if (parts.Length > 0 && int.TryParse(parts[0], out int sequenceNumber))
+                    if (parts.Length > 0 && int.TryParse(parts[1], out int sequenceNumber))
                     {
                         maxSequenceNumber = sequenceNumber;
                     }
