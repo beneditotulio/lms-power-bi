@@ -44,7 +44,8 @@ namespace SGBWeb.Controllers
         public ActionResult Create()
         {
             ViewData["GeneralData"] = GeneralDataService.GetAllGeneralDataByType("COUNTRY");
-            return View();
+            var model = new Author();
+            return View(model);
         }
 
         // POST: Authors/Create
