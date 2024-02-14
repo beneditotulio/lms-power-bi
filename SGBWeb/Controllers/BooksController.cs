@@ -56,7 +56,8 @@ namespace SGBWeb.Controllers
             ViewBag.CountryID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "COUNTRY").ToList(), "ID", "Description");
             ViewBag.LanguageID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "IDIOMA").ToList(), "ID", "Description");
             ViewBag.PublisherID = new SelectList(db.Publishers, "PublisherID", "PublisherName");
-            return View();
+            var model = new Book();
+            return View(model);
         }
 
         // POST: Books/Create
@@ -174,7 +175,7 @@ namespace SGBWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            Book book = BookService.GetBookByISBN(id);
             if (book == null)
             {
                 return HttpNotFound();
