@@ -19,6 +19,9 @@ namespace SGBWeb.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        public MembersController()
+        {
+        }
         public MembersController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
@@ -75,7 +78,8 @@ namespace SGBWeb.Controllers
         public ActionResult Create()
         {
             ViewBag.MemberType = new SelectList(db.Roles, "Id", "Name");
-            return View();
+            var model = new Member();
+            return View(model);
         }
 
         // POST: Members/Create
