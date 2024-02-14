@@ -1,0 +1,43 @@
+﻿@model SGBWeb.Models.GeneralData
+
+@using (Html.BeginForm("AddProfile", "Users", FormMethod.Post))
+{
+    <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="createLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title" id="createLabel">Novo Perfil</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "Ocorreu um erro ao tentar registar o perfil do utilizador!. Corrija os erros e tente novamente")
+
+
+                    <div class=" row">
+                        <div class="form-group col-xs-6 col-md-6 col-lg-6">
+                            @Html.LabelFor(m => m.ID, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.ID, htmlAttributes: new { @class = "form-control", @disabled = "false" })
+                            @Html.ValidationMessageFor(m => m.ID, "", htmlAttributes: new { @class = "text-danger" })
+                        </div>
+                        <br />
+                        <div class=" form-group col-xs-6 col-md-6 col-lg-6">
+                            @Html.LabelFor(m => m.Description, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.Description, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Description, "", htmlAttributes: "text-danger")
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    

@@ -1,6 +1,8 @@
 ﻿@model SGBWeb.Models.RegisterViewModel
+@using SGBWeb.Models
 @{
     ViewBag.Title = "Register";
+    List<GeneralData> profiles = ViewData["Profile"] as List<GeneralData>;
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -8,31 +10,74 @@
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+    @Html.ValidationSummary(true, "Ocorreu um erro ao tentar registar o utilizador!. Corrija os erros e tente novamente")
+
+    <p>
+        A senha requer no minimo 6 caractectres!
+    </p>
+
+    <div class=" row">
+        <div class="form-group col-xs-6 col-md-6 col-lg-6">
+            @Html.LabelFor(m => m.Username, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Username, htmlAttributes: new { @class = "form-control", autocomplete = "username" })
+            @Html.ValidationMessageFor(m => m.Username, "", htmlAttributes: new { @class = "text-danger" })
+        </div>
+        <div class=" form-group col-xs-6 col-md-6 col-lg-6">
+            @Html.LabelFor(m => m.Name, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Name, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name, "", htmlAttributes: "text-danger")
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+    <div class="row">
+        @*@Html.HiddenFor(m => m.Username)*@
+        @Html.HiddenFor(m => m.tempEmail)
+        <div class="form-group col-xs-6 col-md-6 col-lg-6">
+            @Html.Label("Email: ", htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Email, htmlAttributes: new { @type = "email", @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-xs-6 col-md-6 col-lg-6">
+            @Html.LabelFor(m => m.Phone, htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Phone, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+    <div class="row">
+        <div class="form-group col-xs-6 col-md-6 col-lg-6">
+            @Html.Label("Senha:", htmlAttributes: new { @class = "control-label" })
+            @Html.PasswordFor(m => m.Password, htmlAttributes: new { @class = "form-control", autocomplete = "new-password" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-xs-6 col-md-6 col-lg-6">
+            @Html.Label("Repetir a senha:", htmlAttributes: new { @class = "control-label" })
+            @Html.PasswordFor(m => m.ConfirmPassword, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+    <div class="col-sm-12 col-md-4 col-lg-4">
+        <div class="form-group">
+            @Html.Label("Perfil", htmlAttributes: new { @class = "control-label" })
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-list"></i></span>
+                </div>
+                @Html.DropDownListFor(m => m.profileUser, new SelectList(profiles, "id", "description"), "Escolha o Perfil...",
+                   new
+                   {
+                       @class = "form-control",
+                       @id = "profileId",
+                       @name = "profileId",
+                       style = "font-size:12px;",
+                       //@onchange ="setProfile()",
+                       //@required = "required"
+                   })
+            </div>
+            <input type="hidden" id="pro" />
         </div>
+    </div>
+    <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-success">Salvar</button>
     </div>
 }
 

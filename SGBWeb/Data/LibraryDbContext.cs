@@ -22,5 +22,8 @@ namespace SGBWeb.Data
         public DbSet<Book> Books { get; set; }
         public DbSet<BooksAuthors> BooksAuthors { get; set; }
         public DbSet<Copy> Copies { get; set; }
+        public DbSet<Member> Members { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<AspNetRole> Roles { get; set; }
     }
 }

@@ -640,30 +640,22 @@ CREATE TABLE Copies (
 GO
 -- Members table
 CREATE TABLE Members (
-    MemberID INT PRIMARY KEY,
-    MemberName VARCHAR(100),
-    Address VARCHAR(200),
-    Email VARCHAR(100),
-    Phone VARCHAR(15)
-);
-GO
-
-CREATE TABLE Members (
     MemberID NVARCHAR(50) PRIMARY KEY,
-    MemberName VARCHAR(100),
+    --MemberName VARCHAR(100),
     FirstName VARCHAR(100),
     OtherName VARCHAR(100),
     LastName VARCHAR(100),
     Gender VARCHAR(10),
     Nationality VARCHAR(50),
     Nuit VARCHAR(20),
-    Nuit VARCHAR(20),
+    Bi VARCHAR(20),
     MemberType VARCHAR(50),
     Address VARCHAR(200),
     Email VARCHAR(100),
     Phone VARCHAR(15),
     DateCreate DATETIME,
-    Status VARCHAR(20)
+    Status VARCHAR(20),
+    UserId NVARCHAR(128)
 );
 GO
 -- Loans table
@@ -717,3 +709,53 @@ begin region
 20/10/2023
 Created by IP
 */
+
+/*
+begin region
+10/01/2024
+Created by IP
+*/
+--Set up Settings table
+CREATE TABLE [dbo].[Settings]
+(
+	[Id] INT NOT NULL PRIMARY KEY Identity(1,1), 
+    [InitialFine] NUMERIC(18, 2) NULL, 
+    [DailyFine] NUMERIC(18, 2) NULL, 
+    [DaysForReturn] INT NULL, 
+    [LoanByPerson] INT NULL
+)
+/*
+end region
+10/01/2024
+Created by IP
+*/
+
+/*
+begin region
+20/01/2024
+Created by IP
+*/
+--Adding Roles
+IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE Name = 'Administrador')
+    INSERT INTO AspNetRoles (Id, Name) VALUES ('Adminnistrator', 'Administrador');
+
+IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE Name = 'Bibliotecário')
+    INSERT INTO AspNetRoles (Id, Name) VALUES ('Librarian', 'Bibliotecário');
+
+IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE Name = 'Estudante')
+    INSERT INTO AspNetRoles (Id, Name) VALUES ('Student', 'Estudante');
+
+IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE Name = 'Catalogador')
+    INSERT INTO AspNetRoles (Id, Name) VALUES ('Cataloger', 'Catalogador');
+
+IF NOT EXISTS (SELECT * FROM AspNetRoles WHERE Name = 'Suporte de TI')
+    INSERT INTO AspNetRoles (Id, Name) VALUES ('IT Support', 'Suporte de TI');
+/*
+end region
+20/01/2024
+Created by IP
+*/
+
+
+
+
