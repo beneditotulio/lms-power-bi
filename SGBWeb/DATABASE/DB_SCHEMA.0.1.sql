@@ -675,12 +675,14 @@ GO
 CREATE TABLE Loans (
     LoanID INT PRIMARY KEY Identity(1,1),
     ISBN VARCHAR(20), -- Foreign key to the Books table
-    MemberID INT, -- Foreign key to the Members table
-    UserId INT, -- New foreign key referencing Members(MemberID)
+    CopyID INT, -- Foreign key to the Books table
+    MemberID NVARCHAR(50), -- Foreign key to the Members table
+    UserId NVARCHAR(50), -- New foreign key referencing Members(MemberID)
     LoanDate DATE,
     DueDate DATE,
     ReturnedDate DATE,
     FOREIGN KEY (ISBN) REFERENCES Books(ISBN),
+    FOREIGN KEY (CopyID) REFERENCES Copies(CopyID),
     FOREIGN KEY (MemberID) REFERENCES Members(MemberID),
     FOREIGN KEY (UserId) REFERENCES Members(MemberID) -- New foreign key constraint
 );
@@ -724,6 +726,14 @@ CREATE TABLE [dbo].[Settings]
     [DaysForReturn] INT NULL, 
     [LoanByPerson] INT NULL
 )
+GO
+
+INSERT INTO [Settings] ([InitialFine], [DailyFine], [DaysForReturn], [LoanByPerson])
+            VALUES (10.00, 5.00, 14, 5)
+            GO
+
+            SELECT * FROM [Settings]
+            GO
 /*
 end region
 10/01/2024
