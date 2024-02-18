@@ -12,9 +12,11 @@ using SGBWeb.Services;
 
 namespace SGBWeb.Controllers
 {
+    [Authorize]
     public class LoansController : Controller
     {
         LoanService LoanService = new LoanService();
+        SettingService SettingService = new SettingService();
         private LibraryDbContext db = new LibraryDbContext();
 
         // GET: Loans
@@ -31,7 +33,7 @@ namespace SGBWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Loan loan = db.Loans.Find(id);
+            Loan loan = LoanService.GetLoanById(id.GetValueOrDefault());
             if (loan == null)
             {
                 return HttpNotFound();
@@ -59,8 +61,7 @@ namespace SGBWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Loans.Add(loan);
-                db.SaveChanges();
+                LoanService.AddLoan(loan);
                 return RedirectToAction("Index");
             }
 
@@ -99,8 +100,8 @@ namespace SGBWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(loan).State = EntityState.Modified;
-                db.SaveChanges();
+                LoanService.UpdateLoan(loan);
+
                 return RedirectToAction("Index");
             }
             ViewBag.ISBN = new SelectList(db.Books, "ISBN", "Title", loan.ISBN);
@@ -117,7 +118,7 @@ namespace SGBWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Loan loan = db.Loans.Find(id);
+            Loan loan = LoanService.GetLoanById(id.GetValueOrDefault());
             if (loan == null)
             {
                 return HttpNotFound();
@@ -130,9 +131,7 @@ namespace SGBWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Loan loan = db.Loans.Find(id);
-            db.Loans.Remove(loan);
-            db.SaveChanges();
+            LoanService.DeleteLoan(id);
             return RedirectToAction("Index");
         }
 

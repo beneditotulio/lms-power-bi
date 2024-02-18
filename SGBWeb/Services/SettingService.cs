@@ -12,9 +12,9 @@ namespace SGBWeb.Services
     {
         private readonly LibraryDbContext _context;
 
-        public SettingService(LibraryDbContext context)
+        public SettingService()
         {
-            _context = context;
+            _context = new LibraryDbContext();
         }
 
         // Create
