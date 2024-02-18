@@ -61,7 +61,10 @@
                     <li>@Html.ActionLink("Membros", "Index", "Members")</li>
                     <li>@Html.ActionLink("Empréstimos", "Index", "Loans")</li>
                     @*<li>@Html.ActionLink("Devolução", "Index", "Books")</li>*@
-                    <li>@Html.ActionLink("Utilizadores", "Index", "Users")</li>
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <li>@Html.ActionLink("Utilizadores", "Index", "Users")</li>
+                    }
                 </ul>
 
             </div>
