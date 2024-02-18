@@ -14,11 +14,11 @@ namespace SGBWeb.Models
         public int Id { get; set; }
 
         [DisplayName("Multa Inicial")]
-        [Column(TypeName = "decimal(18, 2)")]
+        //[Column(TypeName = "decimal(18, 2)")]
         public decimal? InitialFine { get; set; }
 
         [DisplayName("Multa Diária")]
-        [Column(TypeName = "decimal(18, 2)")]
+        //[Column(TypeName = "decimal(18, 2)")]
         public decimal? DailyFine { get; set; }
 
         [DisplayName("Dias para Devolução")]
