@@ -32,7 +32,7 @@ namespace SGBWeb.Services
         // Read (all)
         public List<Loan> GetAllLoans()
         {
-            return _context.Loans.ToList();
+            return _context.Loans.Include(b=>b.Book).Include(c=>c.Copy).ToList();
         }
 
         // Update

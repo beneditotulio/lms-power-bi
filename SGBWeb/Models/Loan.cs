@@ -13,19 +13,19 @@ namespace SGBWeb.Models
         [DisplayName("ID do Empréstimo")]
         public int LoanID { get; set; }
 
-        //[ForeignKey("Book")]
+        [ForeignKey("Book")]
         [DisplayName("ISBN")]
         public string ISBN { get; set; }
 
-        //[ForeignKey("Copy")]
+        [ForeignKey("Copy")]
         [DisplayName("ID da Cópia")]
         public int CopyID { get; set; }
 
-        //[ForeignKey("Member")]
+        [ForeignKey("Member")]
         [DisplayName("ID do Membro")]
         public string MemberID { get; set; }
 
-        //[ForeignKey("User")]
+        [ForeignKey("User")]
         [DisplayName("ID do Usuário")]
         public string UserId { get; set; }
 
@@ -39,10 +39,10 @@ namespace SGBWeb.Models
         public DateTime? ReturnedDate { get; set; }
 
         // Navigation properties
-        //public virtual Book Book { get; set; }
-        //public virtual Copy Copy { get; set; }
-        //public virtual Member Member { get; set; }
-        //public virtual Member User { get; set; } // Assuming
+        public virtual Book Book { get; set; }
+        public virtual Copy Copy { get; set; }
+        public virtual Member Member { get; set; }
+        public virtual Member User { get; set; } // Assuming
 
     }
 }

@@ -29,7 +29,11 @@ namespace SGBWeb.Services
         {
             return _context.Settings.FirstOrDefault(s => s.Id == id);
         }
-
+        //GetDefaultSetting
+        public Setting GetDefaultSetting()
+        {
+            return _context.Settings.FirstOrDefault();
+        }
         public IEnumerable<Setting> GetAllSettings()
         {
             return _context.Settings.ToList();

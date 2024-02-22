@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using SGBWeb.Data;
@@ -17,6 +18,7 @@ namespace SGBWeb.Controllers
     {
         LoanService LoanService = new LoanService();
         SettingService SettingService = new SettingService();
+        MemberService MemberService = new MemberService();
         private LibraryDbContext db = new LibraryDbContext();
 
         // GET: Loans
@@ -45,9 +47,8 @@ namespace SGBWeb.Controllers
         public ActionResult Create()
         {
             ViewBag.ISBN = new SelectList(db.Books, "ISBN", "Title");
-            ViewBag.CopyID = new SelectList(db.Copies, "CopyID", "ISBN");
-            ViewBag.MemberID = new SelectList(db.Members, "MemberID", "FirstName");
-            ViewBag.UserId = new SelectList(db.Members, "MemberID", "FirstName");
+            //ViewBag.CopyID = new SelectList(db.Copies, "CopyID", "ISBN");
+            ViewBag.MemberID = new SelectList(db.Members.Where(x=>x.MemberType == "Estudante"), "MemberID", "FirstName");
             var model = new Loan();
             return View(model);
         }
@@ -61,6 +62,16 @@ namespace SGBWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                var userId = claim.Value;
+
+                Setting setting = SettingService.GetDefaultSetting();
+
+                loan.LoanDate = DateTime.Now;
+                loan.UserId = MemberService.GetMemberIdByUserId(userId);
+                loan.DueDate = loan.LoanDate.AddDays(setting.DaysForReturn.GetValueOrDefault());
+                loan.ReturnedDate = new DateTime(1900, 01, 01);
                 LoanService.AddLoan(loan);
                 return RedirectToAction("Index");
             }
