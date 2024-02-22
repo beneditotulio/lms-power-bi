@@ -72,6 +72,13 @@ namespace SGBWeb.Services
             _context.Copies.Add(copy);
             _context.SaveChanges();
         }
+        //Update Book Copy Status
+        public void UpdateBookCopyStatus(int copyId, string status)
+        {
+            var toUpdate = _context.Copies.FirstOrDefault(x=>x.CopyID == copyId);
+            toUpdate.Condition = status;
+            _context.SaveChanges();
+        }
         // Function that takes a string series and returns an array of numbers
         public string[] RemoveAuthorsIds(string series)
         {

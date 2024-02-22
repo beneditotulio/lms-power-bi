@@ -10,7 +10,7 @@ namespace SGBWeb.Services
     public class LoanService
     {
         private readonly LibraryDbContext _context;
-
+        BookService BookService = new BookService();
         public LoanService()
         {
             _context = new LibraryDbContext();
@@ -38,6 +38,8 @@ namespace SGBWeb.Services
                         Details = $"Loan for ISBN {loan.ISBN} created."
                     });
                     _context.SaveChanges();
+                    BookService.UpdateBookCopyStatus(loan.CopyID, "Empéstimo");
+
                     transaction.Commit();
                     result = true;
                     response[0] = $"Empréstimo criado com sucesso!";
