@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Sistema de Gestão de Biblioteca com Power BI</title>
+    @*<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />*@
+    <link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    @*<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
+
+    @*<script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Parametrização", "Index", "GeneralData")</li>
+                    <li>@Html.ActionLink("Autores", "Index", "Authors")</li>
+                    <li>@Html.ActionLink("Estantes", "Index", "Bookcase")</li>
+                    <li>@Html.ActionLink("Editoras", "Index", "Publishers")</li>
+                    <li>@Html.ActionLink("Livros", "Index", "Books")</li>
+                    <li>@Html.ActionLink("Bibliotecário", "Index", "Members")</li>
+                    <li>@Html.ActionLink("Empréstimos", "Index", "Books")</li>
+                    <li>@Html.ActionLink("Devolução", "Index", "Books")</li>
+                    <li>@Html.ActionLink("Utilizadores", "Index", "Users")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Sistema de Gestão de Biblioteca com Power BI - Dom Bosco</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>*@
+    <script src="~/Content/jquery.dataTables.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

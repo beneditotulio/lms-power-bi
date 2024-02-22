@@ -2,8 +2,10 @@
 using SGBWeb.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Services.Description;
 
 namespace SGBWeb.Services
 {
@@ -14,6 +16,11 @@ namespace SGBWeb.Services
         public MemberService()
         {
             _context = new LibraryDbContext();
+        }
+
+        public string GetMemberIdByUserId(string userId)
+        {
+            return _context.Members.FirstOrDefault(x=>x.UserId == userId).MemberID;
         }
 
         #region Generate New Id

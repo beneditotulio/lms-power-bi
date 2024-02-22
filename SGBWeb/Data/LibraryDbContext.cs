@@ -18,12 +18,15 @@ namespace SGBWeb.Data
         public DbSet<GeneralData> GeneralDatas { get; set; }
         public DbSet<Bookcase> Bookcases { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
-
         public DbSet<Book> Books { get; set; }
         public DbSet<BooksAuthors> BooksAuthors { get; set; }
         public DbSet<Copy> Copies { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<AspNetRole> Roles { get; set; }
+        public DbSet<Setting> Settings { get; set; }
+        public DbSet<Loan> Loans { get; set; }
+        public DbSet<LoanHistory> LoanHistories { get; set; }
+
     }
 }

@@ -675,12 +675,14 @@ GO
 CREATE TABLE Loans (
     LoanID INT PRIMARY KEY Identity(1,1),
     ISBN VARCHAR(20), -- Foreign key to the Books table
-    MemberID INT, -- Foreign key to the Members table
-    UserId INT, -- New foreign key referencing Members(MemberID)
+    CopyID INT, -- Foreign key to the Books table
+    MemberID NVARCHAR(50), -- Foreign key to the Members table
+    UserId NVARCHAR(50), -- New foreign key referencing Members(MemberID)
     LoanDate DATE,
     DueDate DATE,
     ReturnedDate DATE,
     FOREIGN KEY (ISBN) REFERENCES Books(ISBN),
+    FOREIGN KEY (CopyID) REFERENCES Copies(CopyID),
     FOREIGN KEY (MemberID) REFERENCES Members(MemberID),
     FOREIGN KEY (UserId) REFERENCES Members(MemberID) -- New foreign key constraint
 );
@@ -724,6 +726,14 @@ CREATE TABLE [dbo].[Settings]
     [DaysForReturn] INT NULL, 
     [LoanByPerson] INT NULL
 )
+GO
+
+INSERT INTO [Settings] ([InitialFine], [DailyFine], [DaysForReturn], [LoanByPerson])
+            VALUES (10.00, 5.00, 14, 5)
+            GO
+
+            SELECT * FROM [Settings]
+            GO
 /*
 end region
 10/01/2024
@@ -756,6 +766,78 @@ end region
 Created by IP
 */
 
+/*
+begin region
+15/02/2024
+Created by IP
+*/
+--FIX Loan CRUD
+CREATE TABLE [dbo].[Loans](
+	[LoanID] [int] IDENTITY(1,1) NOT NULL,
+	[ISBN] [varchar](20) NULL,
+	[CopyID] [int] NULL,
+	[MemberID] [nvarchar](50) NULL,
+	[UserId] [nvarchar](50) NULL,
+	[LoanDate] [date] NULL,
+	[DueDate] [date] NULL,
+	[ReturnedDate] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[LoanID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 
+ALTER TABLE [dbo].[Loans]  WITH CHECK ADD FOREIGN KEY([CopyID])
+REFERENCES [dbo].[Copies] ([CopyID])
+GO
 
+ALTER TABLE [dbo].[Loans]  WITH CHECK ADD FOREIGN KEY([ISBN])
+REFERENCES [dbo].[Books] ([ISBN])
+GO
+
+ALTER TABLE [dbo].[Loans]  WITH CHECK ADD FOREIGN KEY([MemberID])
+REFERENCES [dbo].[Members] ([MemberID])
+GO
+
+ALTER TABLE [dbo].[Loans]  WITH CHECK ADD FOREIGN KEY([UserId])
+REFERENCES [dbo].[Members] ([MemberID])
+GO
+/*
+end region
+15/02/2024
+Created by IP
+*/
+
+/*
+begin region
+18/02/2024
+Created by IP
+*/
+--Create Loan History
+CREATE TABLE LoanHistory (
+    LoanHistoryID INT IDENTITY(1,1) PRIMARY KEY,
+    LoanID INT NOT NULL,
+    MemberID NVARCHAR(50) NOT NULL,
+    Event VARCHAR(50) NOT NULL,
+    EventDate DATETIME NOT NULL,
+    Details VARCHAR(MAX),
+    -- Define foreign key constraints to ensure data integrity
+    CONSTRAINT FK_LoanHistory_Loan FOREIGN KEY (LoanID) REFERENCES Loans(LoanID),
+    CONSTRAINT FK_LoanHistory_Member FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+GO
+
+--Add Loan History
+ALTER TABLE Loans
+ADD Status NVARCHAR(50) DEFAULT 'Ativo';
+GO
+/*
+end region
+18/02/2024
+Created by IP
+*/
+
+SELECT * FROM Loans
+GO
 
