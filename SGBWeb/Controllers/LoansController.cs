@@ -92,9 +92,16 @@ namespace SGBWeb.Controllers
                 loan.ReturnedDate = new DateTime(1900, 01, 01);
                 loan.CopyID = copy.CopyID;
                 loan.Status = "Ativo";
-                LoanService.AddLoan(loan);
+                string[] result = LoanService.AddLoan(loan);
+                if (Convert.ToBoolean(result[1]))
+                {
+                    TempData["successMessage"] = result[0];
+                }
+                else
+                {
+                    TempData["errorMessage"] = result[0]; 
+                }
                 return RedirectToAction("Index");
-                TempData["successMessage"] = "Registo Gravado com sucesso!";
             }
 
             ViewBag.ISBN = new SelectList(db.Books, "ISBN", "Title", loan.ISBN);

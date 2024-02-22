@@ -17,21 +17,41 @@ namespace SGBWeb.Services
         }
 
         // Create
-        public void AddLoan(Loan loan)
+        public string[] AddLoan(Loan loan)
         {
-            _context.Loans.Add(loan);
-            _context.SaveChanges();
-
-            // Log the loan creation event
-            _context.LoanHistories.Add(new LoanHistory
+            string[] response = new string[2];
+            bool result = false;
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                LoanID = loan.LoanID,
-                MemberID = loan.MemberID,
-                Event = "Loan Created",
-                EventDate = DateTime.Now,
-                Details = $"Loan for ISBN {loan.ISBN} created."
-            });
-            _context.SaveChanges();
+                try
+                {
+                    _context.Loans.Add(loan);
+                    _context.SaveChanges();
+
+                    // Log the loan creation event
+                    _context.LoanHistories.Add(new LoanHistory
+                    {
+                        LoanID = loan.LoanID,
+                        MemberID = loan.MemberID,
+                        Event = "Loan Created",
+                        EventDate = DateTime.Now,
+                        Details = $"Loan for ISBN {loan.ISBN} created."
+                    });
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    result = true;
+                    response[0] = $"Empréstimo criado com sucesso!";
+                    response[1] = result.ToString();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    result = false;
+                    response[0] = $"Erro, não foi possível criar o empréstimo\n{ex.Message}";
+                    response[1] = result.ToString();
+                }
+            }
+            return response;
         }
 
         // Read (single)

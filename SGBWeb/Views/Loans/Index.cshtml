@@ -2,70 +2,157 @@
 
 @{
     ViewBag.Title = "Index";
+    string errorMessage = TempData["errorMessage"] as string;
+    string successMessage = TempData["successMessage"] as string;
 }
 
-<h2>Index</h2>
+<div class="text-center" style="align-content:center" id="ErrorMessageDisplay">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Book.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Copy.ISBN)
-        </th>
-        <th>
-            @*@Html.DisplayNameFor(model => model.MemberID)*@            
-            @Html.DisplayName("Estudante")
-        </th>
-        <th>
-            @* @Html.DisplayNameFor(model => model.UserId)*@
-            @Html.DisplayName("Utilizador")
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LoanDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DueDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReturnedDate)
-        </th>
-        <th></th>
-    </tr>
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" style="position:center">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Book.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Copy.ISBN)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Member.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LoanDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DueDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReturnedDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LoanID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LoanID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LoanID })
-        </td>
-    </tr>
-}
+            <span>
+                <b> Falha - </b>@errorMessage
+            </span>
+        </div>
+
+    }
+    @if (successMessage != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+
+            <span>
+                <b> Successo - </b>@successMessage
+            </span>
+        </div>
+
+    }
+    @if (Model.Count() == 0)
+    {
+        <div class="alert alert-info alert-dismissible fade show">
+
+            <span>
+                <b> Info! - </b> Nenhum registo adicionado até o momento.
+            </span>
+        </div>
+    }
+</div>
+
+<h2 class="btn-info">Lista de Empréstimo(s)</h2>
+
+<div class="btn-group-sm">
+    <a class="btn btn-sm btn-success fa fa-plus-circle" href="@Url.Action("Create")">
+        Criar
+    </a>
+</div>
+
+<table class="table table-responsive table-striped" id="dataTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Book.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Copy.ISBN)
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.MemberID)*@
+                @Html.DisplayName("Estudante")
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.UserId)*@
+                @Html.DisplayName("Utilizador")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoanDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReturnedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Book.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Copy.ISBN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Member.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoanDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReturnedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Editar", "Edit", new { id = item.LoanID }) |
+            @Html.ActionLink("Detalhes", "Details", new { id = item.LoanID }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.LoanID })*@
+                    <a href="@Url.Action("Edit", new {id = item.LoanID})" class="fa fa-edit" title="Editar Livro"></a> |
+                    <a href="@Url.Action("Details", new {id = item.LoanID})" class="fa fa-list" title="Detalhes Livro"></a> |
+                    <a href="@Url.Action("Delete", new {id = item.LoanID})" class="fa fa-trash" title="Eliminar Livro"></a>
+                </td>
+            </tr>
+
+        </tbody>
+    }
 
 </table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var table = $('#dataTable').DataTable({
+            paginate: true,
+            autoWidth: false,
+            select: true,
+            //Necessario desativar o scrollX e scrollY para acertar o header com o body.
+            //scrollResize: true,
+            //scrollY: 300
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Procurar ...",
+            }
+        });
+
+        $('#dataTable tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+
+    });
+</script>
