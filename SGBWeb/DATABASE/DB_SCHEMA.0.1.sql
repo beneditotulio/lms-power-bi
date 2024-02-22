@@ -814,11 +814,30 @@ begin region
 18/02/2024
 Created by IP
 */
+--Create Loan History
+CREATE TABLE LoanHistory (
+    LoanHistoryID INT IDENTITY(1,1) PRIMARY KEY,
+    LoanID INT NOT NULL,
+    MemberID NVARCHAR(50) NOT NULL,
+    Event VARCHAR(50) NOT NULL,
+    EventDate DATETIME NOT NULL,
+    Details VARCHAR(MAX),
+    -- Define foreign key constraints to ensure data integrity
+    CONSTRAINT FK_LoanHistory_Loan FOREIGN KEY (LoanID) REFERENCES Loans(LoanID),
+    CONSTRAINT FK_LoanHistory_Member FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+GO
 
+--Add Loan History
+ALTER TABLE Loans
+ADD Status NVARCHAR(50) DEFAULT 'Ativo';
+GO
 /*
 end region
 18/02/2024
 Created by IP
 */
 
+SELECT * FROM Loans
+GO
 

@@ -19,7 +19,15 @@ namespace SGBWeb.Controllers
         LoanService LoanService = new LoanService();
         SettingService SettingService = new SettingService();
         MemberService MemberService = new MemberService();
+        BookService BookService = new BookService();
         private LibraryDbContext db = new LibraryDbContext();
+
+        //--Ativo: Indica que o empréstimo está corrente e o livro ainda não foi devolvido.
+        //--Finalizado: O livro foi devolvido, e o empréstimo está completo.
+        //--Atrasado: O livro não foi devolvido até a data de vencimento.
+        //--Renovado: O empréstimo foi estendido além da data de vencimento original.
+        //--Reservado: O livro está reservado para empréstimo, mas o processo de empréstimo ainda não foi iniciado.
+        //--Cancelado: O empréstimo foi cancelado antes do livro ser devolvido ou durante o período de empréstimo.
 
         // GET: Loans
         public ActionResult Index()
@@ -62,18 +70,31 @@ namespace SGBWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (loan.ISBN == null)
+                {
+                    TempData["errorMessage"] = "Não foi possível gravar o registo, selecione um livro!";
+                    return RedirectToAction("Index");
+                }
+                Copy copy = BookService.GetAvailableBookCopyByISBN(loan.ISBN);
+                if (copy == null)
+                {
+                    TempData["errorMessage"] = "Não foi possível gravar o registo, não existem cópias disponíveis para este livro!";
+                    return RedirectToAction("Index");
+                }
                 var claimsIdentity = (ClaimsIdentity)this.User.Identity;
                 var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
                 var userId = claim.Value;
 
                 Setting setting = SettingService.GetDefaultSetting();
-
                 loan.LoanDate = DateTime.Now;
                 loan.UserId = MemberService.GetMemberIdByUserId(userId);
                 loan.DueDate = loan.LoanDate.AddDays(setting.DaysForReturn.GetValueOrDefault());
                 loan.ReturnedDate = new DateTime(1900, 01, 01);
+                loan.CopyID = copy.CopyID;
+                loan.Status = "Ativo";
                 LoanService.AddLoan(loan);
                 return RedirectToAction("Index");
+                TempData["successMessage"] = "Registo Gravado com sucesso!";
             }
 
             ViewBag.ISBN = new SelectList(db.Books, "ISBN", "Title", loan.ISBN);

@@ -47,6 +47,12 @@ namespace SGBWeb.Services
                 .Include(b => b.Book)
                 .ToList();
         }
+        public Copy GetAvailableBookCopyByISBN(string isbn)
+        {
+            return _context
+                .Copies
+                .FirstOrDefault(x => x.ISBN == isbn && x.Condition == "Disponível");
+        }
         public bool CreateBook(Book book)
         {
             bool result = false;

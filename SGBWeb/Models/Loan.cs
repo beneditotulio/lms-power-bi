@@ -37,6 +37,8 @@ namespace SGBWeb.Models
 
         [DisplayName("Data de Devolução")]
         public DateTime? ReturnedDate { get; set; }
+        [DisplayName("Estado")]
+        public string Status { get; set; }
 
         // Navigation properties
         public virtual Book Book { get; set; }

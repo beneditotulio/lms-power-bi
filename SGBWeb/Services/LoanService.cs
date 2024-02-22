@@ -21,6 +21,17 @@ namespace SGBWeb.Services
         {
             _context.Loans.Add(loan);
             _context.SaveChanges();
+
+            // Log the loan creation event
+            _context.LoanHistories.Add(new LoanHistory
+            {
+                LoanID = loan.LoanID,
+                MemberID = loan.MemberID,
+                Event = "Loan Created",
+                EventDate = DateTime.Now,
+                Details = $"Loan for ISBN {loan.ISBN} created."
+            });
+            _context.SaveChanges();
         }
 
         // Read (single)

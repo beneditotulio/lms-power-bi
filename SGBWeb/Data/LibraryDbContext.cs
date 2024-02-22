@@ -26,5 +26,7 @@ namespace SGBWeb.Data
         public DbSet<AspNetRole> Roles { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Loan> Loans { get; set; }
+        public DbSet<LoanHistory> LoanHistories { get; set; }
+
     }
 }
