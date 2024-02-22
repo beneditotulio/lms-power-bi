@@ -5,11 +5,11 @@
     string errorMessage = TempData["errorMessage"] as string;
     string successMessage = TempData["successMessage"] as string;
 }
-<style>
+@*<style>
     #dataTable thead th, #dataTable tbody td {
-        padding: 4px 10px;
+        padding: 2px 10px;
     }
-</style>
+</style>*@
 <div class="container-fluid">
 
     <div class="text-center" style="align-content:center" id="ErrorMessageDisplay">
@@ -53,7 +53,6 @@
     <div class="card">
         <div class="card-header">
             <h2 class="btn-info">Lista de Membros</h2>
-            <b> Successo - </b>@successMessage
         </div>
     </div>
     <div class="btn-group-sm">
@@ -102,7 +101,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
                 </th>
-                <th></th>
+                <th>Acções</th>
             </tr>
         </thead>
 
@@ -147,9 +146,9 @@
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.MemberID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.MemberID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.MemberID })
+                        <a href="@Url.Action("Edit", new {id = item.MemberID})" class="fa fa-edit" title="Editar Membro"></a> |
+                        <a href="@Url.Action("Details", new {id = item.MemberID})" class="fa fa-list" title="Detalhes Membro"></a> |
+                        <a href="@Url.Action("Delete", new {id = item.MemberID})" class="fa fa-trash" title="Eliminar Membro"></a>
                     </td>
                 </tr>
             }
