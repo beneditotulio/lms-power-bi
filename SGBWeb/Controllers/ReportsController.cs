@@ -19,5 +19,10 @@ namespace SGBWeb.Controllers
         {
             return View();
         }
+        // GET: Student Report
+        public ActionResult RegionalSales()
+        {
+            return View();
+        }
     }
 }
