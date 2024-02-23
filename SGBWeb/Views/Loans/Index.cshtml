@@ -76,7 +76,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-            <th></th>
+            <th>Acções</th>
         </tr>
     </thead>
     @foreach (var item in Model)
@@ -84,6 +84,11 @@
         <tbody>
             <tr>
                 <td>
+                    @if (item.Status == "Ativo")
+                    {
+                        <a href="@Url.Action("ReturnLoan", new {id = item.LoanID})" class="fa fa-backward" title="Devolver Livro"></a>
+
+                    }
                     @Html.DisplayFor(modelItem => item.Book.Title)
                 </td>
                 <td>
@@ -111,9 +116,9 @@
                     @*@Html.ActionLink("Editar", "Edit", new { id = item.LoanID }) |
             @Html.ActionLink("Detalhes", "Details", new { id = item.LoanID }) |
             @Html.ActionLink("Eliminar", "Delete", new { id = item.LoanID })*@
-                    <a href="@Url.Action("Edit", new {id = item.LoanID})" class="fa fa-edit" title="Editar Livro"></a> |
-                    <a href="@Url.Action("Details", new {id = item.LoanID})" class="fa fa-list" title="Detalhes Livro"></a> |
-                    <a href="@Url.Action("Delete", new {id = item.LoanID})" class="fa fa-trash" title="Eliminar Livro"></a>
+                    <a href="@Url.Action("Edit", new {id = item.LoanID})" class="fa fa-edit" title="Editar Empréstimo"></a> |
+                    <a href="@Url.Action("Details", new {id = item.LoanID})" class="fa fa-list" title="Detalhes Empréstimo"></a> |
+                    <a href="@Url.Action("Delete", new {id = item.LoanID})" class="fa fa-trash" title="Eliminar Empréstimo"></a> |
                 </td>
             </tr>
 

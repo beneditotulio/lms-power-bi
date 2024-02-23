@@ -56,6 +56,29 @@ namespace SGBWeb.Services
             return response;
         }
 
+        //Mark Loam as returned
+        public void MarkLoanAsReturned(int loanId)
+        {
+            var loan = _context.Loans.FirstOrDefault(l => l.LoanID == loanId);
+            if (loan != null)
+            {
+                loan.Status = "Devolvido";
+                loan.ReturnedDate = DateTime.Now;
+                _context.SaveChanges();
+
+                BookService.UpdateBookCopyStatus(loan.CopyID, "Disponível");
+                _context.LoanHistories.Add(new LoanHistory
+                {
+                    LoanID = loan.LoanID,
+                    MemberID = loan.MemberID,
+                    Event = "Book Returned",
+                    EventDate = DateTime.Now,
+                    Details = $"Book with ISBN {loan.ISBN} returned."
+                });
+                _context.SaveChanges();
+            }
+        }
+
         // Read (single)
         public Loan GetLoanById(int loanId)
         {

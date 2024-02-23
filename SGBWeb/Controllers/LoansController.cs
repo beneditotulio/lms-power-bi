@@ -23,7 +23,7 @@ namespace SGBWeb.Controllers
         private LibraryDbContext db = new LibraryDbContext();
 
         //--Ativo: Indica que o empréstimo está corrente e o livro ainda não foi devolvido.
-        //--Finalizado: O livro foi devolvido, e o empréstimo está completo.
+        //--Devolvido: O livro foi devolvido, e o empréstimo está completo.
         //--Atrasado: O livro não foi devolvido até a data de vencimento.
         //--Renovado: O empréstimo foi estendido além da data de vencimento original.
         //--Reservado: O livro está reservado para empréstimo, mas o processo de empréstimo ainda não foi iniciado.
@@ -174,6 +174,18 @@ namespace SGBWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        //MarkLoanAsReturned
+        // GET: Loans/ReturnLoan/5
+        public ActionResult ReturnLoan(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            LoanService.MarkLoanAsReturned(id.GetValueOrDefault());
+            TempData["successMessage"] = "Livro devolvido com sucesso!";
+            return RedirectToAction("Index");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
