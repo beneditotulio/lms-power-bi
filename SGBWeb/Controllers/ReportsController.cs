@@ -15,12 +15,16 @@ namespace SGBWeb.Controllers
         }
 
         // GET: Student Report
-        public ActionResult StudentReport()
+        public ActionResult Report()
         {
             return View();
         }
         // GET: Student Report
         public ActionResult RegionalSales()
+        {
+            return View();
+        }
+        public ActionResult Analytics()
         {
             return View();
         }
