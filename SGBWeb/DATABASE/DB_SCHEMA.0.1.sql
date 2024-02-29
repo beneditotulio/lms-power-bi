@@ -838,6 +838,196 @@ end region
 Created by IP
 */
 
-SELECT * FROM Loans
+/*
+begin region
+28/02/2024
+Created by IP
+*/
+--GENERATE POWER BI VIEWS
+--1. EMPRÉSTIMOS AO LONGO DO TEMPO
+--Empréstimos ao Longo do Tempo: Um gráfico de linhas mostrando a quantidade de empréstimos
+--feitos ao longo do tempo, permitindo identificar tendências de aumento ou diminuição no 
+--uso da biblioteca.
+CREATE VIEW EmpréstimosAoLongoDoTempo AS
+SELECT
+    LoanDate,
+    COUNT(LoanID) AS QuantidadeDeEmpréstimos
+FROM
+    Loans
+WHERE
+    LoanDate IS NOT NULL
+GROUP BY
+    LoanDate
+--ORDER BY
+--    LoanDate;
 GO
 
+--2. LIVROS MAIS EMPRESTADOS
+--Livros Mais Emprestados: Um gráfico de barras listando os livros mais emprestados, 
+--destacando os títulos mais populares na biblioteca.
+CREATE VIEW LivrosMaisEmprestados AS
+SELECT
+    b.Title,
+    COUNT(l.LoanID) AS QuantidadeDeEmpréstimos
+FROM
+    Loans l
+INNER JOIN
+    Books b ON l.ISBN = b.ISBN
+GROUP BY
+    b.Title
+--ORDER BY
+--    QuantidadeDeEmpréstimos DESC;
+GO
+
+--3. ACTIVIDADE DE EMPRÉSTIMO POR CATEGORIA DE LIVRO
+--Actividade de Empréstimo por Categoria de Livro: Uma visualização que mostra o número
+--de empréstimos por categoria de livro, ajudando a entender quais gêneros são mais populares entre os membros.
+CREATE VIEW EmpréstimosPorCategoria AS
+SELECT
+    gd.Description AS Categoria,
+    COUNT(l.LoanID) AS QuantidadeDeEmpréstimos
+FROM
+    Loans l
+INNER JOIN
+    Books b ON l.ISBN = b.ISBN
+INNER JOIN
+    GeneralData gd ON b.CategoryID = gd.ID
+GROUP BY
+    gd.Description
+--ORDER BY
+--    QuantidadeDeEmpréstimos DESC;
+GO
+
+--4. DISTRIBUIÇÃO DE LIVROS POR EDITORA
+--Distribuição de Livros por Editora: Um gráfico de torta ou barra que mostra a quantidade de livros disponíveis
+--na biblioteca por editora, oferecendo insights sobre a diversidade do acervo.
+CREATE VIEW DistribuicaoLivrosPorEditora AS
+SELECT
+    p.PublisherName AS Editora,
+    COUNT(b.ISBN) AS QuantidadeDeLivros
+FROM
+    Books b
+INNER JOIN
+    Publishers p ON b.PublisherID = p.PublisherID
+GROUP BY
+    p.PublisherName
+--ORDER BY
+--    QuantidadeDeLivros DESC;
+GO
+
+--5. MEMBROS ACTIVOS
+--Membros Activos: Uma lista ou tabela dos membros mais ativos com base no número de empréstimos, destacando os usuários mais engajados.
+CREATE VIEW MembrosMaisAtivos AS
+SELECT
+    CONCAT(m.FirstName,' ', m.OtherName,' ', m.LastName) as MemberName,
+    COUNT(l.LoanID) AS QuantidadeDeEmpréstimos
+FROM
+    Loans l
+INNER JOIN
+    Members m ON l.MemberID = m.MemberID
+GROUP BY
+    m.FirstName, m.OtherName, m.LastName
+--ORDER BY
+--    QuantidadeDeEmpréstimos DESC;
+GO
+
+--6. STATUS DOS EMPRÉSTIMOS
+--Status dos Empréstimos: Um gráfico de barras ou torta que mostra a distribuição do status dos empréstimos (ativo, atrasado, devolvido), 
+--ajudando a gerenciar e reduzir atrasos nos empréstimos.
+CREATE VIEW StatusDosEmpréstimos AS
+SELECT
+    Status,
+    COUNT(LoanID) AS Quantidade
+FROM
+    Loans
+GROUP BY
+    Status
+--ORDER BY
+--    Quantidade DESC;
+GO
+
+--7. ANÁLISE DE MULTAS
+--Análise de Multas: Visualização do total de multas acumuladas ao longo do tempo ou análise das multas por membro, 
+--para entender melhor o impacto financeiro das políticas de empréstimo.
+CREATE VIEW AnaliseDeMultasPorMembro AS
+SELECT
+    l.MemberID,
+    CONCAT(m.FirstName,' ', m.OtherName,' ', m.LastName) as MemberName,
+    SUM(CASE 
+        WHEN l.ReturnedDate > l.DueDate THEN DATEDIFF(day, l.DueDate, l.ReturnedDate) * ls.DailyFine
+        ELSE 0
+    END) AS TotalDeMultas
+FROM
+    Loans l
+INNER JOIN
+    Members m ON l.MemberID = m.MemberID
+INNER JOIN
+    LoanSettings ls ON ls.Id = 1 -- Assumindo que existe apenas um conjunto de regras de empréstimo
+GROUP BY
+    l.MemberID, m.FirstName, m.OtherName, m.LastName
+--ORDER BY
+--    TotalDeMultas DESC;
+GO
+
+--8. LOCALIZAÇÃO DOS LIVROS
+--Localização dos Livros: Um mapa ou gráfico detalhado mostrando a localização dos livros dentro da biblioteca, se a informação de localização
+--for detalhada o suficiente, ajudando na organização e na localização física dos itens.
+CREATE VIEW LocalizacaoDosLivros AS
+SELECT
+    b.Title,
+    b.ISBN,
+    bc.BookcaseName,
+    bc.Location,
+    bc.Description
+FROM
+    Books b
+INNER JOIN
+    Bookcases bc ON b.BookcaseID = bc.BookcaseID;
+GO
+
+--9. ANÁLISE DE AUTORES
+--Análise de Autores: Gráficos mostrando os autores com mais obras na biblioteca ou mais emprestados, destacando os autores favoritos dos membros.
+CREATE VIEW AnaliseDeAutores AS
+SELECT
+    a.AuthorName,
+    COUNT(DISTINCT ba.ISBN) AS TotalDeObras,
+    COUNT(l.LoanID) AS TotalDeEmpréstimos
+FROM
+    Authors a
+INNER JOIN
+    BooksAuthors ba ON a.ID = ba.AuthorID
+LEFT JOIN
+    Books b ON ba.ISBN = b.ISBN
+LEFT JOIN
+    Loans l ON b.ISBN = l.ISBN
+GROUP BY
+    a.AuthorName
+--ORDER BY
+--    TotalDeEmpréstimos DESC, TotalDeObras DESC;
+GO
+
+--10. ANÁLISE DE IDIOMAS DOS LIVROS
+--Análise de Idiomas dos Livros: Um gráfico de barras ou torta mostrando a proporção de livros disponíveis em diferentes idiomas, 
+--oferecendo uma visão da diversidade linguística do acervo.
+CREATE VIEW AnaliseDeIdiomasDosLivros AS
+SELECT
+    gd.Description AS Idioma,
+    COUNT(b.ISBN) AS QuantidadeDeLivros
+FROM
+    Books b
+INNER JOIN
+    GeneralData gd ON b.LanguageID = gd.ID
+WHERE
+    gd.ClassifierType = 'Idioma' -- Supondo que 'ClassifierType' identifica a categoria dos dados em 'GeneralData'
+GROUP BY
+    gd.Description
+--ORDER BY
+--    QuantidadeDeLivros DESC;
+GO
+
+
+/*
+end region
+28/02/2024
+Created by IP
+*/
