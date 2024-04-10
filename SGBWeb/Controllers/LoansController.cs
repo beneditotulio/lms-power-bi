@@ -56,7 +56,7 @@ namespace SGBWeb.Controllers
         {
             ViewBag.ISBN = new SelectList(db.Books, "ISBN", "Title");
             //ViewBag.CopyID = new SelectList(db.Copies, "CopyID", "ISBN");
-            ViewBag.MemberID = new SelectList(db.Members.Where(x=>x.MemberType == "Estudante"), "MemberID", "FirstName");
+            ViewBag.MemberID = new SelectList(db.Members.Where(x=>x.MemberType == "Estudante"), "MemberID", "FullName");
             var model = new Loan();
             return View(model);
         }

@@ -1031,3 +1031,40 @@ end region
 28/02/2024
 Created by IP
 */
+
+/*
+begin region
+28/03/2024
+Created by IP
+*/
+ALTER TABLE Loans
+Modify LoanDate datetime
+GO
+
+--7. ANÁLISE DE MULTAS
+--Análise de Multas: Visualização do total de multas acumuladas ao longo do tempo ou análise das multas por membro, 
+--para entender melhor o impacto financeiro das políticas de empréstimo.
+ALTER VIEW [dbo].[AnaliseDeMultasPorMembro] AS
+SELECT
+    l.MemberID,
+    CONCAT(m.FirstName,' ', m.OtherName,' ', m.LastName) as MemberName,
+    SUM(CASE 
+        WHEN l.ReturnedDate > l.DueDate THEN DATEDIFF(day, l.DueDate, l.ReturnedDate) * ls.DailyFine
+        ELSE 0
+    END) AS TotalDeMultas
+FROM
+    Loans l
+INNER JOIN
+    Members m ON l.MemberID = m.MemberID
+INNER JOIN
+    Settings ls ON ls.Id = 1 -- Assumindo que existe apenas um conjunto de regras de empréstimo
+GROUP BY
+    l.MemberID, m.FirstName, m.OtherName, m.LastName
+--ORDER BY
+--    TotalDeMultas DESC;
+GO
+/*
+end region
+28/03/2024
+Created by IP
+*/

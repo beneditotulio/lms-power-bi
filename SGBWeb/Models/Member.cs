@@ -56,6 +56,15 @@ namespace SGBWeb.Models
         public string UserId { get; set; }
         //[NotMapped]
         //public string password { get; set; }
+
+        [NotMapped]
+        public string FullName 
+        { 
+            get 
+            { 
+                return $"{this.FirstName} {this.OtherName} {this.LastName}"; 
+            }              
+        } 
     }
 
 }
