@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Sistema de Gestão de Biblioteca com Power BI</title>
+    @*<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />*@
+    <link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/dashboard.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Content/jquery.dataTables.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Sistema de Gestão de Biblioteca</a>
+            </div>
+            @Html.Partial("_LoginPartial")
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+                <form class="navbar-form navbar-right">
+                    <input type="text" class="form-control" placeholder="Search...">
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="active"><a href="@Url.Action("Index", "Home")">Overview <span class="sr-only">(current)</span></a></li>
+                    <li><a href="@Url.Action("Report", "Reports")">Reports</a></li>
+                    @*<li><a href="@Url.Action("RegionalSales", "Reports")">Regional Report</a></li>*@
+                    <li><a href="@Url.Action("Analytics", "Reports")">Analytics</a></li>
+                    <li><a href="#">Export</a></li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li>@Html.ActionLink("Parametrização", "Index", "GeneralData")</li>
+                    <li>@Html.ActionLink("Autores", "Index", "Authors")</li>
+                    <li>@Html.ActionLink("Estantes", "Index", "Bookcase")</li>
+                    <li>@Html.ActionLink("Editoras", "Index", "Publishers")</li>
+                    <li>@Html.ActionLink("Livros", "Index", "Books")</li>
+                    <li>@Html.ActionLink("Membros", "Index", "Members")</li>
+                    <li>@Html.ActionLink("Empréstimos", "Index", "Loans")</li>
+                    @*<li>@Html.ActionLink("Devolução", "Index", "Books")</li>*@
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <li>@Html.ActionLink("Utilizadores", "Index", "Users")</li>
+                    }
+                </ul>
+
+            </div>
+
+            <div class="container body-content">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - Sistema de Gestão de Biblioteca com Power BI - Dom Bosco</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    @*<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Content/jquery.dataTables.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
