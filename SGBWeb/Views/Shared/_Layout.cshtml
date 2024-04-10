@@ -270,47 +270,51 @@
     </header><!-- End Header -->
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav">
+            <li class="active nav-item"><a class="nav-link collapsed" href="@Url.Action("Index", "Home")">Overview <span class="sr-only">(current)</span></a></li>
+            <li class="nav-item"><a class="nav-link collapsed" href="@Url.Action("Report", "Reports")">Reports</a></li>
+        </ul>
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="@Url.Action("Index","Home")">
+                <a class="nav-link collapsed" href="@Url.Action("Index","Home")">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link " href="@Url.Action("Index","Agencies")">
+                <a class="nav-link collapsed" href="@Url.Action("Index","GeneralData")">
                     <i class="bi bi-menu-button-wide"></i>
-                    <span>Agência</span>
+                    <span>Parametrização</span>
                 </a>
             </li><!-- End Agency Nav -->
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index","Departments")">
+                <a class="nav-link collapsed" href="@Url.Action("Index","Departments")">
                     <i class="bi bi-journal-text"></i>
                     <span>Departamento</span>
                 </a>
             </li><!-- End Department Nav -->
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index","Employees")">
+                <a class="nav-link collapsed" href="@Url.Action("Index","Employees")">
                     <i class="bi bi-person-check"></i>
                     <span>Funcionário</span>
                 </a>
             </li><!-- End Worker Nav -->
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index","Equipments")">
+                <a class="nav-link collapsed" href="@Url.Action("Index","Equipments")">
                     <i class="bi bi-file-plus-fill"></i>
                     <span>Equipamento</span>
                 </a>
             </li><!-- End Equipment Nav -->
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index","Vehicles")">
+                <a class="nav-link collapsed" href="@Url.Action("Index","Vehicles")">
                     <i class="ri ri-car-fill"></i>
                     <span>Veículo</span>
                 </a>
             </li><!-- End Vehicle Nav -->
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index","Accidents")">
+                <a class="nav-link collapsed" href="@Url.Action("Index","Accidents")">
                     <i class="bi bi-shield-plus"></i>
                     <span>Sinistro</span>
                 </a>
@@ -413,6 +417,11 @@
 
     <!-- Template Main JS File -->
     <script src="~/Content/assets/js/main.js"></script>
+
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Content/jquery.dataTables.js"></script>
+
 
 </body>
 
