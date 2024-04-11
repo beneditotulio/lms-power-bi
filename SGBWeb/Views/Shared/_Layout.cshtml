@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Dashboard - CinoSoftAlert</title>
+    <title>Dashboard - Sistema de Gestão de Biblioteca</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -17,6 +17,8 @@
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
+    <link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
     <!-- Vendor CSS Files -->
 
     <link href="~/Content/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -46,7 +48,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">CinoSoftAlert</span>
+                <span class="d-none d-lg-block">Sistema de Gestão de Biblioteca</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -277,7 +279,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","Home")">
+                <a class="nav-link collapsed" href="@Url.Action("Dashboard","Home")">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -288,54 +290,65 @@
                     <i class="bi bi-menu-button-wide"></i>
                     <span>Parametrização</span>
                 </a>
-            </li><!-- End Agency Nav -->
+            </li><!-- End GeneralData Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","Departments")">
-                    <i class="bi bi-journal-text"></i>
-                    <span>Departamento</span>
+                <a class="nav-link collapsed" href="@Url.Action("Index","Authors")">
+                    <i class="bi bi-person"></i>
+                    <span>Autores</span>
                 </a>
-            </li><!-- End Department Nav -->
+            </li><!-- End Authors Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","Employees")">
-                    <i class="bi bi-person-check"></i>
-                    <span>Funcionário</span>
+                <a class="nav-link collapsed" href="@Url.Action("Index","Bookcase")">
+                    <i class="bi bi-bookmark-check"></i>
+                    <span>Estantes</span>
                 </a>
-            </li><!-- End Worker Nav -->
+            </li><!-- End Bookcase Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","Equipments")">
+                <a class="nav-link collapsed" href="@Url.Action("Index","Publishers")">
                     <i class="bi bi-file-plus-fill"></i>
-                    <span>Equipamento</span>
+                    <span>Editoras</span>
                 </a>
-            </li><!-- End Equipment Nav -->
+            </li><!-- End Publishers Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","Vehicles")">
-                    <i class="ri ri-car-fill"></i>
-                    <span>Veículo</span>
+                <a class="nav-link collapsed" href="@Url.Action("Index","Books")">
+                    <i class="ri ri-book-fill"></i>
+                    <span>Livros</span>
                 </a>
-            </li><!-- End Vehicle Nav -->
+            </li><!-- End Books Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","Accidents")">
-                    <i class="bi bi-shield-plus"></i>
-                    <span>Sinistro</span>
+                <a class="nav-link collapsed" href="@Url.Action("Index","Members")">
+                    <i class="bi bi-person-add"></i>
+                    <span>Membros</span>
                 </a>
-            </li><!-- End Accidents Nav -->
+            </li><!-- End Members Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-person"></i><span>Utilizador</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed" href="@Url.Action("Index","Loans")">
+                    <i class="bi bi-cart-check-fill"></i>
+                    <span>Empréstimos</span>
                 </a>
-                <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="users-profile.html">
-                            <i class="bi bi-circle"></i><span>Perfil</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="icons-remix.html">
-                            <i class="bi bi-circle"></i><span>Listar</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Users Nav -->
+            </li><!-- End Loans Nav -->
+            @if (User.IsInRole("Administrador"))
+            {
+                <li>@Html.ActionLink("Utilizadores", "Index", "Users")</li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="@Url.Action("Index", "Users")">
+                        <i class="bi bi-person"></i><span>Utilizador</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="users-profile.html">
+                                <i class="bi bi-circle"></i><span>Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="icons-remix.html">
+                                <i class="bi bi-circle"></i><span>Listar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li><!-- End Users Nav -->
+            }
+
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-bar-chart"></i><span>Análise de Dados</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -358,7 +371,7 @@
                     </li>
                 </ul>
             </li><!-- End Charts Nav -->
-            <li class="nav-heading">Pages</li>
+            @*<li class="nav-heading">Pages</li>*@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="pages-faq.html">
                     <i class="bi bi-question-circle"></i>
