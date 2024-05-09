@@ -57,8 +57,17 @@ namespace SGBWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Authors.Add(author);
-                db.SaveChanges();
+                //Verifica a existencia da editora, caso nao exista, cria
+                if (!AuthorServices.ExistsAuthorName(author.AuthorName))
+                {
+                    db.Authors.Add(author);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    TempData["errorMessage"] = $"Ja existe um autor com o nome: { author.AuthorName}" ;
+                }
+
                 return RedirectToAction("Index");
             }
 
