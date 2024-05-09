@@ -23,6 +23,14 @@ namespace SGBWeb.Services
             return _context.Members.FirstOrDefault(x=>x.UserId == userId).MemberID;
         }
 
+        public string GetMemberRoleByUserId(string userId)
+        {
+            return _context.Members.FirstOrDefault(x => x.UserId == userId).MemberType;
+        }
+        public string GetMemberRoleByUserName(string userName)
+        {
+            return _context.Members.FirstOrDefault(x => x.Email == userName).MemberType;
+        }
         #region Generate New Id
         public string GetNewEntityId(string entityType)
         {
