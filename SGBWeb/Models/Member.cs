@@ -26,7 +26,7 @@ namespace SGBWeb.Models
 
         [DisplayName("Gênero")]
         public string Gender { get; set; }
-
+        [ForeignKey("NationalityData")]
         [DisplayName("Nacionalidade")]
         public string Nationality { get; set; }
 
@@ -65,6 +65,8 @@ namespace SGBWeb.Models
                 return $"{this.FirstName} {this.OtherName} {this.LastName}"; 
             }              
         } 
+
+        public virtual GeneralData NationalityData { get; set; }
     }
 
 }
