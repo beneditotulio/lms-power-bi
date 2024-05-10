@@ -1,4 +1,5 @@
-﻿using SGBWeb.Services;
+﻿using Microsoft.AspNet.Identity;
+using SGBWeb.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace SGBWeb.Controllers
     {
         UsersService UsersService = new UsersService();
         GeneralDataService GeneralDataService = new GeneralDataService();
+        MemberService MemberService = new MemberService();
+
         // GET: Users
         public ActionResult Index()
         { 
@@ -95,7 +98,15 @@ namespace SGBWeb.Controllers
             var data = GeneralDataService.GetAllGeneralDataByType("USERPROFILE");
             return View("~/Views/Users/UserProfile/ProfileIndex.cshtml", data);
         }
-        #endregion 
+        #endregion
+
+        #region User Profile
+        public ActionResult UsersProfile()
+        {
+            var model = MemberService.GetMemberIByUserName(User.Identity.GetUserName());
+            return View(model);
+        }
+        #endregion
 
     }
 }
