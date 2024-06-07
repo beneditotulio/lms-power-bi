@@ -54,10 +54,10 @@
             <th>Accoes</th>
         </tr>
     </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
 
-    @foreach (var item in Model)
-    {
-        <tbody>
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Bookcase.BookcaseName)
@@ -102,9 +102,9 @@
                     <a href="@Url.Action("Delete", new {id = item.ISBN})" class="fa fa-trash" title="Eliminar Livro"></a>
                 </td>
             </tr>
-        </tbody>
-    }
 
+        }
+    </tbody>
 </table>
 
 
