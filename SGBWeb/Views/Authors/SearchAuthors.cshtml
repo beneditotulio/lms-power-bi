@@ -1,8 +1,19 @@
 ﻿@model List<SGBWeb.Models.Author>
-<ul>
-    @foreach (var author in Model)
-    {
-        <li data-author-id="@author.ID">@author.AuthorName</li>
+<style>
+    ul {
+        list-style-type: none;
     }
-</ul>
+    ul li:hover {
+        background-color: yellow;
+        /* Add any other styling you'd like */
+    }
+</style>
+<div id="content" style="height: 100px; overflow: auto">
+    <ul>
+        @foreach (var author in Model)
+        {
+            <li data-author-id="@author.ID">@author.AuthorName</li>
+        }
+    </ul>
+</div>
 

@@ -127,24 +127,25 @@
                         @Html.EditorFor(model => model.Illustration, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Illustration, "", new { @class = "text-danger" })
                     </div>
+                </div>  
+                <div class="col-md-6">
+                    <!-- Input field for searching and selecting authors -->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SelectedAuthorIDs, "Pesquise o nome do Autor")
+                        @Html.TextBox("authorSearch", null, new { @class = "form-control", placeholder = "Nome do Autor" })
+                        <div id="authorSearchResults"></div>
+                    </div>
+
+                    <!-- Display selected authors -->
+                    <div class="form-group">
+                        <label for="SelectedAuthorIDs">Autor(e)s Selecionad(o):</label>
+                        <ul id="selectedAuthorsList"></ul>
+                        @Html.HiddenFor(model => model.SelectedAuthorIDs)
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <!-- Input field for searching and selecting authors -->
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SelectedAuthorIDs, "Pesquise o nome do Autor")
-                    @Html.TextBox("authorSearch", null, new { @class = "form-control", placeholder = "Nome do Autor" })
-                    <div id="authorSearchResults"></div>
-                </div>
 
-                <!-- Display selected authors -->
-                <div class="form-group">
-                    <label for="SelectedAuthorIDs">Autor(e)s Selecionad(o):</label>
-                    <ul id="selectedAuthorsList"></ul>
-                    @Html.HiddenFor(model => model.SelectedAuthorIDs)
-                </div>
-            </div>
 
         </div>
 
