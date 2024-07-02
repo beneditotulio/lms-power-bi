@@ -43,5 +43,12 @@ namespace SGBWeb.Controllers
 
             return View();
         }
+
+        public ActionResult Faq()
+        {
+            ViewBag.Message = "Your F.A.Q. page.";
+
+            return View();
+        }
     }
 }
