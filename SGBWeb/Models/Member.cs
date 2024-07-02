@@ -54,6 +54,10 @@ namespace SGBWeb.Models
         public string Status { get; set; } = "REGISTERED";
         [DisplayName("UserId")]
         public string UserId { get; set; }
+
+        [DisplayName("Número de Estudante")]
+        public string StudentNumber { get; set; } // Novo campo para número de estudante
+
         //[NotMapped]
         //public string password { get; set; }
 

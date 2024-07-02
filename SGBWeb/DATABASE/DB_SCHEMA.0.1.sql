@@ -1076,3 +1076,17 @@ end region
 28/03/2024
 Created by IP
 */
+
+/*
+begin region
+02/07/2024
+Created by IP
+*/
+ALTER TABLE Members
+    ADD StudentNumber NVARCHAR(MAX); 
+GO
+/*
+end region
+02/07/2024
+Created by IP
+*/
