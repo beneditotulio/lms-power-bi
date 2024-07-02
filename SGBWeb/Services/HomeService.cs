@@ -74,6 +74,34 @@ namespace SGBWeb.Services
             if (membersLastYear == 0) return 100;
             return ((double)(membersThisYear - membersLastYear) / membersLastYear) * 100;
         }
+
+        public List<RecentFineViewModel> GetRecentFines()
+        {
+            // Carregar as configurações de multa
+            var dailyFine = _context.Settings.First().DailyFine ?? 0m; // Lidar com valor nulo
+
+            // Executar a consulta de empréstimos e multas
+            var loansWithFines = _context.Loans
+                .Where(l => l.ReturnedDate > l.DueDate)
+                .OrderByDescending(l => l.ReturnedDate)
+                .ToList(); // Carregar todos os empréstimos no contexto atual
+
+            // Converter para ViewModel
+            var recentFines = loansWithFines
+                .Select(l => new RecentFineViewModel
+                {
+                    LoanId = l.LoanID,
+                    MemberName = l.Member.FirstName + " " + l.Member.LastName,
+                    BookTitle = l.Book.Title,
+                    FineAmount = ((decimal)(l.ReturnedDate.Value - l.DueDate).Days) * dailyFine,
+                    Status = l.Status
+                })
+                .Take(5) // Ajuste conforme necessário
+                .ToList();
+
+            return recentFines;
+        }
+
     }
 
 }

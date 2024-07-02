@@ -236,44 +236,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2457</a></th>
-                                        <td>Edson Trindade</td>
-                                        <td><a href="#" class="text-primary">Book with ISBN 774894778.</a></td>
-                                        <td>$564</td>
-                                        <td><span class="badge bg-success">Returned</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2147</a></th>
-                                        <td>Guete Baptista</td>
-                                        <td><a href="#" class="text-primary">Book with ISBN 774894.</a></td>
-                                        <td>$47</td>
-                                        <td><span class="badge bg-warning">returned</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2049</a></th>
-                                        <td>Leonalda Faria</td>
-                                        <td><a href="#" class="text-primary">Loan for ISBN 6338423445.</a></td>
-                                        <td>$447</td>
-                                        <td><span class="badge bg-success">created</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td>Abreu Fernandes</td>
-                                        <td><a href="#" class="text-primar">Book with ISBN 774894778.</a></td>
-                                        <td>$367</td>
-                                        <td><span class="badge bg-danger">returned</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td>Kelven Mauro</td>
-                                        <td><a href="#" class="text-primary">Loan for ISBN 63384.</a></td>
-                                        <td>$465</td>
-                                        <td><span class="badge bg-success">created</span></td>
-                                    </tr>
+                                    @foreach (var fine in Model.RecentFines)
+                                    {
+                                        <tr>
+                                            <th scope="row"><a href="#">@fine.LoanId</a></th>
+                                            <td>@fine.MemberName</td>
+                                            <td><a href="#" class="text-primary">@fine.BookTitle</a></td>
+                                            <td>@fine.FineAmount.ToString("C")</td> <!-- Exibir como moeda -->
+                                            <td><span class="badge bg-success">@fine.Status</span></td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
-
                         </div>
 
                     </div>
