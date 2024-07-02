@@ -278,58 +278,20 @@
                     <h5 class="card-title">Actividades Recentes <span>| Today</span></h5>
 
                     <div class="activity">
-
-                        <div class="activity-item d-flex">
-                            <div class="activite-label">32 min</div>
-                            <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                            <div class="activity-content">
-                                Book with ISBN 774894778 returned. <a href="#" class="fw-bold text-dark">for Edson Trindade</a>
-                            </div>
-                        </div><!-- End activity item-->
-
-                        <div class="activity-item d-flex">
-                            <div class="activite-label">56 min</div>
-                            <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                            <div class="activity-content">
-                                Book with ISBN 774894 returned.
-                            </div>
-                        </div><!-- End activity item-->
-
-                        <div class="activity-item d-flex">
-                            <div class="activite-label">2 hrs</div>
-                            <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                            <div class="activity-content">
-                                Loan for ISBN 6338423445 created.
-                            </div>
-                        </div><!-- End activity item-->
-
-                        <div class="activity-item d-flex">
-                            <div class="activite-label">1 day</div>
-                            <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                            <div class="activity-content">
-                                Book with ISBN 774894778 returned. <a href="#" class="fw-bold text-dark">for Leonalda Faria</a>
-                            </div>
-                        </div><!-- End activity item-->
-
-                        <div class="activity-item d-flex">
-                            <div class="activite-label">2 days</div>
-                            <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                            <div class="activity-content">
-                                Loan for ISBN 63384 created.
-                            </div>
-                        </div><!-- End activity item-->
-
-                        <div class="activity-item d-flex">
-                            <div class="activite-label">4 weeks</div>
-                            <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                            <div class="activity-content">
-                                Loan for ISBN 774894 created.
-                            </div>
-                        </div><!-- End activity item-->
-
+                        @foreach (var activity in Model.RecentLoanActivities)
+                        {
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">@activity.TimeAgo</div>
+                                <i class='bi bi-circle-fill activity-badge @activity.BadgeColor align-self-start'></i>
+                                <div class="activity-content">
+                                    @activity.ActivityContent
+                                </div>
+                            </div><!-- End activity item-->
+                        }
                     </div>
 
                 </div>
+
             </div><!-- End Recent Activity -->
         </div><!-- End Right side columns -->
 

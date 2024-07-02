@@ -25,7 +25,8 @@ namespace SGBWeb.Controllers
                 FineIncreasePercentage = _homeService.GetFineIncreasePercentage(),
                 TotalMembers = _homeService.GetTotalMembers(),
                 MemberIncreasePercentage = _homeService.GetMemberIncreasePercentage(),
-                RecentFines = _homeService.GetRecentFines()
+                RecentFines = _homeService.GetRecentFines(),
+                RecentLoanActivities = _homeService.GetRecentLoanActivities()
             };
             return View(viewModel);
         }

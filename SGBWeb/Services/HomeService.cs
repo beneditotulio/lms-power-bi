@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace SGBWeb.Services
 {
@@ -101,6 +102,85 @@ namespace SGBWeb.Services
 
             return recentFines;
         }
+
+        public List<LoanHistoryViewModel> GetRecentLoanActivities()
+        {
+            var recentActivities = _context.LoanHistories
+                .Include(b => b.Loan)
+                .Include(b => b.Member)
+                .OrderByDescending(lh => lh.EventDate)
+                .Take(5) // Adjust as needed to fetch the desired number of activities
+                .ToList();
+
+            // Convert LoanHistory entities to LoanHistoryViewModels
+            var activityViewModels = recentActivities.Select(lh => new LoanHistoryViewModel
+            {
+                TimeAgo = CalculateTimeAgo(lh.EventDate), // You need to implement this method
+                BadgeColor = GetBadgeColor(lh.Event), // You need to implement this method
+                ActivityContent = FormatActivityContent(lh) // You need to implement this method
+            }).ToList();
+
+            return activityViewModels;
+        }
+
+        private string CalculateTimeAgo(DateTime eventDate)
+        {
+            TimeSpan timeSinceEvent = DateTime.Now - eventDate;
+            if (timeSinceEvent.TotalMinutes < 60)
+            {
+                return $"{(int)timeSinceEvent.TotalMinutes} min";
+            }
+            else if (timeSinceEvent.TotalHours < 24)
+            {
+                return $"{(int)timeSinceEvent.TotalHours} hrs";
+            }
+            else if (timeSinceEvent.TotalDays < 7)
+            {
+                return $"{(int)timeSinceEvent.TotalDays} dias";
+            }
+            else
+            {
+                return $"{(int)(timeSinceEvent.TotalDays / 7)} semanas";
+            }
+        }
+
+        private string GetBadgeColor(string events)
+        {
+            // Implement logic to determine badge color based on event type
+            // Example:
+            if (events == "Book Returned")
+            {
+                return "text-success";
+            }
+            else if (events == "Loan Created")
+            {
+                return "text-primary";
+            }
+            else
+            {
+                return "text-secondary";
+            }
+        }
+
+        private string FormatActivityContent(LoanHistory loanHistory)
+        {
+            // Format the activity content based on event type and details
+            // Example:
+            if (loanHistory.Event == "Book Returned")
+            {
+                return $"Livro com ISBN {loanHistory.Loan.Book.ISBN} devolvido {loanHistory.Loan.Member.FullName} .";
+            }
+            else if (loanHistory.Event == "Loan Created")
+            {
+                return $"Emprestimo com ISBN {loanHistory.Loan.Book.ISBN} {loanHistory.Loan.Book.Title} criado.";
+            }
+            else
+            {
+                return loanHistory.Details; // Or any other format you need
+            }
+        }
+
+
 
     }
 

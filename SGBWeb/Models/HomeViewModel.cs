@@ -14,6 +14,7 @@ namespace SGBWeb.Models
         public int TotalMembers { get; set; }
         public double MemberIncreasePercentage { get; set; }
         public List<RecentFineViewModel> RecentFines { get; set; } // Adicionar isso
+        public List<LoanHistoryViewModel> RecentLoanActivities { get; set; } // Adicionar isso
     }
 
     public class RecentFineViewModel
@@ -24,4 +25,12 @@ namespace SGBWeb.Models
         public decimal FineAmount { get; set; }
         public string Status { get; set; }
     }
+
+    public class LoanHistoryViewModel
+    {
+        public string TimeAgo { get; set; } // String representation of time elapsed
+        public string BadgeColor { get; set; } // CSS class for badge color
+        public string ActivityContent { get; set; } // Content of the activity item
+    }
+
 }
