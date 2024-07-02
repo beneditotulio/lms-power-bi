@@ -1038,7 +1038,15 @@ begin region
 Created by IP
 */
 ALTER TABLE Loans
-Modify LoanDate datetime
+Alter Column LoanDate datetime
+GO
+
+ALTER TABLE Loans
+Alter Column DueDate datetime
+GO
+
+ALTER TABLE Loans
+Alter Column ReturnedDate datetime
 GO
 
 --7. ANÁLISE DE MULTAS

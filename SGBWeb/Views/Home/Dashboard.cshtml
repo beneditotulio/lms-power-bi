@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SGBWeb.Models.HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -44,8 +45,8 @@
                                     <i class="bi bi-cart"></i>
                                 </div>
                                 <div class="ps-3">
-                                    <h6>145</h6>
-                                    <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                                    <h6>@Model.TotalLoans</h6>
+                                    <span class="text-success small pt-1 fw-bold">@Model.LoanIncreasePercentage %</span> <span class="text-muted small pt-2 ps-1">increase</span>
 
                                 </div>
                             </div>
@@ -78,8 +79,8 @@
                                     <i class="bi bi-currency-dollar"></i>
                                 </div>
                                 <div class="ps-3">
-                                    <h6>$3,264</h6>
-                                    <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                                    <h6>$ @Model.TotalFines</h6>
+                                    <span class="text-success small pt-1 fw-bold">@Model.FineIncreasePercentage%</span> <span class="text-muted small pt-2 ps-1">increase</span>
 
                                 </div>
                             </div>
@@ -113,8 +114,8 @@
                                     <i class="bi bi-people"></i>
                                 </div>
                                 <div class="ps-3">
-                                    <h6>1244</h6>
-                                    <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+                                    <h6>@Model.TotalMembers</h6>
+                                    <span class="text-danger small pt-1 fw-bold">@Model.MemberIncreasePercentage%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
 
                                 </div>
                             </div>
@@ -147,56 +148,56 @@
                             <div id="reportsChart"></div>
 
                             <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        new ApexCharts(document.querySelector("#reportsChart"), {
-                                            series: [{
-                                                name: 'Empréstimos',
-                                                data: [31, 40, 28, 51, 42, 82, 56],
-                                            }, {
+                                document.addEventListener("DOMContentLoaded", () => {
+                                    new ApexCharts(document.querySelector("#reportsChart"), {
+                                        series: [{
+                                            name: 'Empréstimos',
+                                            data: [31, 40, 28, 51, 42, 82, 56],
+                                        }, {
                                             name: 'Multas',
-                                                data: [11, 32, 45, 32, 34, 52, 41]
-                                            }, {
+                                            data: [11, 32, 45, 32, 34, 52, 41]
+                                        }, {
                                             name: 'Membros',
-                                                data: [15, 11, 32, 18, 9, 24, 11]
-                                            }],
-                                            chart: {
-                                                height: 350,
-                                                type: 'area',
-                                                toolbar: {
-                                                    show: false
-                                                },
+                                            data: [15, 11, 32, 18, 9, 24, 11]
+                                        }],
+                                        chart: {
+                                            height: 350,
+                                            type: 'area',
+                                            toolbar: {
+                                                show: false
                                             },
-                                            markers: {
-                                                size: 4
-                                            },
-                                            colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                                            fill: {
-                                                type: "gradient",
-                                                gradient: {
-                                                    shadeIntensity: 1,
-                                                    opacityFrom: 0.3,
-                                                    opacityTo: 0.4,
-                                                    stops: [0, 90, 100]
-                                                }
-                                            },
-                                            dataLabels: {
-                                                enabled: false
-                                            },
-                                            stroke: {
-                                                curve: 'smooth',
-                                                width: 2
-                                            },
-                                            xaxis: {
-                                                type: 'datetime',
-                                                categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                                            },
-                                            tooltip: {
-                                                x: {
-                                                    format: 'dd/MM/yy HH:mm'
-                                                },
+                                        },
+                                        markers: {
+                                            size: 4
+                                        },
+                                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                                        fill: {
+                                            type: "gradient",
+                                            gradient: {
+                                                shadeIntensity: 1,
+                                                opacityFrom: 0.3,
+                                                opacityTo: 0.4,
+                                                stops: [0, 90, 100]
                                             }
-                                        }).render();
-                                    });
+                                        },
+                                        dataLabels: {
+                                            enabled: false
+                                        },
+                                        stroke: {
+                                            curve: 'smooth',
+                                            width: 2
+                                        },
+                                        xaxis: {
+                                            type: 'datetime',
+                                            categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                                        },
+                                        tooltip: {
+                                            x: {
+                                                format: 'dd/MM/yy HH:mm'
+                                            },
+                                        }
+                                    }).render();
+                                });
                             </script>
                             <!-- End Line Chart -->
 
