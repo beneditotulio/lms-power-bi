@@ -1082,9 +1082,15 @@ begin region
 02/07/2024
 Created by IP
 */
-ALTER TABLE Members
+USE LibraryDB; 
+
+-- Verifica se o campo já existe antes de adicioná-lo
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Members' AND COLUMN_NAME = 'StudentNumber')
+BEGIN
+    ALTER TABLE Members
     ADD StudentNumber NVARCHAR(MAX); 
-GO
+END
+
 /*
 end region
 02/07/2024
