@@ -106,7 +106,7 @@ namespace SGBWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "MemberID,FirstName,OtherName,LastName,Gender,Nationality,Nuit,MemberType,Address,Email,Phone,DateCreate,Status")] Member member)
+        public async Task<ActionResult> Create([Bind(Include = "MemberID,FirstName,OtherName,LastName,Gender,Nationality,Nuit,MemberType,Address,Email,Phone,DateCreate,StudentNumber,Bi,Status")] Member member)
         {
             if (ModelState.IsValid)
             {
@@ -192,7 +192,7 @@ namespace SGBWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MemberID,FirstName,OtherName,LastName,Gender,Nationality,Nuit,MemberType,Address,Email,Phone,DateCreate,Status")] Member member)
+        public ActionResult Edit([Bind(Include = "MemberID,FirstName,OtherName,LastName,Gender,Nationality,Nuit,MemberType,Address,Email,Phone,DateCreate,StudentNumber,Bi,Status")] Member member)
         {
             if (ModelState.IsValid)
             {

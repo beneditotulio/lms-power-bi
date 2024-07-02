@@ -1091,6 +1091,8 @@ BEGIN
     ADD StudentNumber NVARCHAR(MAX); 
 END
 
+SELECT * FROM Members
+GO
 /*
 end region
 02/07/2024
