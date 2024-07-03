@@ -1,114 +1,78 @@
 ﻿@model SGBWeb.Models.Member
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalhes do Membro";
 }
 
-<h2>Details</h2>
+<div class="container mt-4">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="@Url.Action("Dashboard", "Home")">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Members")">Membro(s)</a></li>
+        <li class="breadcrumb-item active">Detalhes do Membro</li>
+    </ol>
 
-<div>
-    <h4>Member</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+    <div class="card">
+        <div class="card-header">
+            <h2>Detalhes do Membro : <strong>@Model.FullName</strong></h2> 
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.FirstName)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.FirstName)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.OtherName)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.OtherName)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OtherName)
-        </dt>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.LastName)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.LastName)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.OtherName)
-        </dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Gender)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Gender)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Nationality)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.NationalityData.Description)</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Nuit)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Nuit)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.MemberType)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.MemberType)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
+                        @if (Model.MemberType == "Estudante")
+                        {
+                            <dt class="col-sm-4">@Html.DisplayNameFor(model => model.StudentNumber)</dt>
+                            <dd class="col-sm-8">@Html.DisplayFor(model => model.StudentNumber)</dd>
+                        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Address)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Address)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nationality)
-        </dt>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Email)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Email)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nationality)
-        </dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Phone)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Phone)</dd>
+                    </dl>
+                </div>
+            </div>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">@Html.DisplayNameFor(model => model.DateCreate)</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.DateCreate)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nuit)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nuit)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MemberType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MemberType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-    </dl>
+                <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Status)</dt>
+                <dd class="col-sm-10">REGISTADO</dd>
+            </dl>
+        </div>
+        <div class="card-footer text-right">
+            <a href="/Members/Edit?id=@Model.MemberID" class="btn btn-primary">Editar</a> |
+            @*@Html.ActionLink("Editar", "Edit", new { id = Model.MemberID }, new { @class = "btn btn-primary" }) |*@
+            @Html.ActionLink("Voltar à Lista", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MemberID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
