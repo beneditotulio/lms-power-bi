@@ -56,7 +56,7 @@ namespace SGBWeb.Controllers
         // GET: Members
         public ActionResult Index()
         {
-            return View(db.Members.Where(x => x.Status == "REGISTERED").ToList());
+            return View(db.Members.Include(x=>x.NationalityData).Where(x => x.Status == "REGISTERED").ToList());
         }
 
         // GET: Members/Details/5
