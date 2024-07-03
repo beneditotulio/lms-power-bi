@@ -124,8 +124,8 @@
                         <td>
                             @*<a href="@Url.Action("Edit", new {id = Url.Encode(item.MemberID)})" class="fa fa-edit" title="Editar Membro"></a> |*@
                             <a href="/Members/Edit?id=@item.MemberID" class="fa fa-edit" title="Editar Membro"></a>|                            |
-                            <a href="@Url.Action("Details", new {id = item.MemberID})" class="fa fa-list" title="Detalhes Membro"></a> |
-                            <a href="@Url.Action("Delete", new {id = item.MemberID})" class="fa fa-trash" title="Eliminar Membro"></a>
+                            <a href="/Members/Details?id=@item.MemberID" class="fa fa-list" title="Detalhes Membro"></a> |
+                            <a href="/Members/Delete?id=@item.MemberID"  class="fa fa-trash" title="Eliminar Membro"></a>
                         </td>
                         </tr>
                     }

@@ -56,7 +56,7 @@ namespace SGBWeb.Controllers
         // GET: Members
         public ActionResult Index()
         {
-            return View(db.Members.ToList());
+            return View(db.Members.Where(x => x.Status == "REGISTERED").ToList());
         }
 
         // GET: Members/Details/5
@@ -267,7 +267,7 @@ namespace SGBWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Member member = db.Members.FirstOrDefault(x=>x.MemberID == id);
+            Member member = db.Members.FirstOrDefault(x => x.MemberID == id);
             if (member == null)
             {
                 return HttpNotFound();
@@ -281,10 +281,46 @@ namespace SGBWeb.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             Member member = db.Members.Find(id);
-            db.Members.Remove(member);
-            db.SaveChanges();
+            if (member != null)
+            {
+                member.Status = "DELETED";
+                db.Entry(member).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["successMessage"] = "Membro marcado como deletado com sucesso!";
+            }
+            else
+            {
+                TempData["errorMessage"] = "Membro não encontrado!";
+            }
             return RedirectToAction("Index");
         }
+
+
+        //// GET: Members/Delete/5
+        //public ActionResult Delete(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Member member = db.Members.FirstOrDefault(x=>x.MemberID == id);
+        //    if (member == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(member);
+        //}
+
+        //// POST: Members/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(string id)
+        //{
+        //    Member member = db.Members.Find(id);
+        //    db.Members.Remove(member);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {
