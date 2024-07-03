@@ -1,42 +1,203 @@
 ﻿@model SGBWeb.Models.Loan
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Loan";
 }
 
-<h2 class="btn-success">Criar</h2>
+<h2>Criar Empréstimo</h2>
 
-@using (Html.BeginForm()) 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Empréstimos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Criar Empréstimo</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Detalhes do Livro
+            </div>
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>Título do Livro:</dt>
+                    <dd id="BookTitle"></dd>
+                    <dt>ISBN:</dt>
+                    <dd id="BookISBN"></dd>
+                    <dt>Cópias Disponíveis:</dt>
+                    <dd id="BookCopies"></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Detalhes do Estudante
+            </div>
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>Nome do Estudante:</dt>
+                    <dd id="StudentName"></dd>
+                    <dt>BI:</dt>
+                    <dd id="StudentBI"></dd>
+                    <dt>Número do Cartão do Estudante:</dt>
+                    <dd id="StudentCardNumber"></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Empréstimo</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.Label("Livro", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ISBN", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ISBN, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("BookSearch", "Pesquisar Livro:", new { @class = "control-label" })
+                    <input type="text" id="BookSearch" class="form-control" placeholder="Digite título do livro ou ISBN">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("StudentSearch", "Pesquisar Estudante:", new { @class = "control-label" })
+                    <input type="text" id="StudentSearch" class="form-control" placeholder="Digite nome do estudante, BI ou número do cartão">
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.Label("Estudante", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MemberID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MemberID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @Html.HiddenFor(model => model.ISBN)
+        @Html.HiddenFor(model => model.CopyID)
+        @Html.HiddenFor(model => model.MemberID)
+        @Html.HiddenFor(model => model.UserId)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Criar" class="btn btn-success fa fa-save" />
+                <input type="submit" value="Salvar" class="btn btn-default" id="submitBtn" disabled />
+                @Html.ActionLink("Voltar à Lista", "Index", null, new { @class = "btn btn-secondary" })
             </div>
         </div>
     </div>
 }
 
+<script>
+    $(document).ready(function () {
+        var selectedBook = null;
+        var selectedStudent = null;
 
+        // Função para buscar e exibir detalhes do livro
+        $('#BookSearch').keyup(function () {
+            var searchText = $(this).val().trim();
+            if (searchText.length >= 3) {
+                $.ajax({
+                    url: '@Url.Action("GetBookDetails", "Loans")',
+                    type: 'GET',
+                    data: { searchText: searchText },
+                    success: function (data) {
+                        if (data) {
+                            selectedBook = data;
+                            $('#BookTitle').text(data.title);
+                            $('#BookISBN').text(data.isbn);
+                            $('#BookCopies').text(data.availableCopies);
+                            enableSubmitButton();
+                        } else {
+                            selectedBook = null;
+                            clearBookDetails();
+                            disableSubmitButton();
+                        }
+                    },
+                    error: function () {
+                        console.log('Erro ao buscar detalhes do livro.');
+                        disableSubmitButton();
+                    }
+                });
+            } else {
+                selectedBook = null;
+                clearBookDetails();
+                disableSubmitButton();
+            }
+        });
 
+        // Função para buscar e exibir detalhes do estudante
+        $('#StudentSearch').keyup(function () {
+            var searchText = $(this).val().trim();
+            if (searchText.length >= 3) {
+                $.ajax({
+                    url: '@Url.Action("GetStudentDetails", "Loans")',
+                    type: 'GET',
+                    data: { searchText: searchText },
+                    success: function (data) {
+                        if (data) {
+                            selectedStudent = data;
+                            $('#StudentName').text(data.name);
+                            $('#StudentBI').text(data.bi);
+                            $('#StudentCardNumber').text(data.cardNumber);
+                            enableSubmitButton();
+                        } else {
+                            selectedStudent = null;
+                            clearStudentDetails();
+                            disableSubmitButton();
+                        }
+                    },
+                    error: function () {
+                        console.log('Erro ao buscar detalhes do estudante.');
+                        disableSubmitButton();
+                    }
+                });
+            } else {
+                selectedStudent = null;
+                clearStudentDetails();
+                disableSubmitButton();
+            }
+        });
+
+        function enableSubmitButton() {
+            if (selectedBook && selectedStudent) {
+                $('#submitBtn').prop('disabled', false);
+            }
+        }
+
+        function disableSubmitButton() {
+            $('#submitBtn').prop('disabled', true);
+        }
+
+        function clearBookDetails() {
+            $('#BookTitle').text('');
+            $('#BookISBN').text('');
+            $('#BookCopies').text('');
+        }
+
+        function clearStudentDetails() {
+            $('#StudentName').text('');
+            $('#StudentBI').text('');
+            $('#StudentCardNumber').text('');
+        }
+
+        // Evento de envio do formulário
+        $('form').submit(function (event) {
+            event.preventDefault(); // Evita o envio padrão do formulário
+
+            // Verifica se ambos livro e estudante foram selecionados
+            if (selectedBook && selectedStudent) {
+                // Atribui os valores selecionados aos campos hidden
+                $('#ISBN').val(selectedBook.isbn);
+                $('#CopyID').val(selectedBook.copyId); // Ajuste conforme a lógica do seu sistema
+                $('#MemberID').val(selectedStudent.memberId);
+                $('#UserId').val(selectedStudent.userId);
+
+                // Submete o formulário
+                this.submit();
+            } else {
+                alert('Por favor, selecione um livro e um estudante válidos.');
+            }
+        });
+    });
+</script>

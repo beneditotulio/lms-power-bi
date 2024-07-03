@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace SGBWeb.Services
 {
@@ -108,5 +109,39 @@ namespace SGBWeb.Services
                 _context.SaveChanges();
             }
         }
+
+
+        // Action para buscar detalhes do livro
+        public List<object> GetBookDetails(string searchText)
+        {
+            var books = _context.Books
+                .Where(b => b.Title.Contains(searchText) || b.ISBN.Contains(searchText))
+                .Select(b => new
+                {
+                    title = b.Title,
+                    isbn = b.ISBN,
+                    availableCopies = b.Copies.Count(c => c.Condition == "Disponível")
+                })
+                .ToList<object>();
+
+            return books;
+        }
+
+        // Action para buscar detalhes do estudante
+        public List<object> GetStudentDetails(string searchText)
+        {
+            var students = _context.Members
+                .Where(m => m.FirstName.Contains(searchText) || m.LastName.Contains(searchText) || m.Bi.Contains(searchText) || m.StudentNumber.Contains(searchText))
+                .Select(m => new
+                {
+                    name = m.FirstName + " " + m.OtherName + " " + m.LastName,
+                    bi = m.Bi,
+                    cardNumber = m.StudentNumber
+                })
+                .ToList<object>();
+
+            return students;
+        }
+
     }
 }

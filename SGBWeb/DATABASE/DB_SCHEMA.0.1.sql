@@ -1093,6 +1093,9 @@ END
 
 SELECT * FROM Members
 GO
+
+SELECT * FROM Copies
+GO
 /*
 end region
 02/07/2024

@@ -194,5 +194,28 @@ namespace SGBWeb.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        // Action para buscar detalhes do livro
+        public ActionResult GetBookDetails(string searchText)
+        {
+            var bookDetails = LoanService.GetBookDetails(searchText);
+            if (bookDetails != null)
+            {
+                return Json(bookDetails, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null);
+        }
+
+        // Action para buscar detalhes do estudante
+        public ActionResult GetStudentDetails(string searchText)
+        {
+            var studentDetails = LoanService.GetStudentDetails(searchText);
+            if (studentDetails != null)
+            {
+                return Json(studentDetails, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null);
+        }
     }
 }
