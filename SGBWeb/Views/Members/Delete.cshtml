@@ -4,117 +4,121 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="@Url.Action("Dashboard", "Home")">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Members")">Membro(s)</a></li>
+    <li class="breadcrumb-item active">Eliminar Membro(s)</li>
+</ol>
 
-<h3>Deseja eliminar este membro?</h3>
-<div>
-    <h4>Member</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+<div class="card">
+    <div class="card-header">
+        <h2 class="btn-danger">Eliminar</h2>
+    </div>
+    <div class="card-body">
+        <h3>Deseja eliminar este membro: <strong>@Model.FullName</strong>?</h3>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.OtherName)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.OtherName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OtherName)
-        </dt>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.OtherName)
-        </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Nationality)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.NationalityData.Description)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Nuit)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Nuit)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.MemberType)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.MemberType)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Address)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nationality)
-        </dt>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nationality)
-        </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nuit)
-        </dt>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.DateCreate)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.DateCreate)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nuit)
-        </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Status)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MemberType)
-        </dt>
+            @if (Model.MemberType == "Estudante")
+            {
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.StudentNumber)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.StudentNumber)</dd>
+            }
+        </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.MemberType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Gravar" class="btn btn-default" /> |
-            @Html.ActionLink("Voltar a lista", "Index")
-        </div>
-    }
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-actions">
+                <button type="submit" class="btn btn-danger">
+                    Confirmar Eliminação
+                    <i class="fa fa-trash"></i>
+                </button>
+                @Html.ActionLink("Voltar a lista", "Index", null, new { @class = "btn btn-secondary ml-2" })
+            </div>
+        }
+    </div>
 </div>
