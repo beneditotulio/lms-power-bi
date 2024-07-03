@@ -38,7 +38,7 @@ namespace SGBWeb.Services
                         Details = $"Loan for ISBN {loan.ISBN} created."
                     });
                     _context.SaveChanges();
-                    BookService.UpdateBookCopyStatus(loan.CopyID, "Empéstimo");
+                    BookService.UpdateBookCopyStatus(loan.CopyID, "Empréstimo");
 
                     transaction.Commit();
                     result = true;
