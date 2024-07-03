@@ -190,16 +190,73 @@ namespace SGBWeb.Controllers
         // POST: Members/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "MemberID,FirstName,OtherName,LastName,Gender,Nationality,Nuit,MemberType,Address,Email,Phone,DateCreate,StudentNumber,Bi,Status")] Member member)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(member).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(member);
+        //}
+        // POST: Members/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MemberID,FirstName,OtherName,LastName,Gender,Nationality,Nuit,MemberType,Address,Email,Phone,DateCreate,StudentNumber,Bi,Status")] Member member)
+        public async Task<ActionResult> Edit([Bind(Include = "MemberID,FirstName,OtherName,LastName,Gender,Nationality,Nuit,MemberType,Address,Email,Phone,DateCreate,StudentNumber,Bi,Status")] Member member)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(member).State = EntityState.Modified;
+                var existingMember = db.Members.Find(member.MemberID);
+                if (existingMember == null)
+                {
+                    return HttpNotFound();
+                }
+
+                // Update member properties
+                existingMember.FirstName = member.FirstName;
+                existingMember.OtherName = member.OtherName;
+                existingMember.LastName = member.LastName;
+                existingMember.Gender = member.Gender;
+                existingMember.Nationality = member.Nationality;
+                existingMember.Nuit = member.Nuit;
+                //existingMember.MemberType = member.MemberType;
+                existingMember.Address = member.Address;
+                existingMember.Email = member.Email;
+                existingMember.Phone = member.Phone;
+                existingMember.StudentNumber = member.StudentNumber;
+                existingMember.Bi = member.Bi;
+                existingMember.Status = member.Status;
+
+                // Check if the member type (permission) has changed
+                if (existingMember.MemberType != member.MemberType)
+                {
+                    // Remove old permission
+                    var rolesForUser = await UserManager.GetRolesAsync(existingMember.UserId);
+                    if (rolesForUser.Count() > 0)
+                    {
+                        foreach (var item in rolesForUser.ToList())
+                        {
+                            var result = await UserManager.RemoveFromRoleAsync(existingMember.UserId, item);
+                        }
+                    }
+
+                    // Add new permission
+                    var result1 = UserManager.AddToRole(existingMember.UserId, member.MemberType);
+
+                    existingMember.MemberType = member.MemberType;
+                }
+
+
+                // Update database
+                db.Entry(existingMember).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["successMessage"] = "Registo atualizado com sucesso!";
                 return RedirectToAction("Index");
             }
+
             return View(member);
         }
 
