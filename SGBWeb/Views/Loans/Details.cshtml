@@ -1,74 +1,61 @@
 ﻿@model SGBWeb.Models.Loan
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalhes do Empréstimo";
 }
 
-<h2>Details</h2>
+<div class="container-fluid">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="@Url.Action("Dashboard", "Home")">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index")">Empréstimos</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detalhes</li>
+        </ol>
+    </nav>
 
-<div>
-    <h4>Loan</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Book.Title)
-        </dt>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Detalhes do Empréstimo</h2>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Título do Livro:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Book.Title)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Book.Title)
-        </dd>
+                <dt class="col-sm-3">ISBN:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Copy.ISBN)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Copy.ISBN)
-        </dt>
+                <dt class="col-sm-3">Estudante:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Member.FullName)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Copy.ISBN)
-        </dd>
+                <dt class="col-sm-3">Utilizador:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.User.FullName)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Member.FirstName)
-        </dt>
+                <dt class="col-sm-3">Data de Empréstimo:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.LoanDate)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Member.FirstName)
-        </dd>
+                <dt class="col-sm-3">Data de Devolução:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.DueDate)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FirstName)
-        </dt>
+                <dt class="col-sm-3">Data de Devolução Real:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.ReturnedDate)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.User.FirstName)
-        </dd>
+                <dt class="col-sm-3">Estado:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Status)</dd>
+            </dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LoanDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LoanDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DueDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DueDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ReturnedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReturnedDate)
-        </dd>
-
-    </dl>
+            <div class="row mt-4">
+                <div class="col-sm-6">
+                    <a href="@Url.Action("Edit", new { id = Model.LoanID })" class="btn btn-primary">
+                        <i class="fa fa-edit"></i> Editar Empréstimo
+                    </a>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="@Url.Action("Index")" class="btn btn-secondary">
+                        <i class="fa fa-arrow-left"></i> Voltar para Lista
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.LoanID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
