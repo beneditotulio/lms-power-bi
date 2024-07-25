@@ -15,80 +15,72 @@ namespace SGBWeb.Controllers
     //[Authorize(Roles = "Administrator")]
     public class BooksController : Controller
     {
-        private LibraryDbContext db = new LibraryDbContext();
-        BookService BookService = new BookService();
+        private readonly LibraryDbContext db = new LibraryDbContext();
+        private readonly BookService bookService = new BookService();
+
         // GET: Books
         public ActionResult Index()
         {
-            var books = new List<Book>();
             try
             {
-              books =  BookService.GetAllBooks();
+                var books = bookService.GetAllBooks();
+                return View(books);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw;
+                // Log the exception
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
-            return View(books);
         }
 
         // GET: Books/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = BookService.GetBookByISBN(id);
+
+            var book = bookService.GetBookByISBN(id);
             if (book == null)
             {
                 return HttpNotFound();
             }
+
             return View(book);
         }
 
         // GET: Books/Create
         public ActionResult Create()
         {
-            ViewBag.BookcaseID = new SelectList(db.Bookcases, "BookcaseID", "BookcaseName");
-            ViewBag.CategoryID = new SelectList(db.GeneralDatas.Where(x=>x.ClassifierType == "CATEGORIA").ToList(), "ID", "Description");
-            ViewBag.CountryID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "COUNTRY").ToList(), "ID", "Description");
-            ViewBag.LanguageID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "IDIOMA").ToList(), "ID", "Description");
-            ViewBag.PublisherID = new SelectList(db.Publishers, "PublisherID", "PublisherName");
-            var model = new Book();
-            return View(model);
+            PopulateDropDownLists();
+            return View(new Book());
         }
 
         // POST: Books/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ISBN,Title,Subtitle,CDU,BookcaseID,PublisherID,LanguageID,Pagination,PublicationYear,CategoryID,AvailableCopies,CountryID,Illustration,SelectedAuthorIDs")] Book book)
         {
             if (ModelState.IsValid)
             {
-                var selectedAuthorIDs = BookService.RemoveAuthorsIds(book.SelectedAuthorIDs);
+                var selectedAuthorIDs = bookService.RemoveAuthorsIds(book.SelectedAuthorIDs);
                 try
                 {
-                    //Create Book
-                    if (BookService.CreateBook(book))
+                    if (bookService.CreateBook(book))
                     {
-                        //If is Book Created, foreach author, associate book.
-                        for (int i = 0; i < selectedAuthorIDs.Length; i++)
+                        foreach (var authorId in selectedAuthorIDs)
                         {
                             var bookAuthors = new BooksAuthors
                             {
-                                AuthorID = int.Parse(selectedAuthorIDs[i]),
+                                AuthorID = int.Parse(authorId),
                                 ISBN = book.ISBN
                             };
-                            BookService.CreateBookAuthors(bookAuthors);
+                            bookService.CreateBookAuthors(bookAuthors);
                         }
-                        //If AvailableCopies = 0, then set 1
-                        book.AvailableCopies = book.AvailableCopies == 0 ? 1 : book.AvailableCopies;
 
-                        //Create each copy according to total amount of Available Copies
+                        book.AvailableCopies = Math.Max(book.AvailableCopies, 1);
+
                         for (int i = 1; i <= book.AvailableCopies; i++)
                         {
                             var copy = new Copy
@@ -97,59 +89,45 @@ namespace SGBWeb.Controllers
                                 ISBN = book.ISBN,
                                 Condition = "Disponível"
                             };
-                            BookService.CreateBookCopies(copy);
+                            bookService.CreateBookCopies(copy);
                         }
                     }
-
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-
-                    throw;
+                    // Log the exception
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                 }
+
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BookcaseID = new SelectList(db.Bookcases, "BookcaseID", "BookcaseName");
-            ViewBag.CategoryID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "CATEGORIA").ToList(), "ID", "Description");
-            ViewBag.CountryID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "COUNTRY").ToList(), "ID", "Description");
-            ViewBag.LanguageID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "IDIOMA").ToList(), "ID", "Description");
-            ViewBag.PublisherID = new SelectList(db.Publishers, "PublisherID", "PublisherName");
+            PopulateDropDownLists();
             return View(book);
         }
 
         // GET: Books/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            List<BooksAuthors> booksAuthors = db.BooksAuthors
-                .Where(x=>x.ISBN == id)
-                .Include(b => b.Book)
-                .Include(b => b.Author)
-                .ToList();
 
-            Book book = db.Books
-                .Include(ba=>ba.BooksAuthors)
-                .FirstOrDefault(x=>x.ISBN == id);
+            var book = db.Books
+                .Include(b => b.BooksAuthors)
+                .FirstOrDefault(b => b.ISBN == id);
 
             if (book == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.BookcaseID = new SelectList(db.Bookcases, "BookcaseID", "BookcaseName");
-            ViewBag.CategoryID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "CATEGORIA").ToList(), "ID", "Description");
-            ViewBag.CountryID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "COUNTRY").ToList(), "ID", "Description");
-            ViewBag.LanguageID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "IDIOMA").ToList(), "ID", "Description");
-            ViewBag.PublisherID = new SelectList(db.Publishers, "PublisherID", "PublisherName");
+
+            PopulateDropDownLists();
             return View(book);
         }
 
         // POST: Books/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ISBN,Title,Subtitle,CDU,BookcaseID,PublisherID,LanguageID,Pagination,PublicationYear,CategoryID,AvailableCopies,CountryID,Illustration,SelectedAuthorIDs")] Book book)
@@ -160,26 +138,25 @@ namespace SGBWeb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BookcaseID = new SelectList(db.Bookcases, "BookcaseID", "BookcaseName");
-            ViewBag.CategoryID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "CATEGORIA").ToList(), "ID", "Description");
-            ViewBag.CountryID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "COUNTRY").ToList(), "ID", "Description");
-            ViewBag.LanguageID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "IDIOMA").ToList(), "ID", "Description");
-            ViewBag.PublisherID = new SelectList(db.Publishers, "PublisherID", "PublisherName");
+
+            PopulateDropDownLists();
             return View(book);
         }
 
         // GET: Books/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = BookService.GetBookByISBN(id);
+
+            var book = bookService.GetBookByISBN(id);
             if (book == null)
             {
                 return HttpNotFound();
             }
+
             return View(book);
         }
 
@@ -188,18 +165,23 @@ namespace SGBWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Book book = db.Books.Find(id);
-            db.Books.Remove(book);
-            db.SaveChanges();
+            var book = db.Books.Find(id);
+            if (book != null)
+            {
+                db.Books.Remove(book);
+                db.SaveChanges();
+            }
+
             return RedirectToAction("Index");
         }
 
         // GET: Books/GetBookCopies/5
         public ActionResult GetBookCopies(string isbn)
         {
-            var copies = BookService.GetBookCopiesByISBN(isbn);
+            var copies = bookService.GetBookCopiesByISBN(isbn);
             return View(copies);
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -207,6 +189,15 @@ namespace SGBWeb.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private void PopulateDropDownLists()
+        {
+            ViewBag.BookcaseID = new SelectList(db.Bookcases, "BookcaseID", "BookcaseName");
+            ViewBag.CategoryID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "CATEGORIA"), "ID", "Description");
+            ViewBag.CountryID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "COUNTRY"), "ID", "Description");
+            ViewBag.LanguageID = new SelectList(db.GeneralDatas.Where(x => x.ClassifierType == "IDIOMA"), "ID", "Description");
+            ViewBag.PublisherID = new SelectList(db.Publishers, "PublisherID", "PublisherName");
         }
     }
 }
