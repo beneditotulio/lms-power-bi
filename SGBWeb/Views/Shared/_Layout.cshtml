@@ -283,93 +283,112 @@
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Dashboard","Home")">
-                    <i class="bi bi-grid"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li><!-- End Dashboard Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","GeneralData")">
-                    <i class="bi bi-menu-button-wide"></i>
-                    <span>Parametrização</span>
-                </a>
-            </li><!-- End GeneralData Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","Authors")">
-                    <i class="bi bi-person"></i>
-                    <span>Autores</span>
-                </a>
-            </li><!-- End Authors Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","Bookcase")">
-                    <i class="bi bi-bookmark-check"></i>
-                    <span>Estantes</span>
-                </a>
-            </li><!-- End Bookcase Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","Publishers")">
-                    <i class="bi bi-file-plus-fill"></i>
-                    <span>Editoras</span>
-                </a>
-            </li><!-- End Publishers Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","Books")">
-                    <i class="ri ri-book-fill"></i>
-                    <span>Livros</span>
-                </a>
-            </li><!-- End Books Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","Members")">
-                    <i class="bi bi-person-add"></i>
-                    <span>Membros</span>
-                </a>
-            </li><!-- End Members Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index","Loans")">
-                    <i class="bi bi-cart-check-fill"></i>
-                    <span>Empréstimos</span>
-                </a>
-            </li><!-- End Loans Nav -->
-            @if (User.IsInRole("Administrador"))
+            @if (User.IsInRole("Estudante"))
             {
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="@Url.Action("Index", "Users")">
-                        <i class="bi bi-person"></i><span>Utilizador</span>
+                    <a class="nav-link collapsed" href="@Url.Action("Index","Loans")">
+                        <i class="bi bi-cart-check-fill"></i>
+                        <span>Empréstimos</span>
                     </a>
-                </li><!-- End Users Nav -->
+                </li><!-- End Loans Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Faq", "Home")">
+                        <i class="bi bi-question-circle"></i>
+                        <span>F.A.Q</span>
+                    </a>
+                </li><!-- End F.A.Q Page Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Contact", "Home")">
+                        <i class="bi bi-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                </li><!-- End Contact Page Nav -->
             }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Dashboard","Home")">
+                        <i class="bi bi-grid"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <!-- End Dashboard Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-bar-chart"></i><span>Análise de Dados</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li class="nav-item"><a class="nav-link collapsed" href="@Url.Action("Report", "Reports")">Reports</a></li>
-                </ul>
-            </li><!-- End Charts Nav -->
-            @*<li class="nav-heading">Pages</li>*@
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Faq", "Home")">
-                    <i class="bi bi-question-circle"></i>
-                    <span>F.A.Q</span>
-                </a>
-            </li><!-- End F.A.Q Page Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Index","GeneralData")">
+                        <i class="bi bi-menu-button-wide"></i>
+                        <span>Parametrização</span>
+                    </a>
+                </li><!-- End GeneralData Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Index","Authors")">
+                        <i class="bi bi-person"></i>
+                        <span>Autores</span>
+                    </a>
+                </li><!-- End Authors Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Index","Bookcase")">
+                        <i class="bi bi-bookmark-check"></i>
+                        <span>Estantes</span>
+                    </a>
+                </li><!-- End Bookcase Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Index","Publishers")">
+                        <i class="bi bi-file-plus-fill"></i>
+                        <span>Editoras</span>
+                    </a>
+                </li><!-- End Publishers Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Index","Books")">
+                        <i class="ri ri-book-fill"></i>
+                        <span>Livros</span>
+                    </a>
+                </li><!-- End Books Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Index","Members")">
+                        <i class="bi bi-person-add"></i>
+                        <span>Membros</span>
+                    </a>
+                </li><!-- End Members Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Index","Loans")">
+                        <i class="bi bi-cart-check-fill"></i>
+                        <span>Empréstimos</span>
+                    </a>
+                </li><!-- End Loans Nav -->
+                if (User.IsInRole("Administrador"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="@Url.Action("Index", "Users")">
+                            <i class="bi bi-person"></i><span>Utilizador</span>
+                        </a>
+                    </li><!-- End Users Nav -->
+                }
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Contact", "Home")">
-                    <i class="bi bi-envelope"></i>
-                    <span>Contact</span>
-                </a>
-            </li><!-- End Contact Page Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-bar-chart"></i><span>Análise de Dados</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li class="nav-item"><a class="nav-link collapsed" href="@Url.Action("Report", "Reports")">Reports</a></li>
+                    </ul>
+                </li><!-- End Charts Nav -->
+                @*<li class="nav-heading">Pages</li>*@
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Faq", "Home")">
+                        <i class="bi bi-question-circle"></i>
+                        <span>F.A.Q</span>
+                    </a>
+                </li><!-- End F.A.Q Page Nav -->
 
-
-
-
-
-
-
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Contact", "Home")">
+                        <i class="bi bi-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                </li><!-- End Contact Page Nav -->
+            }
 
         </ul>
 

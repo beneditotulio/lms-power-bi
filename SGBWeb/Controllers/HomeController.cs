@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace SGBWeb.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         HomeService _homeService = new HomeService();
