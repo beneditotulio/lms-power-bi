@@ -63,8 +63,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.Label("BookSearch", "Pesquisar Livro:", new { @class = "control-label" })
-                    <input type="text" id="BookSearch" class="form-control" placeholder="Digite título do livro ou ISBN">
+                    <input type="text" id="BookSearch" class="form-control" placeholder="Digite título do livro ou ISBN" onkeyup="searchBooks()">
                 </div>
+                @*<input type="text" id="searchText" placeholder="Search for a book" onkeyup="searchBooks()" />*@
+                <select class="form-control" id="bookDropdown" onchange="displayBookDetails()">
+                    <option value="">Selecione o livro</option>
+                </select>
+                <div id="bookDetails"></div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
@@ -200,4 +205,34 @@
             }
         });
     });
+
+
+        function searchBooks() {
+            var searchText = $('#BookSearch').val();
+            $.ajax({
+                url: '@Url.Action("GetBookDetails", "Loans")',
+                type: 'GET',
+                data: { searchText: searchText },
+                success: function (data) {
+                    var dropdown = $('#bookDropdown');
+                    dropdown.empty();
+                    if (data) {
+                        $.each(data, function (index, book) {
+                            dropdown.append($('<option>', {
+                                value: book.isbn,
+                                text: book.title
+                            }));
+                        });
+                    }
+                }
+            });
+        }
+
+        function displayBookDetails() {
+            var selectedBook = $('#bookDropdown option:selected').text();
+            var selectedISBN = $('#bookDropdown').val();
+            $('#BookTitle').text(selectedBook);
+            $('#BookISBN').text(selectedISBN);
+            //$('#bookDetails').html('Title: ' + selectedBook + '<br>ISBN: ' + selectedISBN);
+        }
 </script>
