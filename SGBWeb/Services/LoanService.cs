@@ -136,7 +136,9 @@ namespace SGBWeb.Services
                 {
                     name = m.FirstName + " " + m.OtherName + " " + m.LastName,
                     bi = m.Bi,
-                    cardNumber = m.StudentNumber
+                    cardNumber = m.StudentNumber,
+                    memberId = m.MemberID,
+                    userId = m.UserId
                 })
                 .ToList<object>();
 

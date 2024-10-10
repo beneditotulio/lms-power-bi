@@ -65,8 +65,7 @@
                     @Html.Label("BookSearch", "Pesquisar Livro:", new { @class = "control-label" })
                     <input type="text" id="BookSearch" class="form-control" placeholder="Digite título do livro ou ISBN" onkeyup="searchBooks()">
                 </div>
-                @*<input type="text" id="searchText" placeholder="Search for a book" onkeyup="searchBooks()" />*@
-                <select class="form-control" id="bookDropdown" onchange="displayBookDetails()">
+                <select class="form-control" id="bookDropdown">
                     <option value="">Selecione o livro</option>
                 </select>
                 <div id="bookDetails"></div>
@@ -75,6 +74,10 @@
                 <div class="form-group">
                     @Html.Label("StudentSearch", "Pesquisar Estudante:", new { @class = "control-label" })
                     <input type="text" id="StudentSearch" class="form-control" placeholder="Digite nome do estudante, BI ou número do cartão">
+                    
+                    <select class="form-control" id="studentDropdown" >
+                        <option value="">Selecione o estudante</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -107,11 +110,43 @@
                     type: 'GET',
                     data: { searchText: searchText },
                     success: function (data) {
+                        var dropdown = $('#bookDropdown');
+                        dropdown.empty();
+                        dropdown.append($('<option>', {
+                            value: '',
+                            text: 'Selecione o livro'
+                        }));
                         if (data) {
-                            selectedBook = data;
-                            $('#BookTitle').text(data.title);
-                            $('#BookISBN').text(data.isbn);
-                            $('#BookCopies').text(data.availableCopies);
+                            $.each(data, function (index, book) {
+                                dropdown.append($('<option>', {
+                                    value: book.isbn,
+                                    text: book.title
+                                }));
+                            });
+                        }
+                    },
+                    error: function () {
+                        console.log('Erro ao buscar detalhes do livro.');
+                    }
+                });
+            }
+        });
+
+        // Função para exibir detalhes do livro selecionado
+        $('#bookDropdown').change(function () {
+            var selectedISBN = $(this).val();
+            if (selectedISBN) {
+                $.ajax({
+                    url: '@Url.Action("GetBookDetails", "Loans")',
+                    type: 'GET',
+                    data: { searchText: selectedISBN },
+                    success: function (data) {
+                        if (data && data.length > 0) {
+                            var book = data[0];
+                            selectedBook = book;
+                            $('#BookTitle').text(book.title);
+                            $('#BookISBN').text(book.isbn);
+                            $('#BookCopies').text(book.availableCopies);
                             enableSubmitButton();
                         } else {
                             selectedBook = null;
@@ -131,7 +166,7 @@
             }
         });
 
-        // Função para buscar e exibir detalhes do estudante
+        @*// Função para buscar e exibir detalhes do estudante
         $('#StudentSearch').keyup(function () {
             var searchText = $(this).val().trim();
             if (searchText.length >= 3) {
@@ -162,8 +197,77 @@
                 clearStudentDetails();
                 disableSubmitButton();
             }
-        });
+        });*@
 
+
+        // Function to search and display student details
+$('#StudentSearch').keyup(function () {
+    var searchText = $(this).val().trim();
+    if (searchText.length >= 3) {
+        $.ajax({
+            url: '@Url.Action("GetStudentDetails", "Loans")',
+            type: 'GET',
+            data: { searchText: searchText },
+            success: function (data) {
+                var dropdown = $('#studentDropdown');
+                dropdown.empty();
+                dropdown.append($('<option>', {
+                    value: '',
+                    text: 'Select a student'
+                }));
+                if (data) {
+                    $.each(data, function (index, student) {
+                        dropdown.append($('<option>', {
+                            value: student.cardNumber,
+                            text: student.name
+                        }));
+                    });
+                }
+            },
+            error: function () {
+                console.log('Error fetching student details.');
+            }
+        });
+    }
+});
+
+// Function to display selected student details
+$('#studentDropdown').change(function () {
+    var selectedCardNumber = $(this).val();
+    if (selectedCardNumber) {
+        $.ajax({
+            url: '@Url.Action("GetStudentDetails", "Loans")',
+            type: 'GET',
+            data: { searchText: selectedCardNumber },
+            success: function (data) {
+                if (data && data.length > 0) {
+                    var student = data[0];
+                    selectedStudent = student;
+                    $('#StudentName').text(student.name);
+                    $('#StudentBI').text(student.bi);
+                    $('#StudentCardNumber').text(student.cardNumber);
+                    enableSubmitButton();
+                } else {
+                    selectedStudent = null;
+                    clearStudentDetails();
+                }
+            },
+            error: function () {
+                console.log('Error fetching student details.');
+            }
+        });
+    } else {
+        selectedStudent = null;
+        clearStudentDetails();
+        //disableSubmitButton();
+    }
+});
+
+function clearStudentDetails() {
+    $('#StudentName').text('');
+    $('#StudentBI').text('');
+    $('#StudentCardNumber').text('');
+}
         function enableSubmitButton() {
             if (selectedBook && selectedStudent) {
                 $('#submitBtn').prop('disabled', false);
@@ -205,34 +309,5 @@
             }
         });
     });
-
-
-        function searchBooks() {
-            var searchText = $('#BookSearch').val();
-            $.ajax({
-                url: '@Url.Action("GetBookDetails", "Loans")',
-                type: 'GET',
-                data: { searchText: searchText },
-                success: function (data) {
-                    var dropdown = $('#bookDropdown');
-                    dropdown.empty();
-                    if (data) {
-                        $.each(data, function (index, book) {
-                            dropdown.append($('<option>', {
-                                value: book.isbn,
-                                text: book.title
-                            }));
-                        });
-                    }
-                }
-            });
-        }
-
-        function displayBookDetails() {
-            var selectedBook = $('#bookDropdown option:selected').text();
-            var selectedISBN = $('#bookDropdown').val();
-            $('#BookTitle').text(selectedBook);
-            $('#BookISBN').text(selectedISBN);
-            //$('#bookDetails').html('Title: ' + selectedBook + '<br>ISBN: ' + selectedISBN);
-        }
 </script>
+

@@ -68,47 +68,79 @@ namespace SGBWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "LoanID,ISBN,CopyID,MemberID,UserId,LoanDate,DueDate,ReturnedDate")] Loan loan)
         {
-            if (ModelState.IsValid)
+            if (loan.ISBN == null)
             {
-                if (loan.ISBN == null)
-                {
-                    TempData["errorMessage"] = "Não foi possível gravar o registo, selecione um livro!";
-                    return RedirectToAction("Index");
-                }
-                Copy copy = BookService.GetAvailableBookCopyByISBN(loan.ISBN);
-                if (copy == null)
-                {
-                    TempData["errorMessage"] = "Não foi possível gravar o registo, não existem cópias disponíveis para este livro!";
-                    return RedirectToAction("Index");
-                }
-                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-                var userId = claim.Value;
-
-                Setting setting = SettingService.GetDefaultSetting();
-                loan.LoanDate = DateTime.Now;
-                loan.UserId = MemberService.GetMemberIdByUserId(userId);
-                loan.DueDate = loan.LoanDate.AddDays(setting.DaysForReturn.GetValueOrDefault());
-                loan.ReturnedDate = new DateTime(1900, 01, 01);
-                loan.CopyID = copy.CopyID;
-                loan.Status = "Ativo";
-                string[] result = LoanService.AddLoan(loan);
-                if (Convert.ToBoolean(result[1]))
-                {
-                    TempData["successMessage"] = result[0];
-                }
-                else
-                {
-                    TempData["errorMessage"] = result[0]; 
-                }
+                TempData["errorMessage"] = "Não foi possível gravar o registo, selecione um livro!";
                 return RedirectToAction("Index");
             }
+            Copy copy = BookService.GetAvailableBookCopyByISBN(loan.ISBN);
+            if (copy == null)
+            {
+                TempData["errorMessage"] = "Não foi possível gravar o registo, não existem cópias disponíveis para este livro!";
+                return RedirectToAction("Index");
+            }
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            var userId = claim.Value;
 
-            ViewBag.ISBN = new SelectList(db.Books, "ISBN", "Title", loan.ISBN);
-            ViewBag.CopyID = new SelectList(db.Copies, "CopyID", "ISBN", loan.CopyID);
-            ViewBag.MemberID = new SelectList(db.Members, "MemberID", "FirstName", loan.MemberID);
-            ViewBag.UserId = new SelectList(db.Members, "MemberID", "FirstName", loan.UserId);
-            return View(loan);
+            Setting setting = SettingService.GetDefaultSetting();
+            loan.LoanDate = DateTime.Now;
+            loan.UserId = MemberService.GetMemberIdByUserId(userId);
+            loan.DueDate = loan.LoanDate.AddDays(setting.DaysForReturn.GetValueOrDefault());
+            loan.ReturnedDate = new DateTime(1900, 01, 01);
+            loan.CopyID = copy.CopyID;
+            loan.Status = "Ativo";
+            string[] result = LoanService.AddLoan(loan);
+            if (Convert.ToBoolean(result[1]))
+            {
+                TempData["successMessage"] = result[0];
+            }
+            else
+            {
+                TempData["errorMessage"] = result[0];
+            }
+            return RedirectToAction("Index");
+            //if (ModelState.IsValid)
+            //{
+            //    if (loan.ISBN == null)
+            //    {
+            //        TempData["errorMessage"] = "Não foi possível gravar o registo, selecione um livro!";
+            //        return RedirectToAction("Index");
+            //    }
+            //    Copy copy = BookService.GetAvailableBookCopyByISBN(loan.ISBN);
+            //    if (copy == null)
+            //    {
+            //        TempData["errorMessage"] = "Não foi possível gravar o registo, não existem cópias disponíveis para este livro!";
+            //        return RedirectToAction("Index");
+            //    }
+            //    var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            //    var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            //    var userId = claim.Value;
+
+            //    Setting setting = SettingService.GetDefaultSetting();
+            //    loan.LoanDate = DateTime.Now;
+            //    loan.UserId = MemberService.GetMemberIdByUserId(userId);
+            //    loan.DueDate = loan.LoanDate.AddDays(setting.DaysForReturn.GetValueOrDefault());
+            //    loan.ReturnedDate = new DateTime(1900, 01, 01);
+            //    loan.CopyID = copy.CopyID;
+            //    loan.Status = "Ativo";
+            //    string[] result = LoanService.AddLoan(loan);
+            //    if (Convert.ToBoolean(result[1]))
+            //    {
+            //        TempData["successMessage"] = result[0];
+            //    }
+            //    else
+            //    {
+            //        TempData["errorMessage"] = result[0]; 
+            //    }
+            //    return RedirectToAction("Index");
+            //}
+
+            //ViewBag.ISBN = new SelectList(db.Books, "ISBN", "Title", loan.ISBN);
+            //ViewBag.CopyID = new SelectList(db.Copies, "CopyID", "ISBN", loan.CopyID);
+            //ViewBag.MemberID = new SelectList(db.Members, "MemberID", "FirstName", loan.MemberID);
+            //ViewBag.UserId = new SelectList(db.Members, "MemberID", "FirstName", loan.UserId);
+            //return View(loan);
         }
 
         // GET: Loans/Edit/5
